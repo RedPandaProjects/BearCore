@@ -1,0 +1,12 @@
+#pragma once
+namespace BearCore
+{
+
+	class BEARTOOL_API BearCheckSum
+	{
+	public:
+		BEAR_CLASS_STATIC(BearCheckSum)
+		static void SHA256(void*data, bsize size, uint8 sha[]);
+		static uint32 CRC32(const void*data, bsize size);
+	};
+}
