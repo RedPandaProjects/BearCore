@@ -51,6 +51,7 @@ namespace BearCore
 			y += right.y;
 			return *this;
 		}
+
 		inline BearVector2 &operator-=(const BearVector2 &right)
 		{
 			x -= right.x;
