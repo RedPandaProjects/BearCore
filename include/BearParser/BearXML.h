@@ -8,15 +8,15 @@ namespace BearCore
 		BearXML();
 	
 		~BearXML();
-		bool loadFromFile(const bchar* file, BearString&value_error, BearString&out_error);
-		bool loadFromStream(const BearInputStream& file, BearEncoding::Encoding tp, BearString&value_error, BearString&out_error);
-		bool loadFromBuffrer(const BearBufferedReader&buffer, BearEncoding::Encoding tp, BearString&value_error, BearString&out_error);
-		void clear();
-		BearString  get(BearXmlNode node,const bchar*text=TEXT(""));
-		BearString  getAtribute(BearXmlNode node,const char* Atribute, const bchar*text = TEXT(""));
-		BearXmlNode getNode(const char* name);
-		BearXmlNode getNode(BearXmlNode node, const char* name);
-		BearXmlNode nextNode(BearXmlNode node, const char* name);
+		bool LoadFromFile(const bchar* file, BearString&value_error, BearString&out_error);
+		bool LoadFromStream(const BearInputStream& file, BearEncoding::Encoding tp, BearString&value_error, BearString&out_error);
+		bool LoadFromBuffrer(const BearBufferedReader&buffer, BearEncoding::Encoding tp, BearString&value_error, BearString&out_error);
+		void Clear();
+		BearString  Get(BearXmlNode node,const bchar*text=TEXT(""));
+		BearString  GetAtribute(BearXmlNode node,const char* Atribute, const bchar*text = TEXT(""));
+		BearXmlNode GetNode(const char* name);
+		BearXmlNode GetNode(BearXmlNode node, const char* name);
+		BearXmlNode NextNode(BearXmlNode node, const char* name);
 
 		BearXML(const BearXML&) = delete;
 		BearXML&operator =(const BearXML&) = delete;

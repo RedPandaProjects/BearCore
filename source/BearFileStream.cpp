@@ -6,24 +6,24 @@ BearCore::BearFileStream::BearFileStream():m_file(0),m_mode(0)
 
 BearCore::BearFileStream::BearFileStream(const bchar * name, BearFlags<uint8> mode) : m_file(0), m_mode(0)
 {
-	open(name, mode);
+	Open(name, mode);
 }
 
 BearCore::BearFileStream::~BearFileStream()
 {
-	close();
+	Close();
 }
 
-bool BearCore::BearFileStream::open(const bchar * name, BearFlags<uint8> flags)
+bool BearCore::BearFileStream::Open(const bchar * name, BearFlags<uint8> flags)
 {
-	close();
+	Close();
 	const bchar*mode = TEXT("");
 	m_mode = flags;
-	if (flags.test(Write))
+	if (flags.test(M_Write))
 		mode = TEXT("wb");
-	if (flags.test(Read))
+	if (flags.test(M_Read))
 		mode = TEXT("rb");
-	if (m_file) close();
+	if (m_file) Close();
 #ifdef UNICODE
 	_wfopen_s(reinterpret_cast<FILE**>(&m_file), name, mode);
 #else
@@ -31,31 +31,30 @@ bool BearCore::BearFileStream::open(const bchar * name, BearFlags<uint8> flags)
 #endif
 	if (m_file)
 	{
-		seek(0);
+		Seek(0);
 		//BearString::Copy(m_name, name);
 	}
 	else
 	{
-		close();
+		Close();
 	}
 	return m_file;
 }
 
-bool BearCore::BearFileStream::eof() const
+bool BearCore::BearFileStream::Eof() const
 {
-	return tell() == size();
+	return Tell() ==Size();
 }
 
-bsize BearCore::BearFileStream::seek(bsize tell1) const
+bsize BearCore::BearFileStream::Seek(bsize tell1) const
 {
 	if (!m_file)
 		return 0;
-
-	_fseeki64((FILE*)m_file, tell1, SEEK_SET);
-	return tell();
+	_fseeki64((FILE*)m_file, static_cast<int64>(tell1), SEEK_SET);
+	return Tell();
 }
 
-bsize BearCore::BearFileStream::tell() const
+bsize BearCore::BearFileStream::Tell() const
 {
 	if (m_file)
 		return	static_cast<bsize>(_ftelli64((FILE*)m_file));
@@ -63,35 +62,35 @@ bsize BearCore::BearFileStream::tell() const
 		return 0;
 }
 
-bsize BearCore::BearFileStream::size() const
+bsize BearCore::BearFileStream::Size() const
 {
 	if (!m_file)
 		return 0;
-	bsize pos = tell();
+	bsize pos = Tell();
 	fseek((FILE*)m_file, 0, SEEK_END);
-	bsize size_ = tell();
-	seek(static_cast<bsize>(pos));
+	bsize size_ = Tell();
+	_fseeki64((FILE*)m_file, static_cast<int64>(pos), SEEK_SET);
 	return size_;
 }
 
-void BearCore::BearFileStream::close()
+void BearCore::BearFileStream::Close()
 {
 	if (m_file)fclose((FILE*)m_file);
 	m_file = 0;
 	m_mode = 0;
 }
 
-BearCore::BearStreamRef< BearCore::BearInputStream> BearCore::BearFileStream::readChunkAsInputStream(uint32 type) const
+BearCore::BearStreamRef< BearCore::BearInputStream> BearCore::BearFileStream::ReadChunkAsInputStream(uint32 type) const
 {
-	auto size = goToChunk(type);
+	auto size = GoToChunk(type);
 	if (!size)return BearCore::BearStreamRef<BearCore::BearInputStream>();
 
 	BearMemoryStream *temp = bear_new<BearMemoryStream>();
-	temp->write(*read(size),size);
+	temp->Write(*this->Read(size),size);
 	return temp;
 }
 
-void BearCore::BearFileStream::swap(BearFileStream & right)
+void BearCore::BearFileStream::Swap(BearFileStream & right)
 {
 	bear_swap(right.m_file, m_file);
 	bear_swap(right.m_mode, m_mode);
@@ -101,21 +100,21 @@ void BearCore::BearFileStream::swap(BearFileStream & right)
 
 
 
-void BearCore::BearFileStream::destory()
+void BearCore::BearFileStream::Destory()
 {
-	close();
+	Close();
 	BearMemory::Free(this);
 }
 
 void BearCore::BearFileStream::read_impl(void * data, bsize size) const
 {
-	if (m_file&&m_mode.test(Read))
+	if (m_file&&m_mode.test(M_Read))
 		fread(data, size, 1, (FILE*)m_file);
 }
 
 bool BearCore::BearFileStream::write_impl(void * data, bsize & size)
 {
-	if (m_file&&m_mode.test(Write)) {
+	if (m_file&&m_mode.test(M_Write)) {
 		size = fwrite(data, 1, size, (FILE*)m_file);
 		return true;
 	}

@@ -7,14 +7,14 @@ namespace BearCore
 		BearFraction();
 		BearFraction( BearFraction&&right);
 		BearFraction(const BearFraction&right);
-		void copy(const BearFraction&right);
-		void swap(BearFraction&right);
+		void Copy(const BearFraction&right);
+		void Swap(BearFraction&right);
 		BearFraction &operator=(const BearFraction&right);
 		BearFraction &operator=(BearFraction&&right);
 
 		BearFraction(uint64 c, uint64 b);
-		uint64 div();
-		bool isRest();
+		uint64 Div();
+		bool IsRest();
 	
 		BearFraction &operator*=(const BearFraction& a);
 		BearFraction& operator/=(const BearFraction& a);

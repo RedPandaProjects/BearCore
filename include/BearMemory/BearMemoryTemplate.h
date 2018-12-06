@@ -105,20 +105,32 @@ namespace BearCore
 	template<typename C>
 	C*bear_alloc(bsize count)
 	{
-		return reinterpret_cast<C*>(BearMemory::Malloc(sizeof(C)*count, typeid(C).name()));
+		return reinterpret_cast<C*>(BearMemory::Malloc(sizeof(C)*count
+#ifdef DEBUG
+			, typeid(C).name()
+#endif
+		));
 	}
 
 	template<typename C>
 	C*bear_new()
 	{
-		C*c = reinterpret_cast<C*>(BearMemory::Malloc(sizeof(C), typeid(C).name()));
+		C*c = reinterpret_cast<C*>(BearMemory::Malloc(sizeof(C)
+#ifdef DEBUG
+			, typeid(C).name()
+#endif
+		));
 		new(c)C();
 		return c;
 	}
-	template<typename C, class...D>
-	C*bear_new(D...d)
+	template<typename C, typename...D>
+	C*bear_new(D&...d)
 	{
-		C*c = reinterpret_cast<C*>(BearMemory::Malloc(sizeof(C), typeid(C).name()));
+		C*c = reinterpret_cast<C*>(BearMemory::Malloc(sizeof(C)
+#ifdef DEBUG
+			, typeid(C).name()
+#endif
+		));
 		new(c)C(d...);
 		return c;
 	}
@@ -126,7 +138,11 @@ namespace BearCore
 	template<typename C>
 	C*bear_realloc(C*old, bsize new_count)
 	{
-		return reinterpret_cast<C*>(BearMemory::Realloc(reinterpret_cast<void*>(old), sizeof(C)*new_count, typeid(C).name()));
+		return reinterpret_cast<C*>(BearMemory::Realloc(reinterpret_cast<void*>(old), sizeof(C)*new_count
+#ifdef DEBUG
+			, typeid(C).name()
+#endif
+		));
 	}
 
 	template<typename C>

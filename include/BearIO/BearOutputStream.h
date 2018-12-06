@@ -5,34 +5,34 @@ namespace BearCore
 	{
 	public:
 		BearOutputStream();
-		void writeUint8(uint8 data);
-		void writeUint16(uint16 data);
-		void writeUint32(uint32 data);
-		void writeUint64(uint64 data);
+		void WriteUint8(uint8 data);
+		void WriteUint16(uint16 data);
+		void WriteUint32(uint32 data);
+		void WriteUint64(uint64 data);
 		
-		void writeInt8(int8 data);
-		void writeInt16(int16 data);
-		void writeInt32(int32 data);
-		void writeInt64(int64 data);
+		void WriteInt8(int8 data);
+		void WriteInt16(int16 data);
+		void WriteInt32(int32 data);
+		void WriteInt64(int64 data);
 		
-		void writeFloat(float data);
-		void writeDouble(double data);
+		void WriteFloat(float data);
+		void WriteDouble(double data);
 		
-		bsize write(void*data, bsize size);
+		bsize Write(void*data, bsize size);
 		
-		void beginChunk(int32 id);
-		void endChunk(); 
+		void BeginChunk(int32 id);
+		void EndChunk(); 
 		
-		void writeString(const BearString&base,BearEncoding::Encoding encoding,bool info=true);
-		void writeStringWithZero(const BearString&base, BearEncoding::Encoding encoding);
-		void writeStringAndNewLine(const BearString &str, BearEncoding::Encoding encoding);
+		void WriteString(const BearString&base,BearEncoding::Encoding encoding,bool info=true);
+		void WriteStringWithZero(const BearString&base, BearEncoding::Encoding encoding);
+		void WriteStringAndNewLine(const BearString &str, BearEncoding::Encoding encoding);
 		
 		virtual  bool write_impl(void*data, bsize &size) = 0;
-		virtual bool eof() const=0;
-		virtual bsize seek(bsize tell) const = 0;
-		virtual bsize tell()const = 0;
-		virtual bsize size()const = 0;
-		virtual void destory() = 0;
+		virtual bool Eof() const=0;
+		virtual bsize Seek(bsize tell) const = 0;
+		virtual bsize Tell()const = 0;
+		virtual bsize Size()const = 0;
+		virtual void Destory() = 0;
 	private:
 		int64 m_tell_Chunk;
 

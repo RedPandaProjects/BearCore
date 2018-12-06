@@ -29,8 +29,11 @@ namespace BearCore
 		template<bsize sizeBuffer>
 		static	inline void Contact(bchar(&dst)[sizeBuffer], const  bchar *src);
 		template<bsize sizeBuffer>
-		static inline void Copy(bchar(&dst)[sizeBuffer], const  bchar *src);
-		static inline void Copy(bchar*dst, bsize sizeBuffer, const  bchar *src);
+		static inline void Copy(bchar16(&dst)[sizeBuffer], const  bchar16 *src);
+		static inline void Copy(bchar16*dst, bsize sizeBuffer, const  bchar16 *src);
+		template<bsize sizeBuffer>
+		static inline void Copy(bchar8(&dst)[sizeBuffer], const  bchar8 *src);
+		static inline void Copy(bchar8*dst, bsize sizeBuffer, const  bchar8 *src);
 		static inline const bchar* ToChar(const bchar* str, bchar ch);
 		static inline  bchar* ToChar(bchar* str, bchar ch);
 		static inline const bchar* ToCharWithEnd(const bchar* str, bchar ch);
@@ -60,7 +63,9 @@ namespace BearCore
 			return find;
 		}
 		template<bsize sizeBuffer>
-		static inline void Printf(bchar(&dst)[sizeBuffer], const bchar*str, ...);
+		static inline void Printf(bchar(&dst)[sizeBuffer], const bchar*str,...);
+		template<bsize sizeBuffer>
+		static inline void PrintfVa(bchar(&dst)[sizeBuffer], const bchar*str, va_list va);
 		static inline void Scanf(const bchar*text, const bchar*str, ...);
 		static inline const bchar* SubSpaceInBegin(const bchar*text)
 		{
@@ -257,7 +262,8 @@ namespace BearCore
 		}
 		static inline void  ToLower(bchar* str);
 		static inline void  ToUpper(bchar* str);
-		static inline int32   Compare(const bchar*str1,const bchar*str2);
+		static inline int32   Compare(const bchar8*str1,const bchar8*str2);
+		static inline int32   Compare(const bchar16*str1, const bchar16*str2);
 	public:
 
 		BearString() :basic_string(), m_tell(0) {}
@@ -270,8 +276,8 @@ namespace BearCore
 		inline 	BearString&operator=(BearString&&str) { swap(str); return*this; }
 		inline	void seek(bsize tell)
 		{
-			if (size() + m_tell > tell)m_tell = tell;
-			else m_tell = size() + m_tell;
+			if (basic_string::size() + m_tell > tell)m_tell = tell;
+			else m_tell =basic_string::size() + m_tell;
 		}
 		inline	bsize tell()const
 		{
@@ -281,12 +287,12 @@ namespace BearCore
 		inline void	operator--(int) { if (m_tell) seek(m_tell - 1); }
 		inline const bchar* operator*() const
 		{
-			if (!basic_string::size())return TEXT("");
+			if (!basic_string::size()||basic_string::size()== m_tell)return TEXT("");
 			return &at(m_tell);
 		}
 		inline bchar* operator*()
 		{
-			if (!basic_string::size())return TEXT("");
+			if (!basic_string::size() || basic_string::size() == m_tell)return TEXT("");
 			return &at(m_tell);
 		}
 
@@ -309,7 +315,6 @@ namespace BearCore
 				seek(item - begin + m_tell);
 				return true;
 			}
-			return true;
 
 		}
 		inline bool to_char_with_end(bchar ch)
@@ -352,11 +357,34 @@ namespace BearCore
 			seek(find - **this + m_tell);
 		}
 		template<typename...A>
-		inline void append_printf(const bchar*str, A&...a)
+		inline BearString& assign_printf(const bchar*str, const A&...a)
+		{
+			BearString8192 out;
+			Printf(out, str, a...);
+			assign(out);
+			return *this;
+		}
+		inline BearString& assign_printf_va(const bchar*str, va_list va)
+		{
+			BearString8192 out;
+			PrintfVa(out, str, va);
+			assign(out);
+			return *this;
+		}
+		template<typename...A>
+		inline BearString& append_printf(const bchar*str,const A&...a)
 		{
 			BearString8192 out;
 			Printf(out, str, a...);
 			append(out);
+			return *this;
+		}
+		inline BearString& append_printf_va(const bchar*str, va_list va)
+		{
+			BearString8192 out;
+			PrintfVa(out, str, va);
+			append(out);
+			return *this;
 		}
 		template<typename...A>
 		inline void scanf(const bchar*str, A...a)const
@@ -371,7 +399,7 @@ namespace BearCore
 		}
 		inline void sub_space_in_end()
 		{
-			bchar*end = **this + size();
+			bchar*end = **this ;
 			SubSpaceInEnd(end);
 		}
 		template<bsize sizeBuffer>

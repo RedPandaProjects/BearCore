@@ -1,64 +1,67 @@
 #include "BearCore.hpp"
-void BearCore::BearBufferedReader::readStringToLine(BearString&str, BearEncoding::Encoding encoding) const
+void BearCore::BearBufferedReader::ReadStringToLine(BearString&str, BearEncoding::Encoding encoding) const
 {
-	if (tell() == 0&&size()>3)	
-		if (((char*)begin())[0] == 0xef && ((char*)begin())[1] == 0xbb && ((char*)begin())[2] == 0xbf)
-			seek(3);
+	if (Tell() == 0&&Size()>3)	
+		if (((char*)Begin())[0] == 0xef && ((char*)Begin())[1] == 0xbb && ((char*)Begin())[2] == 0xbf)
+			Seek(3);
 	str.seek(0);
 	str.clear_no_free();
 	switch (encoding)
 	{
 	case  BearEncoding::ANSI:
 	{
-		const bchar8*begin1 = reinterpret_cast<const bchar8*>(begin());
-		const bchar8*end1 = reinterpret_cast<const bchar8*>(end());
-		const bchar8*begin2 = strchr(begin1, '\n');
-		if (!begin2)
+		const bchar8*Begin1 = reinterpret_cast<const bchar8*>(Begin());
+		const bchar8*End1 = reinterpret_cast<const bchar8*>(End());
+		const bchar8*Begin2 = strchr(Begin1, '\n');
+		if (!Begin2 || Begin2 > End1)
 		{
-			begin2 = end1;
+			Begin2 = End1;
 		}
 #ifdef UNICODE
-		str.append( *BearEncoding::ToUTF16( begin1, begin2 ), begin2 - begin1);
+		str.append( *BearEncoding::ToUTF16( Begin1, Begin2 ), Begin2 - Begin1);
 #else
-		str.append(begin1, begin2 - begin1);
+		str.append(Begin1, Begin2 - Begin1);
 #endif
 	
-		seek(begin2-begin1 + tell()+1);
+		Seek(Begin2-Begin1 + Tell()+1);
 	}
 		break;
 	case BearEncoding::UTF8:
 	{
-		const bcharu8*begin1 = reinterpret_cast<const bcharu8*>(begin());
-		const bcharu8*end1 = reinterpret_cast<const bcharu8*>(end());
-		const bcharu8*begin2 = reinterpret_cast<const bcharu8*>(strchr(reinterpret_cast<const bchar8*>(begin1), '\n'));
-		if (!begin2)
+		const bcharu8*Begin1 = reinterpret_cast<const bcharu8*>(Begin());
+		const bcharu8*End1 = reinterpret_cast<const bcharu8*>(End());
+		const bcharu8*Begin2 = reinterpret_cast<const bcharu8*>(strchr(reinterpret_cast<const bchar8*>(Begin1), '\n'));
+		if (!Begin2||Begin2>End1)
 		{
-			begin2 = end1;
+			Begin2 = End1;
 		}
 #ifdef UNICODE
-		str.append(*BearEncoding::ToUTF16(begin1, begin2 ), begin2 - begin1);
+		str.append(*BearEncoding::ToUTF16(Begin1, Begin2 ), Begin2 - Begin1);
 #else
-		str.append(*BearEncoding::ToANSI(begin1, begin2 ), begin2 - begin1);
+		str.append(*BearEncoding::ToANSI(Begin1, Begin2 ), Begin2 - Begin1);
 #endif
 
-		seek(begin2 - begin1 + tell() + 1);
+		Seek(Begin2 - Begin1 + Tell() + 1);
 	
 		break;
 	}
 	case  BearEncoding::UTF16:
 	{
-		const bchar16*begin1 = reinterpret_cast<const bchar16*>(begin());
-	//	const bchar16*end1 = reinterpret_cast<const bchar16*>(end());
+		const bchar16*Begin1 = reinterpret_cast<const bchar16*>(Begin());
+		const bchar16*End1 = reinterpret_cast<const bchar16*>(End());
 
-		const bchar16*begin2 = wcschr(begin1, L'\n');
-
+		const bchar16*Begin2 = wcschr(Begin1, L'\n');
+		if (!Begin2 || Begin2 > End1)
+		{
+			Begin2 = End1;
+		}
 
 #ifndef UNICODE
-		str.append(*BearEncoding::ToANSI(begin1, begin2 ),( begin2 - begin1)*2);
+		str.append(*BearEncoding::ToANSI(Begin1, Begin2 ),( Begin2 - Begin1)*2);
 #else
-		str.append(begin1, begin2 - begin1);
+		str.append(Begin1, Begin2 - Begin1);
 #endif
-		seek(begin2 - begin1 + tell()+1);
+		Seek(Begin2 - Begin1 + Tell()+1);
 		break;
 	}
 	default:
@@ -66,61 +69,61 @@ void BearCore::BearBufferedReader::readStringToLine(BearString&str, BearEncoding
 	} 
 }
 
-void BearCore::BearBufferedReader::readStringToZero(BearString&str, BearEncoding::Encoding encoding) const
+void BearCore::BearBufferedReader::ReadStringToZero(BearString&str, BearEncoding::Encoding encoding) const
 {
 	switch (encoding)
 	{
 	case BearEncoding::ANSI:
 	{
-		const bchar8*begin1 = reinterpret_cast<const bchar8*>(begin());
-		const bchar8*end1 = reinterpret_cast<const bchar8*>(end());
-		const bchar8*begin2 = strchr(begin1, '\0');
-		if (!begin2)
+		const bchar8*Begin1 = reinterpret_cast<const bchar8*>(Begin());
+		const bchar8*End1 = reinterpret_cast<const bchar8*>(End());
+		const bchar8*Begin2 = strchr(Begin1, '\0');
+		if (!Begin2)
 		{
-			begin2 = end1;
+			Begin2 = End1;
 		}
 #ifdef UNICODE
-		str.append(*BearEncoding::ToUTF16(begin1, begin2), begin2 - begin1);
+		str.append(*BearEncoding::ToUTF16(Begin1, Begin2), Begin2 - Begin1);
 #else
-		str.append(begin1, begin2 - begin1);
+		str.append(Begin1, Begin2 - Begin1);
 #endif
 
-		seek(begin2 - begin1 + tell() + 1);
+		Seek(Begin2 - Begin1 + Tell() + 1);
 	}
 	break;
 	case BearEncoding::UTF8:
 	{
-		const bcharu8*begin1 = reinterpret_cast<const bcharu8*>(begin());
-		const bcharu8*end1 = reinterpret_cast<const bcharu8*>(end());
-		const bcharu8*begin2 = reinterpret_cast<const bcharu8*>(strchr(reinterpret_cast<const bchar8*>(begin1), '\0'));
-		if (!begin2)
+		const bcharu8*Begin1 = reinterpret_cast<const bcharu8*>(Begin());
+		const bcharu8*End1 = reinterpret_cast<const bcharu8*>(End());
+		const bcharu8*Begin2 = reinterpret_cast<const bcharu8*>(strchr(reinterpret_cast<const bchar8*>(Begin1), '\0'));
+		if (!Begin2)
 		{
-			begin2 = end1;
+			Begin2 = End1;
 		}
 #ifdef UNICODE
-		str.append(*BearEncoding::ToUTF16(begin1, begin2));
+		str.append(*BearEncoding::ToUTF16(Begin1, Begin2));
 #else
-		str.append(*BearEncoding::ToANSI(begin1, begin2));
+		str.append(*BearEncoding::ToANSI(Begin1, Begin2));
 #endif
 
-		seek(begin2 - begin1 + tell() + 1);
+		Seek(Begin2 - Begin1 + Tell() + 1);
 
 		break;
 	}
 	case  BearEncoding::UTF16:
 	{
-		const bchar16*begin1 = reinterpret_cast<const bchar16*>(begin());
-	//	const bchar16*end1 = reinterpret_cast<const bchar16*>(end());
+		const bchar16*Begin1 = reinterpret_cast<const bchar16*>(Begin());
+	//	const bchar16*End1 = reinterpret_cast<const bchar16*>(End());
 
-		const bchar16*begin2 = wcschr(begin1, L'\0');
+		const bchar16*Begin2 = wcschr(Begin1, L'\0');
 
 
 #ifndef UNICODE
-		str.append(*BearEncoding::ToANSI(begin1, begin2), begin2 - begin1);
+		str.append(*BearEncoding::ToANSI(Begin1, Begin2), Begin2 - Begin1);
 #else
-		str.append(begin1, begin2 - begin1);
+		str.append(Begin1, Begin2 - Begin1);
 #endif
-		seek(begin2 - begin1 + tell() + 1);
+		Seek(Begin2 - Begin1 + Tell() + 1);
 		break;
 	}
 	default:
@@ -128,10 +131,10 @@ void BearCore::BearBufferedReader::readStringToZero(BearString&str, BearEncoding
 	}
 }
 
-BearCore::BearStreamRef<BearCore::BearInputStream> BearCore::BearBufferedReader::readChunkAsInputStream(uint32 type) const
+BearCore::BearStreamRef<BearCore::BearInputStream> BearCore::BearBufferedReader::ReadChunkAsInputStream(uint32 type) const
 {
-	auto ptr=readChunkAsBufferedReader(type);
+	auto ptr=ReadChunkAsBufferedReader(type);
 	auto strem = *ptr;
-	ptr.clearNoFree();
+	ptr.clear_no_free();
 	return BearStreamRef<BearInputStream>(strem);
 }

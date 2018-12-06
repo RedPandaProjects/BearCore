@@ -60,6 +60,9 @@ namespace BearCore
 			if (!m_data ) { return 0; }
 			return &m_data->m_data;
 		}
+		const P*operator->()const { return get(); }
+		P*operator->() { return get(); }
+		bool is_one()const { if (m_data)return m_data->m_count == 1; return false; }
 		BearMemoryMultiRef&operator=(const BearMemoryMultiRef&ptr) { copy(ptr); return*this; };
 		BearMemoryMultiRef&operator=( BearMemoryMultiRef&&ptr) { swap(ptr); return*this; };
 		void swap(BearMemoryMultiRef&ptr)

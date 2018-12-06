@@ -62,6 +62,10 @@ namespace BearCore
 			return 	 BearMemoryRef<bcharu8>(const_cast<bcharu8*>(text), false);
 		}
 
+		static bchar8 ToANSI(bchar16 c);
+		static bchar8 ToANSI(bchar8 c);
 
+		static bchar16 ToUTF16(bchar16 c);
+		static bchar16 ToUTF16(bchar8 c);
 	};
 }

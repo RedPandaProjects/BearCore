@@ -5,21 +5,21 @@ BearCore::BearFraction::BearFraction():m_c(0),m_d(0)
 
 BearCore::BearFraction::BearFraction(BearFraction && right) : m_c(0), m_d(0)
 {
-	swap(right);
+	Swap(right);
 }
 
 BearCore::BearFraction::BearFraction(const BearFraction & right) : m_c(0), m_d(0)
 {
-	copy(right);
+	Copy(right);
 }
 
-void BearCore::BearFraction::copy(const BearFraction & right)
+void BearCore::BearFraction::Copy(const BearFraction & right)
 {
 	m_c = right.m_c;
 	m_d = right.m_d;
 }
 
-void BearCore::BearFraction::swap(BearFraction & right)
+void BearCore::BearFraction::Swap(BearFraction & right)
 {
 	bear_swap(m_c, right.m_c);
 	bear_swap(m_d, right.m_d);
@@ -29,27 +29,27 @@ BearCore::BearFraction::BearFraction(uint64 c, uint64 b):m_c(c),m_d(b)
 {
 }
 
-uint64 BearCore::BearFraction::div()
+uint64 BearCore::BearFraction::Div()
 {
 	if (m_d == 0)return 0;
 	uint64 a = m_c / m_d;
     return a;
 }
 
-bool BearCore::BearFraction::isRest()
+bool BearCore::BearFraction::IsRest()
 {
 	return m_c%m_d;
 }
 
 BearCore::BearFraction & BearCore::BearFraction::operator=(const BearFraction & right)
 {
-	copy(right);
+	Copy(right);
 	return*this;
 }
 
 BearCore::BearFraction & BearCore::BearFraction::operator=(BearFraction && right)
 {
-	swap(right);
+	Swap(right);
 	return*this;
 }
 

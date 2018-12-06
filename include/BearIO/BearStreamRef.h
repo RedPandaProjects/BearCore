@@ -12,11 +12,11 @@ namespace  BearCore
 		void clear()
 		{
 			if (!m_p)return;
-			m_p->destory();
+			m_p->Destory();
 			m_p = 0;
 			//	bear_free<P>(m_p, false);
 		}
-		void clearNoFree() { m_p = 0; }
+		void clear_no_free() { m_p = 0; }
 		~BearStreamRef() { clear(); }
 		P*operator->() { return m_p; }
 		const P*operator->()const { return m_p; }

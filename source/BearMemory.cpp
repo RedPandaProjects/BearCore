@@ -1,6 +1,7 @@
 #include "BearCore.hpp"
+static BearCore::BearMutex Mutex;
 #ifdef DEBUG 
-static bool LDebugMemory = false;
+static bool DebugMemory = false;
 struct BearDebugMemoryBlock
 {
 	BearDebugMemoryBlock(const char*name, void*ptr) :name(name), ptr(ptr) {	}
@@ -16,12 +17,14 @@ static std::vector<BearDebugMemoryBlock> LMemoryBlocks;
 
 static void AddBlock(BearDebugMemoryBlock&&memory)
 {
-	if (!LDebugMemory)return;
+	BearCore::BearMutexLock Lock(Mutex);
+	if (!DebugMemory)return;
 	LMemoryBlocks.push_back(memory);
 	BearCore::bear_sort(LMemoryBlocks.begin(), LMemoryBlocks.end());
 }
 static void ReBlock(void*old, void*new_block)
 {
+	BearCore::BearMutexLock Lock(Mutex);
 	auto find = BearCore::bear_lower_bound(LMemoryBlocks.begin(), LMemoryBlocks.end(), BearDebugMemoryBlock(old));
 	if (find == LMemoryBlocks.end() || find->ptr != old)return;
 	find->ptr = new_block;;
@@ -29,6 +32,7 @@ static void ReBlock(void*old, void*new_block)
 }
 static void SubBlock(void*old)
 {
+	BearCore::BearMutexLock Lock(Mutex);
 	auto find = BearCore::bear_lower_bound(LMemoryBlocks.begin(), LMemoryBlocks.end(), BearDebugMemoryBlock(old));
 	if (find == LMemoryBlocks.end() || find->ptr != old)return;
 	LMemoryBlocks.erase(find);
@@ -92,25 +96,25 @@ void BearCore::BearMemory::DebugCheak()
 {
 	if (!LMemoryBlocks.empty())
 	{
-		BearDebug::ErrorPrintf(TEXT("------------------------------MEMORY------------------------------\n"));
+		BearLog::Printf(TEXT("------------------------------MEMORY------------------------------\n"));
 		auto begin = LMemoryBlocks.begin();
 		auto end = LMemoryBlocks.end();
 		while (begin != end)
 		{
-			BearDebug::ErrorPrintf(BEAR_PRINT_ANSI TEXT(":0x%p\n"), begin->name, begin->ptr);
+			BearLog::Printf(BEAR_PRINT_ANSI TEXT(":0x%p\n"), begin->name, begin->ptr);
 			begin++;
 		}
-		BearDebug::ErrorPrintf(TEXT("------------------------------------------------------------------\n"));
+		BearLog::Printf(TEXT("------------------------------------------------------------------\n"));
 	}
 
 }
 void BearCore::BearMemory::DebugOn()
 {
-	LDebugMemory = true;
+	DebugMemory = true;
 }
 
 void BearCore::BearMemory::DebugOff()
 {
-	LDebugMemory = false;
+	DebugMemory = false;
 }
 #endif

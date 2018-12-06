@@ -12,16 +12,16 @@ namespace BearCore
 		BearColor(float R, float G, float B, float A = 1);
 
 		BearColor(const BearColor&color);
-		void copy(const BearColor&color);
-		void swap(BearColor&color);
+		void Copy(const BearColor&color);
+		void Swap(BearColor&color);
 		BearColor&operator=(const BearColor&color);
 
-		void set(uint32 color);
-		void set(uint8 R, uint8 G, uint8 B, uint8 A = 255);
-		void set(float R, float G, float B, float A = 1.f);
-		BearCore::BearVector4<float> getFloat() const;
-		BearCore::BearVector4<uint8> getUint8() const;
-		uint32 getUint32()const;
+		void Set(uint32 color);
+		void Set(uint8 R, uint8 G, uint8 B, uint8 A = 255);
+		void Set(float R, float G, float B, float A = 1.f);
+		BearCore::BearVector4<float> GetFloat() const;
+		BearCore::BearVector4<uint8> GetUint8() const;
+		uint32 GetUint32()const;
 		static const BearColor Black;
 		static const BearColor White;
 		static const BearColor Red;

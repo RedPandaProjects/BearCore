@@ -7,23 +7,23 @@ namespace  BearCore
 		BEAR_CLASS_NO_COPY(BearFileStream);
 		enum Mode
 		{
-			Read = 1 << 0,
-			Write = 1 << 1
+			M_Read = 1 << 0,
+			M_Write = 1 << 1
 		};
 		BearFileStream();
-		BearFileStream(const bchar* name, BearFlags<uint8> mode = Read);
+		BearFileStream(const bchar* name, BearFlags<uint8> mode = M_Read);
 		~BearFileStream();
-		bool open(const bchar* name, BearFlags<uint8> mode = Read);
-		virtual bool eof() const;
-		virtual bsize seek(bsize tell) const;
-		virtual bsize tell()const;
-		virtual bsize size()const;
-		void close();
-		virtual BearStreamRef<BearInputStream> readChunkAsInputStream(uint32 type)const;
+		bool Open(const bchar* name, BearFlags<uint8> mode = M_Read);
+		virtual bool Eof() const;
+		virtual bsize Seek(bsize tell) const;
+		virtual bsize Tell()const;
+		virtual bsize Size()const;
+		void Close();
+		virtual BearStreamRef<BearInputStream> ReadChunkAsInputStream(uint32 type)const;
 
-		void swap(BearFileStream&right);
+		void Swap(BearFileStream&right);
 	private:
-		virtual void destory();
+		virtual void Destory();
 		virtual void read_impl(void*data, bsize size) const;
 		virtual bool write_impl(void*data, bsize &size);
 	private:

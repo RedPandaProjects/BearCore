@@ -8,17 +8,17 @@ BearXML::BearXML():m_Doc(NULL)
 
 BearCore::BearXML::~BearXML()
 {
-	clear();
+	Clear();
 }
 
-bool BearCore::BearXML::loadFromFile(const bchar * file, BearString&value_error, BearString&out_error)
+bool BearCore::BearXML::LoadFromFile(const bchar * file, BearString&value_error, BearString&out_error)
 {
-	clear();
-	m_Doc = new TiXmlDocument;
+	Clear();
+	m_Doc = bear_new< TiXmlDocument>();
 	TiXmlDocument*m_doc = static_cast<TiXmlDocument*>(m_Doc);
 	if (!m_doc->LoadFile(*BearEncoding::ToANSI(file)))
 	{
-		clear();
+		Clear();
 		return false;
 	}
 	if (m_doc->Error())
@@ -30,26 +30,26 @@ bool BearCore::BearXML::loadFromFile(const bchar * file, BearString&value_error,
 		value_error.assign(m_doc->Value());
 		out_error.assign(m_doc->ErrorDesc());
 #endif
-		clear();
+		Clear();
 		return false;
 	}
 	return true;
 }
 
-bool BearCore::BearXML::loadFromStream(const BearInputStream & file, BearEncoding::Encoding tp, BearString&value_error, BearString&out_error)
+bool BearCore::BearXML::LoadFromStream(const BearInputStream & file, BearEncoding::Encoding tp, BearString&value_error, BearString&out_error)
 {
-	return loadFromBuffrer(BearMemoryStream(file), tp, value_error, out_error);
+	return LoadFromBuffrer(BearMemoryStream(file), tp, value_error, out_error);
 }
 
-bool BearCore::BearXML::loadFromBuffrer(const BearBufferedReader & buffer, BearEncoding::Encoding tp, BearString&value_error, BearString&out_error)
+bool BearCore::BearXML::LoadFromBuffrer(const BearBufferedReader & buffer, BearEncoding::Encoding tp, BearString&value_error, BearString&out_error)
 {
-	clear();
+	Clear();
 	m_Doc = new TiXmlDocument;
 	TiXmlDocument*m_doc = static_cast<TiXmlDocument*>(m_Doc);
 
 	if (tp == BearEncoding::ANSI)
 	{
-		auto ptr = BearEncoding::ToUTF8((const bchar8*)buffer.begin(), (const bchar8*)buffer.end());
+		auto ptr = BearEncoding::ToUTF8((const bchar8*)buffer.Begin(), (const bchar8*)buffer.End());
 		m_doc->Parse((char*)*ptr, 0, TIXML_ENCODING_UTF8);
 		if (m_doc->Error())
 		{
@@ -60,13 +60,13 @@ bool BearCore::BearXML::loadFromBuffrer(const BearBufferedReader & buffer, BearE
 			value_error.assign(m_doc->Value());
 			out_error.assign(m_doc->ErrorDesc());
 #endif
-			clear();
+			Clear();
 			return false;
 		}
 	}
 	else if (tp == BearEncoding::UTF16)
 	{
-		auto ptr = BearEncoding::ToUTF8((const bchar16*)buffer.begin(), (const bchar16*)buffer.end());
+		auto ptr = BearEncoding::ToUTF8((const bchar16*)buffer.Begin(), (const bchar16*)buffer.End());
 		m_doc->Parse((char*)*ptr, 0, TIXML_ENCODING_UTF8);
 		if (m_doc->Error())
 		{
@@ -77,13 +77,13 @@ bool BearCore::BearXML::loadFromBuffrer(const BearBufferedReader & buffer, BearE
 			value_error.assign(m_doc->Value());
 			out_error.assign(m_doc->ErrorDesc());
 #endif
-			clear();
+			Clear();
 			return false;
 		}
 	}
 	else 
 	{
-		auto ptr = BearEncoding::ToUTF8((const bcharu8*)buffer.begin(), (const bcharu8*)buffer.end());
+		auto ptr = BearEncoding::ToUTF8((const bcharu8*)buffer.Begin(), (const bcharu8*)buffer.End());
 		m_doc->Parse((char*)*ptr, 0, TIXML_ENCODING_UTF8);
 		if (m_doc->Error())
 		{
@@ -94,7 +94,7 @@ bool BearCore::BearXML::loadFromBuffrer(const BearBufferedReader & buffer, BearE
 			value_error.assign(m_doc->Value());
 			out_error.assign(m_doc->ErrorDesc());
 #endif
-			clear();
+			Clear();
 			return false;
 		}
 	}
@@ -102,17 +102,18 @@ bool BearCore::BearXML::loadFromBuffrer(const BearBufferedReader & buffer, BearE
 }
 
 
-void BearXML::clear()
+void BearXML::Clear()
 {
 	TiXmlDocument*m_doc = static_cast<TiXmlDocument*>(m_Doc);
 	if (m_doc)
 	{
 		m_doc->Clear();
 		bear_delete(m_doc);
+		m_Doc = 0;
 	}
 }
 
-BearString BearXML::get(BearXmlNode node, const  bchar* default_str_val)
+BearString BearXML::Get(BearXmlNode node, const  bchar* default_str_val)
 {
 	if (!m_Doc)
 		return (default_str_val);
@@ -125,7 +126,7 @@ BearString BearXML::get(BearXmlNode node, const  bchar* default_str_val)
 	else return (default_str_val);
 }
 
-BearString BearCore::BearXML::getAtribute(BearXmlNode node, const  char* Atribute, const  bchar* default_str_val)
+BearString BearCore::BearXML::GetAtribute(BearXmlNode node, const  char* Atribute, const  bchar* default_str_val)
 {
 	if (!m_Doc)
 		return (default_str_val);
@@ -140,7 +141,7 @@ BearString BearCore::BearXML::getAtribute(BearXmlNode node, const  char* Atribut
 		else return (default_str_val);
 	else return (default_str_val);
 }
-BearXML::BearXmlNode BearXML::getNode(const char * name)
+BearXML::BearXmlNode BearXML::GetNode(const char * name)
 {
 	if (!m_Doc)
 		return NULL;
@@ -148,14 +149,14 @@ BearXML::BearXmlNode BearXML::getNode(const char * name)
 	return m_doc->FirstChildElement(name);
 }
 
-BearXML::BearXmlNode BearXML::getNode(BearXmlNode node, const char * name)
+BearXML::BearXmlNode BearXML::GetNode(BearXmlNode node, const char * name)
 {
 	if (!m_Doc)
 		return NULL;
 	return ((TiXmlElement*)node)->FirstChildElement(name);
 }
 
-BearXML::BearXmlNode BearCore::BearXML::nextNode(BearXmlNode node, const char * name)
+BearXML::BearXmlNode BearCore::BearXML::NextNode(BearXmlNode node, const char * name)
 {
 	if (!m_Doc)
 		return NULL;

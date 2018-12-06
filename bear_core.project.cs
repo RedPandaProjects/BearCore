@@ -10,5 +10,6 @@ public class bear_core :Project
 		AddSourceFiles(Path.Combine(ProjectPath,"source"),true);
 		Include.Public.Add(Path.Combine(ProjectPath,"include"));
 		Projects.Private.Add("tinyxml");
-	}
+        Projects.Private.Add("BugTrap");
+    }
 } 

@@ -18,13 +18,13 @@ bool BearCore::BearFileManager::DirectoryExists(const bchar * name)
 }
 void BearCore::BearFileManager::GetWorkPath(BearStringPath & path)
 {
-	GetCurrentDirectory(MAX_PATH * 2, path);
+	GetCurrentDirectory(MAX_PATH , path);
 }
 
 void BearCore::BearFileManager::GetApplicationPath(BearStringPath & path)
 {
 
-	GetModuleFileName(GetModuleHandle(NULL), path, MAX_PATH * 2);
+	GetModuleFileName(GetModuleHandle(NULL), path, MAX_PATH);
 	BearString::ToCharWithEnd(path, TEXT('\\'))[0] = 0;
 }
 

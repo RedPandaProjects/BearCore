@@ -9,31 +9,31 @@ namespace BearCore
 		BearMatrix(BearMatrix&&mat);
 		BearMatrix(const BearMatrix&mat);
 		
-		void swap(BearMatrix&mat);
-		void copy(const BearMatrix&mat);
+		void Swap(BearMatrix&mat);
+		void Copy(const BearMatrix&mat);
 		BearMatrix &operator=(const BearMatrix&mat);
 		BearMatrix &operator=( BearMatrix&&mat);
 		
 		
-		BearMatrix& buildIdentity();
-		BearMatrix& buildOrtho(float width, float height, float screenNear, float screenDepth);
-		BearMatrix& buildOrthoOffCenter(float width, float height, float screenNear, float screenDepth);
+		BearMatrix& BuildIdentity();
+		BearMatrix& BuildOrtho(float width, float height, float screenNear, float screenDepth);
+		BearMatrix& BuildOrthoOffCenter(float width, float height, float screenNear, float screenDepth);
 		BearMatrix operator*(const BearMatrix&matrix)const;
 
-		BearMatrix& translation(float x, float y, float z);
-		inline BearMatrix& translation(BearCore::BearVector3<float> position)
+		BearMatrix& Translation(float x, float y, float z);
+		inline BearMatrix& Translation(BearCore::BearVector3<float> position)
 		{
-			return translation(position.x, position.y, position.z);
+			return Translation(position.x, position.y, position.z);
 		}
-		BearMatrix& scale(float x, float y, float z);
-		inline BearMatrix& scale(BearCore::BearVector3<float> size)
+		BearMatrix& Scale(float x, float y, float z);
+		inline BearMatrix& Scale(BearCore::BearVector3<float> size)
 		{
-			return scale(size.x, size.y, size.z);
+			return Scale(size.x, size.y, size.z);
 		}
 
-		BearMatrix& rotateX(float x);
-		BearMatrix& rotateY(float y);
-		BearMatrix& rotateZ(float z);
+		BearMatrix& RotateX(float x);
+		BearMatrix& RotateY(float y);
+		BearMatrix& RotateZ(float z);
 
 		const float*operator*() const;
 	private:

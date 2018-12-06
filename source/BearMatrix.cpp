@@ -25,45 +25,45 @@ static void multiply (float* result, const float* matrix1, const float* matrix2)
 }
 BearCore::BearMatrix::BearMatrix()
 {
-	BearCore::bear_fill(m_matrix, 16, 0);
+	//BearCore::bear_fill(m_matrix, 16, 0);
 
 }
 
 BearCore::BearMatrix::BearMatrix(BearMatrix && mat)
 {
-	copy(mat);
+	Copy(mat);
 }
 
 BearCore::BearMatrix::BearMatrix(const BearMatrix & mat)
 {
-	copy(mat);
+	Copy(mat);
 }
 
-void BearCore::BearMatrix::swap(BearMatrix & mat)
+void BearCore::BearMatrix::Swap(BearMatrix & mat)
 {
 	BearCore::bear_swap(m_matrix, mat.m_matrix);
 }
 
-void BearCore::BearMatrix::copy(const BearMatrix & mat)
+void BearCore::BearMatrix::Copy(const BearMatrix & mat)
 {
 	BearCore::bear_copy(reinterpret_cast<float*>( m_matrix), const_cast<float*>(mat.m_matrix),16);
 }
 
 BearCore::BearMatrix & BearCore::BearMatrix::operator=(const BearMatrix & mat)
 {
-	copy(mat);
+	Copy(mat);
 	return *this;
 }
 
 BearCore::BearMatrix & BearCore::BearMatrix::operator=(BearMatrix && mat)
 {
-	copy(mat);
+	Copy(mat);
 	return *this;
 }
 
-BearCore::BearMatrix & BearCore::BearMatrix::buildIdentity()
+BearCore::BearMatrix & BearCore::BearMatrix::BuildIdentity()
 {
-	BearCore::bear_fill(m_matrix, 16, 0);
+	//BearCore::bear_fill(m_matrix, 16, 0);
 	m_matrix[0] = 1.0f;
 	m_matrix[1] = 0.0f;
 	m_matrix[2] = 0.0f;
@@ -86,7 +86,7 @@ BearCore::BearMatrix & BearCore::BearMatrix::buildIdentity()
 	return *this;
 }
 
-BearCore::BearMatrix & BearCore::BearMatrix::buildOrtho(float width, float height, float screenNear, float screenDepth)
+BearCore::BearMatrix & BearCore::BearMatrix::BuildOrtho(float width, float height, float screenNear, float screenDepth)
 {
 	BearCore::bear_fill(m_matrix, 16, 0);
 	m_matrix[0] = float(2) / width;
@@ -97,7 +97,7 @@ BearCore::BearMatrix & BearCore::BearMatrix::buildOrtho(float width, float heigh
 	return *this;
 }
 
-BearCore::BearMatrix & BearCore::BearMatrix::buildOrthoOffCenter(float width, float height, float screenNear, float screenDepth)
+BearCore::BearMatrix & BearCore::BearMatrix::BuildOrthoOffCenter(float width, float height, float screenNear, float screenDepth)
 {
 	BearCore::bear_fill(m_matrix, 16, 0);
 	m_matrix[0] =float(2) / width;
@@ -117,18 +117,18 @@ BearCore::BearMatrix BearCore::BearMatrix::operator*(const BearMatrix & matrix) 
 	return result;
 }
 
-BearCore::BearMatrix & BearCore::BearMatrix::translation(float x, float y, float z)
+BearCore::BearMatrix & BearCore::BearMatrix::Translation(float x, float y, float z)
 {
-	buildIdentity();
+	BuildIdentity();
 	m_matrix[12] = x;
 	m_matrix[13] = y;
 	m_matrix[14] = z;
 	return*this;
 }
 
-BearCore::BearMatrix & BearCore::BearMatrix::scale(float x, float y, float z)
+BearCore::BearMatrix & BearCore::BearMatrix::Scale(float x, float y, float z)
 {
-	buildIdentity();
+	BuildIdentity();
 	m_matrix_4x4[0][0] = x;
 	m_matrix_4x4[1][1] = y;
 	m_matrix_4x4[2][2] = z;
@@ -136,9 +136,9 @@ BearCore::BearMatrix & BearCore::BearMatrix::scale(float x, float y, float z)
 }
 
 
-BearCore::BearMatrix & BearCore::BearMatrix::rotateX(float x)
+BearCore::BearMatrix & BearCore::BearMatrix::RotateX(float x)
 {
-	buildIdentity();
+	BuildIdentity();
 	float cosa = static_cast<float>(cos(x));
 	float sina = static_cast<float>(sin(x));
 	m_matrix[5] = cosa;
@@ -148,9 +148,9 @@ BearCore::BearMatrix & BearCore::BearMatrix::rotateX(float x)
 	return*this;
 }
 
-BearCore::BearMatrix & BearCore::BearMatrix::rotateY(float y)
+BearCore::BearMatrix & BearCore::BearMatrix::RotateY(float y)
 {
-	buildIdentity();
+	BuildIdentity();
 	float cosa = static_cast<float>(cos(y));
 	float sina = static_cast<float>(sin(y));
 	m_matrix[0] = cosa;
@@ -160,9 +160,9 @@ BearCore::BearMatrix & BearCore::BearMatrix::rotateY(float y)
 	return*this;
 }
 
-BearCore::BearMatrix & BearCore::BearMatrix::rotateZ(float z)
+BearCore::BearMatrix & BearCore::BearMatrix::RotateZ(float z)
 {
-	buildIdentity();
+	BuildIdentity();
 	float cosa = static_cast<float>(cos(z));
 	float sina = static_cast<float>(sin(z));
 	m_matrix[0] = cosa;

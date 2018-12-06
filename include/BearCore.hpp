@@ -26,6 +26,7 @@
 #include "BearMemory/BearMemoryAllocator.h"
 #include "BearMemory/BearMemoryMultiRef.h"
 
+#include "BearCoreInitializer.h"
 
 #include "BearTemplate/BearAlgorithm.h"
 
@@ -36,6 +37,7 @@
 #include "BearTools/BearStringConteniar.h"
 
 #include "BearDebug/BearDebug.h"
+
 #include "BearDebug/BearDebugDefines.h"
 
 #include "BearTemplate/BearFunctional.h"
@@ -50,6 +52,7 @@
 
 #include "BearTools/BearMap.h"
 
+#include "BearDebug/BearLog.h"
 
 #include "BearTools/BearEncoding.h"
 
@@ -63,8 +66,6 @@
 
 #include "BearIO/BearFileManager.h"
 
-#include "BearUI/BearWindow.h"
-
 #include "BearProjects/BearProjectTool.h"
 
 #include "BearTools/BearDefines.h"
@@ -74,9 +75,17 @@
 #include "BearTools/BearMatrix.h"
 #include "BearTools/BearColor.h"
 
-#include  "BearIO/BearInputKeyboard.h"
-
 #include "BearTools/BearTime.h"
 #include "BearTime/BearTimer.h"
 
 #include "BearParser/BearXML.h"
+#include "BearTools/BearIncluder.h"
+#include "BearParser/BearINI.h"
+
+#include "BearIO/BearFileSystem.h"
+
+#include "BearTemplate/BearMultiplicatorDefine.h"
+#include "BearTemplate/BearFunctionReflector.h"
+
+#include "BearTools/BearThread.h"
+#include "BearTools/BearMutex.h"

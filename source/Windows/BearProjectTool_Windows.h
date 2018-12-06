@@ -29,7 +29,7 @@ bool BearCore::BearProjectTool::CheckProject(const bchar * name)
 			name++;
 
 		BearString::Contact(fullname, name);
-#ifdef DEBUG
+#ifdef _DEBUG
 		BearString::Contact(fullname, TEXT("_debug"));
 #elif MIXED
 		BearString::Contact(fullname, TEXT("_mixed"));

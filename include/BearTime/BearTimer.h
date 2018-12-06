@@ -8,17 +8,17 @@ namespace BearCore
 		{
 			m_factor = 1.f;
 			m_pause = false;
-			m_timer= getCurrentTime();
+			m_timer= GetCurrentTime();
 		}
 		inline void restart()
 		{
 			if (!m_pause)
-			m_timer = getCurrentTime();
+			m_timer = GetCurrentTime();
 		}
-		inline BearTime getElapsedTime() const
+		inline BearTime get_elapsed_time() const
 		{
 			if (m_pause)return m_pause_time;
-			return  (getCurrentTime() - m_timer)*m_factor;
+			return  (GetCurrentTime() - m_timer)*m_factor;
 		}
 		inline void pause(bool paused) 
 		{
@@ -27,20 +27,20 @@ namespace BearCore
 		inline void pause() 
 		{
 			m_pause = true;
-			m_pause_time = (getCurrentTime() - m_timer);
+			m_pause_time = (GetCurrentTime() - m_timer);
 		}
 		inline void play() 
 		{
 			if (!m_pause)return;
-			m_timer = getCurrentTime() - m_pause_time;
+			m_timer = GetCurrentTime() - m_pause_time;
 			m_pause = false;
 
 		}
 		inline bool paused()const { return m_pause; }
-		inline void setTimeFactor(double factor) { m_factor = factor; }
-		inline double getTimeFactor()const { return m_factor; }
+		inline void set_time_factor(double factor) { m_factor = factor; }
+		inline double get_time_factor()const { return m_factor; }
 	private:
-		BearTime getCurrentTime() const ;
+		BearTime GetCurrentTime() const ;
 		BearTime m_timer;
 		bool m_pause;
 		BearTime m_pause_time;

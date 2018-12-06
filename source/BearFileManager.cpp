@@ -79,12 +79,24 @@ BearCore::BearFileManager::FileTime BearCore::BearFileManager::GetTime—hangeFile
 
 BearCore::BearString BearCore::BearFileManager::GetFileNameAndExtension(const bchar * FullPathAndFile)
 {
-	return BearString();
+	BearString temp(FullPathAndFile);
+	temp.seek(0);
+	if (temp.to_char_with_end(BEAR_PATH[0]))
+		temp++;
+	return temp;
 }
 
 BearCore::BearString BearCore::BearFileManager::GetFileName(const bchar * FullPathAndFile)
 {
-	return BearString();
+	BearString temp(FullPathAndFile);
+	if (temp.to_char_with_end(TEXT('.')))
+		**temp = 0;
+	temp.seek(0);
+	if (temp.to_char_with_end(BEAR_PATH[0]))
+		temp++;
+	else
+		temp.seek(0);
+	return temp;
 }
 
 BearCore::BearString BearCore::BearFileManager::GetPathFile(const bchar * FullPathAndFile)

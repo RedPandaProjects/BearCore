@@ -8,6 +8,9 @@ namespace BearCore
 	template <typename T> struct bear_remove_reference<T&> {
 		typedef T type;
 	};
+	template <typename T> struct bear_remove_reference<T&&> {
+		typedef T type;
+	};
 	template <typename T> struct bear_remove_pointer
 	{
 		typedef T type;
@@ -21,6 +24,15 @@ namespace BearCore
 	};
 	template <typename T> struct bear_remove_const<T const> {
 		typedef T type;
+	};
+
+
+	template <typename T> struct bear_remove_void {
+		typedef T type;
+	};
+	template <>
+	struct bear_remove_void<void> {
+		typedef int type;
 	};
 	template <typename T> struct bear_is_const {
 		enum { value = false };
@@ -37,7 +49,9 @@ namespace BearCore
 	template <typename T> struct bear_is_reference<T &> {
 		enum { value = true };
 	};
-
+	template <typename T> struct bear_is_reference<T &&> {
+		enum { value = true };
+	};
 	template <typename T> struct bear_is_void {
 		enum { value = false };
 	};

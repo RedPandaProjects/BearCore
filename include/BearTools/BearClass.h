@@ -14,9 +14,9 @@
 	CL&operator=(CL&&cl) = delete;
 	
 #ifdef DEBUG
-#define BEAR_FUNCTION_DEBUG(RET,FUN,ARGS)\
-	RET FUN(ARGS);
+#define BEAR_FUNCTION_DEBUG(RET,FUN,...)\
+	RET FUN(__VA_ARGS__);
 #else
-#define BEAR_FUNCTION_DEBUG(RET,FUN,ARGS)\
-	inlien RET FUN(ARGS){}	
+#define BEAR_FUNCTION_DEBUG(RET,FUN,...)\
+	inline RET FUN(__VA_ARGS__){}	
 #endif

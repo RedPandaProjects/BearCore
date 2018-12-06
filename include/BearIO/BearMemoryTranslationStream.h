@@ -8,27 +8,27 @@ namespace  BearCore
 		BearMemoryTranslationStream(const BearInputStream&stream);
 		BearMemoryTranslationStream(void*ptr,bsize size,bool free=false);
 		~BearMemoryTranslationStream();
-		bool empty()const;
-		virtual bool eof() const;
-		virtual bsize seek(bsize tell) const;
-		virtual bsize tell()const;
-		virtual bsize size()const;
-		virtual void*begin();
-		virtual const void*begin()const;
-		virtual void*end();
-		virtual const void*end()const;
-		virtual void clear();
-		virtual BearStreamRef<BearBufferedReader> readChunkAsBufferedReader(uint32 type)const;
+		bool Empty()const;
+		virtual bool Eof() const;
+		virtual bsize Seek(bsize tell) const;
+		virtual bsize Tell()const;
+		virtual bsize Size()const;
+		virtual void*Begin();
+		virtual const void*Begin()const;
+		virtual void*End();
+		virtual const void*End()const;
+		virtual void Clear();
+		virtual BearStreamRef<BearBufferedReader> ReadChunkAsBufferedReader(uint32 type)const;
 
-		void swap(BearMemoryTranslationStream&right);
-		void copy(const BearMemoryTranslationStream&right);
+		void Swap(BearMemoryTranslationStream&right);
+		void Copy(const BearMemoryTranslationStream&right);
 
 		BearMemoryTranslationStream( BearMemoryTranslationStream&&right);
 		BearMemoryTranslationStream(const BearMemoryTranslationStream&right);
 		BearMemoryTranslationStream& operator=(const BearMemoryTranslationStream&right);
 		BearMemoryTranslationStream& operator=(BearMemoryTranslationStream&&right);
 	private:
-		virtual void destory();
+		virtual void Destory();
 		virtual void read_impl(void*data, bsize size) const;
 		virtual bool write_impl(void*data, bsize &size);
 	private:

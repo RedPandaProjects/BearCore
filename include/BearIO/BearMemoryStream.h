@@ -7,27 +7,27 @@ namespace  BearCore
 		BearMemoryStream();
 		~BearMemoryStream();
 
-		virtual bool eof() const;
-		virtual bsize seek(bsize tell) const;
-		virtual bsize tell()const;
-		virtual bsize size()const;
-		void resize(bsize size);
-		virtual void*begin();
-		virtual const void*begin()const;
-		virtual void*end();
-		virtual const void*end()const;
-		virtual void clear();
-		virtual BearStreamRef<BearBufferedReader> readChunkAsBufferedReader(uint32 type)const;
+		virtual bool Eof() const;
+		virtual bsize Seek(bsize tell) const;
+		virtual bsize Tell()const;
+		virtual bsize Size()const;
+		void Resize(bsize size);
+		virtual void*Begin();
+		virtual const void*Begin()const;
+		virtual void*End();
+		virtual const void*End()const;
+		virtual void Clear();
+		virtual BearStreamRef<BearBufferedReader> ReadChunkAsBufferedReader(uint32 type)const;
 
 		BearMemoryStream(BearMemoryStream&&right);
-		void swap(BearMemoryStream&right);
-		void copy(const BearMemoryStream&right);
+		void Swap(BearMemoryStream&right);
+		void Copy(const BearMemoryStream&right);
 		BearMemoryStream(const BearMemoryStream&right);
 		BearMemoryStream(const BearInputStream&right);
 		BearMemoryStream& operator=(const BearMemoryStream&right);
 		BearMemoryStream& operator=(BearMemoryStream&&right);
 	private:
-		virtual void destory();
+		virtual void Destory();
 		virtual void read_impl(void*data, bsize size) const;
 		virtual bool write_impl(void*data, bsize &size);
 	private:

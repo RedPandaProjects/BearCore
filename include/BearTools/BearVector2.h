@@ -51,12 +51,25 @@ namespace BearCore
 			y += right.y;
 			return *this;
 		}
-
+		inline BearVector2 operator+(const BearVector2& right) const
+		{
+			BearVector2 result(*this);
+			result.x += right.x;
+			result.y += right.y;
+			return result;
+		}
 		inline BearVector2 &operator-=(const BearVector2 &right)
 		{
 			x -= right.x;
 			y -= right.y;
 			return *this;
+		}
+		inline BearVector2 operator-(const BearVector2& right) const
+		{
+			BearVector2 result(*this);
+			result.x -= right.x;
+			result.y -= right.y;
+			return result;
 		}
 		inline	BearVector2& operator*=(const BearVector2 &right)
 		{
@@ -64,11 +77,25 @@ namespace BearCore
 			y=y * right.y;
 			return *this;
 		}
+		inline BearVector2 operator*(const BearVector2& right) const
+		{
+			BearVector2 result(*this);
+			result.x *= right.x;
+			result.y *= right.y;
+			return result;
+		}
 		inline BearVector2 &operator/=(const BearVector2& right)
 		{
 			x=x / right.x;
 			y=y / right.y;
 			return *this;
+		}
+		inline BearVector2 operator/(const BearVector2& right) const
+		{
+			BearVector2 result(*this);
+			result.x /= right.x;
+			result.y /= right.y;
+			return result;
 		}
 		union
 		{
@@ -89,4 +116,6 @@ namespace BearCore
 	};
 	typedef BearVector2<float> BearFVector2;
 	typedef BearVector2<int32> BearIVector2;
+
+
 }

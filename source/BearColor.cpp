@@ -10,25 +10,25 @@ BearCore::BearColor::~BearColor()
 
 BearCore::BearColor::BearColor(uint8 R, uint8 G, uint8 B, uint8 A)
 {
-	set(R, G, B, A);
+	Set(R, G, B, A);
 }
 
 BearCore::BearColor::BearColor(uint32 color)
 {
-	set(color);
+	Set(color);
 }
 
 BearCore::BearColor::BearColor(float R, float G, float B, float A)
 {
-	set(R, G, B, A);
+	Set(R, G, B, A);
 }
 
 BearCore::BearColor::BearColor(const BearColor & color)
 {
-	copy(color);
+	Copy(color);
 }
 
-void BearCore::BearColor::copy(const BearColor & color)
+void BearCore::BearColor::Copy(const BearColor & color)
 {
 	m_r = color.m_r;
 	m_g = color.m_g;
@@ -36,7 +36,7 @@ void BearCore::BearColor::copy(const BearColor & color)
 	m_a = color.m_a;
 }
 
-void BearCore::BearColor::swap(BearColor & color)
+void BearCore::BearColor::Swap(BearColor & color)
 {
 	BearCore::bear_swap(m_r  ,color.m_r);
 	BearCore::bear_swap(m_g , color.m_g);
@@ -46,37 +46,37 @@ void BearCore::BearColor::swap(BearColor & color)
 
 BearCore::BearColor & BearCore::BearColor::operator=(const BearColor & color)
 {
-	copy(color);
+	Copy(color);
 	return*this;
 }
 
-void BearCore::BearColor::set(uint32 color)
+void BearCore::BearColor::Set(uint32 color)
 {
 	uint8*col = (uint8*)&color;
-	set(col[0], col[1], col[2], col[3]);
+	Set(col[0], col[1], col[2], col[3]);
 }
 
-void BearCore::BearColor::set(uint8 R, uint8 G, uint8 B, uint8 A)
+void BearCore::BearColor::Set(uint8 R, uint8 G, uint8 B, uint8 A)
 {
-	set(R / 255.f, G / 255.f, B / 255.f, A / 255.f);
+	Set(R / 255.f, G / 255.f, B / 255.f, A / 255.f);
 }
 
-void BearCore::BearColor::set(float R, float G, float B, float A)
+void BearCore::BearColor::Set(float R, float G, float B, float A)
 {
 	m_r = R; m_g = G; m_b = B; m_a = A;
 }
 
-BearCore::BearVector4<float> BearCore::BearColor::getFloat() const
+BearCore::BearVector4<float> BearCore::BearColor::GetFloat() const
 {
 	return BearCore::BearVector4<float>(m_r,m_g,m_b,m_a);
 }
 
-BearCore::BearVector4<uint8> BearCore::BearColor::getUint8() const
+BearCore::BearVector4<uint8> BearCore::BearColor::GetUint8() const
 {
 	return BearCore::BearVector4<uint8>(static_cast<uint8>(m_r * 255.f), static_cast<uint8>(m_g * 255.f), static_cast<uint8>(m_b * 255.f), static_cast<uint8>(m_a * 255.f));
 }
 
-uint32 BearCore::BearColor::getUint32() const
+uint32 BearCore::BearColor::GetUint32() const
 {
 	uint8 temp[4];
 	temp[0] =static_cast<uint8>( m_r * 255.f);

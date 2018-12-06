@@ -1,86 +1,86 @@
 #include "BearCore.hpp"
-#define WRITENUMBER write(&data,sizeof(data)); 
+#define WRITENUMBER Write(&data,sizeof(data)); 
 BearCore::BearOutputStream::BearOutputStream():m_tell_Chunk(-1)
 {
 }
-void BearCore::BearOutputStream::writeUint8(uint8 data)
+void BearCore::BearOutputStream::WriteUint8(uint8 data)
 {
 	WRITENUMBER
 }
 
-void BearCore::BearOutputStream::writeUint16(uint16 data)
+void BearCore::BearOutputStream::WriteUint16(uint16 data)
 {
 	WRITENUMBER
 }
 
-void BearCore::BearOutputStream::writeUint32(uint32 data)
+void BearCore::BearOutputStream::WriteUint32(uint32 data)
 {
 	WRITENUMBER
 }
 
-void BearCore::BearOutputStream::writeUint64(uint64 data)
+void BearCore::BearOutputStream::WriteUint64(uint64 data)
 {
 	WRITENUMBER
 }
 
-void BearCore::BearOutputStream::writeInt8(int8 data)
+void BearCore::BearOutputStream::WriteInt8(int8 data)
 {
 	WRITENUMBER
 }
 
-void BearCore::BearOutputStream::writeInt16(int16 data)
+void BearCore::BearOutputStream::WriteInt16(int16 data)
 {
 	WRITENUMBER
 }
 
-void BearCore::BearOutputStream::writeInt32(int32 data)
+void BearCore::BearOutputStream::WriteInt32(int32 data)
 {
 	WRITENUMBER
 }
 
-void BearCore::BearOutputStream::writeInt64(int64 data)
+void BearCore::BearOutputStream::WriteInt64(int64 data)
 {
 	WRITENUMBER
 }
 
-void BearCore::BearOutputStream::writeFloat(float data)
+void BearCore::BearOutputStream::WriteFloat(float data)
 {
 	WRITENUMBER
 }
 
-void BearCore::BearOutputStream::writeDouble(double data)
+void BearCore::BearOutputStream::WriteDouble(double data)
 {
 	WRITENUMBER
 }
 
-bsize BearCore::BearOutputStream::write(void * data, bsize size)
+bsize BearCore::BearOutputStream::Write(void * data, bsize size)
 {
 	if (write_impl(data, size))
 		return size;
 	return 0;
 }
 
-void BearCore::BearOutputStream::beginChunk(int32 id)
+void BearCore::BearOutputStream::BeginChunk(int32 id)
 {
-	if (tell() < 0)return;
-	writeInt32(id);
-	m_tell_Chunk = tell();
+	if (Tell() < 0)return;
+	WriteInt32(id);
+	m_tell_Chunk = Tell();
 	if (m_tell_Chunk < -1)return;
-	writeInt32(0);
+	WriteInt32(0);
 }
 
-void BearCore::BearOutputStream::endChunk()
+void BearCore::BearOutputStream::EndChunk()
 {
 	BEAR_ASSERT(m_tell_Chunk >= 0);
-	if (tell() < 0)return;
-	int64 size = tell() - m_tell_Chunk;
-	seek(static_cast<bsize>(m_tell_Chunk));
-	writeInt32(static_cast<int32>(size));
-	seek(static_cast<bsize>(tell() + m_tell_Chunk - 4));
+	if (Tell() < 0)return;
+	int64 size = Tell() - m_tell_Chunk;
+	Seek(static_cast<bsize>(m_tell_Chunk));
+	WriteInt32(static_cast<int32>(size));
+	Seek(static_cast<bsize>(Tell() + m_tell_Chunk - 4));
 	m_tell_Chunk = -1;
 }
 
-void BearCore::BearOutputStream::writeString(const BearString & str, BearEncoding::Encoding encoding, bool info)
+void BearCore::BearOutputStream::WriteString(const BearString & str, BearEncoding::Encoding encoding, bool info)
 {
 	if (info)
 	{
@@ -89,17 +89,17 @@ void BearCore::BearOutputStream::writeString(const BearString & str, BearEncodin
 		{
 		case BearEncoding::ANSI:
 			type_info |= 0b10;
-			writeUint8(type_info);
-			writeUint32(static_cast<uint32>(str.size()));
+			WriteUint8(type_info);
+			WriteUint32(static_cast<uint32>(str.size()));
 			break;
 		case BearEncoding::UTF8:
 			type_info |= 0b100;
-			writeUint8(type_info);
+			WriteUint8(type_info);
 			break;
 		case BearEncoding::UTF16:
 			type_info |= 0b1000;
-			writeUint8(type_info);
-			writeUint32(static_cast<uint32>(str.size())*2);
+			WriteUint8(type_info);
+			WriteUint32(static_cast<uint32>(str.size())*2);
 			break;
 		default:
 			return;
@@ -111,7 +111,7 @@ void BearCore::BearOutputStream::writeString(const BearString & str, BearEncodin
 	{
 	case BearEncoding::ANSI:
 	{
-		write((void*)*BearEncoding::ToANSI(*str), str.size());
+		Write((void*)*BearEncoding::ToANSI(*str), str.size());
 	}
 	break;
 	case BearEncoding::UTF8:
@@ -119,16 +119,16 @@ void BearCore::BearOutputStream::writeString(const BearString & str, BearEncodin
 	
 		auto ptr = BearEncoding::ToUTF8(*str);
 		if (info)
-			writeUint32(static_cast<uint32>(str.GetSize(reinterpret_cast<const bchar8*>(*ptr))));
-		write(*ptr, str.GetSize(reinterpret_cast<const bchar8*>(*ptr)));
+			WriteUint32(static_cast<uint32>(str.GetSize(reinterpret_cast<const bchar8*>(*ptr))));
+		Write(*ptr, str.GetSize(reinterpret_cast<const bchar8*>(*ptr)));
 	}
 	break;
 	case BearEncoding::UTF16:
 	{
 #ifndef UNICODE
-		write((void*)*BearEncoding::ToUTF16(*str), str.size()*2);
+		Write((void*)*BearEncoding::ToUTF16(*str), str.size()*2);
 #else
-		write((void*)(*str), str.size()*2);
+		Write((void*)(*str), str.size()*2);
 #endif
 	}
 	break;
@@ -137,34 +137,34 @@ void BearCore::BearOutputStream::writeString(const BearString & str, BearEncodin
 	};
 }
 
-void BearCore::BearOutputStream::writeStringWithZero(const BearString & str, BearEncoding::Encoding encoding)
+void BearCore::BearOutputStream::WriteStringWithZero(const BearString & str, BearEncoding::Encoding encoding)
 {
-	writeString(str, encoding, false);
+	WriteString(str, encoding, false);
 	switch (encoding)
 	{
 	case BearEncoding::ANSI:
 	case BearEncoding::UTF8:
-		writeInt8((int8)0);	
+		WriteInt8((int8)0);	
 		break;
 	case BearEncoding::UTF16:
-		writeInt16((int16)0);
+		WriteInt16((int16)0);
 		break;
 	default:
 		break;
 	}
 }
 
-void BearCore::BearOutputStream::writeStringAndNewLine(const BearString & str, BearEncoding::Encoding encoding)
+void BearCore::BearOutputStream::WriteStringAndNewLine(const BearString & str, BearEncoding::Encoding encoding)
 {
-	writeString(str, encoding, false);
+	WriteString(str, encoding, false);
 	switch (encoding)
 	{
 	case BearEncoding::ANSI:
 	case BearEncoding::UTF8:
-		writeInt8((int8)'\r');		writeInt8((int8)'\n');
+		WriteInt8((int8)'\r');		WriteInt8((int8)'\n');
 		break;
 	case BearEncoding::UTF16:
-		writeInt16((int16)L'\r');		writeInt16((int16)L'\n');
+		WriteInt16((int16)L'\r');		WriteInt16((int16)L'\n');
 		break;
 	default:
 		break;
@@ -176,22 +176,22 @@ bool BearCore::BearOutputStream::write_impl(void * data, bsize & size)
 	return false;
 }
 
-bool BearCore::BearOutputStream::eof() const
+bool BearCore::BearOutputStream::Eof() const
 {
 	return false;
 }
 
-bsize BearCore::BearOutputStream::seek(bsize tell) const
+bsize BearCore::BearOutputStream::Seek(bsize Tell) const
 {
 	return bsize();
 }
 
-bsize BearCore::BearOutputStream::tell() const
+bsize BearCore::BearOutputStream::Tell() const
 {
 	return bsize();
 }
 
-bsize BearCore::BearOutputStream::size() const
+bsize BearCore::BearOutputStream::Size() const
 {
 	return bsize();
 }

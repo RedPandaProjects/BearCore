@@ -7,9 +7,9 @@ BearCore::BearMemoryTranslationStream::BearMemoryTranslationStream()
 BearCore::BearMemoryTranslationStream::BearMemoryTranslationStream(const BearInputStream & stream)
 {
 	m_data.create();
-	m_data.get()->m_size = stream.size()-stream.tell();
+	m_data.get()->m_size = stream.Size()-stream.Tell();
 	m_data.get()->m_tell = 0;
-	m_data.get()->m_ptr = stream.read();
+	m_data.get()->m_ptr = stream.Read();
 }
 
 BearCore::BearMemoryTranslationStream::BearMemoryTranslationStream(void * ptr, bsize size,bool free)
@@ -23,131 +23,131 @@ BearCore::BearMemoryTranslationStream::BearMemoryTranslationStream(void * ptr, b
 
 BearCore::BearMemoryTranslationStream::~BearMemoryTranslationStream()
 {
-	clear();
+	Clear();
 }
 
-bool BearCore::BearMemoryTranslationStream::empty() const
+bool BearCore::BearMemoryTranslationStream::Empty() const
 {
 	return m_data.empty();
 }
 
-bool BearCore::BearMemoryTranslationStream::eof() const
+bool BearCore::BearMemoryTranslationStream::Eof() const
 {
-	return tell() == size();;
+	return Tell() == Size();;
 }
 
-bsize BearCore::BearMemoryTranslationStream::seek(bsize tell1) const
+bsize BearCore::BearMemoryTranslationStream::Seek(bsize tell1) const
 {
-	if (empty())return 0;
+	if (Empty())return 0;
 	m_data.get()->m_tell = tell1;
-	if (tell() > size())
+	if (Tell() >Size())
 		m_data.get()->m_tell = m_data.get()->m_size;
 	return m_data.get()->m_tell;
 }
 
-bsize BearCore::BearMemoryTranslationStream::tell() const
+bsize BearCore::BearMemoryTranslationStream::Tell() const
 {
-	if (empty())return 0;
+	if (Empty())return 0;
 	return m_data.get()->m_tell;
 }
 
-bsize BearCore::BearMemoryTranslationStream::size() const
+bsize BearCore::BearMemoryTranslationStream::Size() const
 {
-	if (empty())return 0;
+	if (Empty())return 0;
 	return m_data.get()->m_size;
 }
 
 
-void * BearCore::BearMemoryTranslationStream::begin()
+void * BearCore::BearMemoryTranslationStream::Begin()
 {
-	if (empty())return 0;
+	if (Empty())return 0;
 	return *(m_data.get()->m_ptr)+ m_data.get()->m_tell;
 }
 
-const void * BearCore::BearMemoryTranslationStream::begin() const
+const void * BearCore::BearMemoryTranslationStream::Begin() const
 {
-	if (empty())return 0;
+	if (Empty())return 0;
 	return *(m_data.get()->m_ptr) + m_data.get()->m_tell;
 }
 
-void * BearCore::BearMemoryTranslationStream::end()
+void * BearCore::BearMemoryTranslationStream::End()
 {
-	if (empty())return 0;
+	if (Empty())return 0;
 	return *(m_data.get()->m_ptr) + m_data.get()->m_size;
 }
 
-const void * BearCore::BearMemoryTranslationStream::end() const
+const void * BearCore::BearMemoryTranslationStream::End() const
 {
-	if (empty())return 0;
+	if (Empty())return 0;
 	return *(m_data.get()->m_ptr) + m_data.get()->m_size;
 }
 
-void BearCore::BearMemoryTranslationStream::clear()
+void BearCore::BearMemoryTranslationStream::Clear()
 {
 	m_data.clear();
 }
 
-BearCore::BearStreamRef<BearCore::BearBufferedReader> BearCore::BearMemoryTranslationStream::readChunkAsBufferedReader(uint32 type) const
+BearCore::BearStreamRef<BearCore::BearBufferedReader> BearCore::BearMemoryTranslationStream::ReadChunkAsBufferedReader(uint32 type) const
 {
-	auto size = goToChunk(type);
+	auto size = GoToChunk(type);
 	if (!size)return BearCore::BearStreamRef<BearCore::BearBufferedReader>();
 	BearMemoryTranslationStream *temp = bear_new<BearMemoryTranslationStream>();
 	*temp = *this;
-	seek(tell() + size);
+	Seek(Tell() + size);
 	return temp;
 }
 
-void BearCore::BearMemoryTranslationStream::swap(BearMemoryTranslationStream & right)
+void BearCore::BearMemoryTranslationStream::Swap(BearMemoryTranslationStream & right)
 {
 	m_data.swap(right.m_data);
 }
 
-void BearCore::BearMemoryTranslationStream::copy(const BearMemoryTranslationStream & right)
+void BearCore::BearMemoryTranslationStream::Copy(const BearMemoryTranslationStream & right)
 {
-	clear();
+	Clear();
 	m_data = right.m_data;
 }
 
 BearCore::BearMemoryTranslationStream::BearMemoryTranslationStream(BearMemoryTranslationStream && right)
 {
-	swap(right);
+	Swap(right);
 }
 
 BearCore::BearMemoryTranslationStream::BearMemoryTranslationStream(const BearMemoryTranslationStream & right)
 {
-	copy(right);
+	Copy(right);
 }
 
 BearCore::BearMemoryTranslationStream & BearCore::BearMemoryTranslationStream::operator=(const BearMemoryTranslationStream & right)
 {
-	copy(right);
+	Copy(right);
 	return *this;
 }
 
 BearCore::BearMemoryTranslationStream & BearCore::BearMemoryTranslationStream::operator=(BearMemoryTranslationStream && right)
 {
-	swap(right);
+	Swap(right);
 	return *this;
 }
 
-void BearCore::BearMemoryTranslationStream::destory()
+void BearCore::BearMemoryTranslationStream::Destory()
 {
-	clear();
+	Clear();
 	BearMemory::Free(this);
 }
 
 void BearCore::BearMemoryTranslationStream::read_impl(void * data, bsize size) const
 {
-	if (empty())return ;
+	if (Empty())return ;
 	bear_copy(data, *m_data.get()->m_ptr + m_data.get()->m_tell, size + m_data.get()->m_tell>m_data.get()->m_size ? m_data.get()->m_size - m_data.get()->m_tell : size);
-	seek(size + m_data.get()->m_tell);
+	Seek(size + m_data.get()->m_tell);
 }
 
 bool BearCore::BearMemoryTranslationStream::write_impl(void * data, bsize & size)
 {
-	if (empty())return false;
+	if (Empty())return false;
 	if (size + m_data.get()->m_tell > m_data.get()->m_size)size = m_data.get()->m_size - m_data.get()->m_tell;
 	bear_copy(*m_data.get()->m_ptr + m_data.get()->m_tell, data, size);
-	seek(size + m_data.get()->m_tell);
+	Seek(size + m_data.get()->m_tell);
 	return size + m_data.get()->m_tell < m_data.get()->m_size;
 }
