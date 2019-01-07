@@ -21,3 +21,27 @@ inline R Call(BEAR_REPEAT(BEARNUMBER, MAKE_ARRAY_3, A))
 	return Impl::BearFunctionReturner<bear_remove_reference<R>::type>()(Call(stack));
 }
 #endif
+
+#ifdef CALL_IN_MAKER_CL
+template<class P, class CL BEAR_IF_COMMA(BEARNUMBER) BEAR_ENUM_PARAMS(BEARNUMBER, class A)  >
+void call_impl(P(CL::*function)(BEAR_ENUM_PARAMS(BEARNUMBER, A)),void*cl, void**args)
+{
+	BEAR_REPEAT(BEARNUMBER, MAKE_ARRAY_1, A);
+	Impl::BearClassFunctionRefCaller<P>()(function, (CL*)cl, m_return BEAR_REPEAT(BEARNUMBER, MAKE_ARRAY_2, a));
+}
+template< class P,class CL BEAR_IF_COMMA(BEARNUMBER) BEAR_ENUM_PARAMS(BEARNUMBER, class A)  >
+void call_impl(P(*function)(CL* BEAR_IF_COMMA(BEARNUMBER) BEAR_ENUM_PARAMS(BEARNUMBER, A)), void*cl, void**args)
+{
+	BEAR_REPEAT(BEARNUMBER, MAKE_ARRAY_1, A);
+	Impl::BearClassFunctionRefCaller2<P>()(function, (CL*)cl, m_return BEAR_REPEAT(BEARNUMBER, MAKE_ARRAY_2, a));
+}
+#endif
+#ifdef CALL_IN_REF_CL
+template<class R,class CL BEAR_IF_COMMA(BEARNUMBER) BEAR_ENUM_PARAMS(BEARNUMBER, class A)>
+inline R Call(CL*cl BEAR_IF_COMMA(BEARNUMBER) BEAR_REPEAT(BEARNUMBER, MAKE_ARRAY_3, A))
+{
+	void*stack[256];
+	BEAR_REPEAT(BEARNUMBER, MAKE_ARRAY_4, a);
+	return Impl::BearFunctionReturner<bear_remove_reference<R>::type>()(Call(reinterpret_cast<void*>( cl),stack));
+}
+#endif

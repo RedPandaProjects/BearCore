@@ -159,6 +159,7 @@ void BearCore::BearINI::decoder(const BearBufferedReader & base, BearEncoding::E
 					key_data = *str;
 
 			}
+			BearString::SubSpaceInEnd(key_data);
 			str.seek(0);
 			str.sub_space_in_begin();
 			str.sub_space_in_end();

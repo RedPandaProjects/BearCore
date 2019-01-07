@@ -26,6 +26,11 @@ namespace BearCore
 			copy(right);
 			return *this;
 		}
+		inline BearVector2 &operator=(BearVector2&& right)
+		{
+			swap(right);
+			return *this;
+		}
 
 		BearVector2(cl cl1, cl cl2)
 		{

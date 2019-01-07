@@ -3,6 +3,11 @@
 #include <codecvt>
 std::wstring_convert<std::codecvt<bchar16, bchar8, std::mbstate_t>, bchar16> *ConverterUTF16;
 std::wstring_convert<std::codecvt_utf8_utf16<bchar16>, bchar16> *ConverterUTF8;
+
+#ifdef WINDOWS
+static uint32 LAnsiCode = 1251;/*RUS*/;
+#endif
+
 struct Initializer
 {
 	Initializer() {}
@@ -44,9 +49,16 @@ BearCore::BearMemoryRef<bchar8> BearCore::BearEncoding::ToANSI(const bcharu8 * t
 
 BearCore::BearMemoryRef<bchar16> BearCore::BearEncoding::ToUTF16(const bchar8 * text, const bchar8 * end)
 {
+#ifdef WINDOWS
+	bchar16  *res = bear_alloc<bchar16>(end - text + 1);
+	MultiByteToWideChar(LAnsiCode, 0, text,end-text, res, end - text + 1);
+	res[end - text] = 0;
+	return res;
+#else
 	initializer.Initialize();
 	std::wstring str = ConverterUTF16->from_bytes(text, end);
 	return ToUTF16(&*str.begin(), str.end()._Ptr);
+#endif
 }
 
 BearCore::BearMemoryRef<bchar16> BearCore::BearEncoding::ToUTF16(const bchar16 * begin, const bchar16 * end)
@@ -88,6 +100,7 @@ bchar8 BearCore::BearEncoding::ToANSI(bchar16 c)
 {
 	initializer.Initialize();
 	return ConverterUTF16->to_bytes(c)[0];
+
 }
 
 bchar8 BearCore::BearEncoding::ToANSI(bchar8 c)
@@ -102,6 +115,30 @@ bchar16 BearCore::BearEncoding::ToUTF16(bchar16 c)
 
 bchar16 BearCore::BearEncoding::ToUTF16(bchar8 c)
 {
+#ifdef WINDOWS
+	bchar16  res[2];
+	MultiByteToWideChar(LAnsiCode, 0, &c, 2, res, 2);
+	return res[0];
+#else
 	initializer.Initialize();
 	return ConverterUTF16->from_bytes(c)[0];
+#endif
+}
+
+void BearCore::BearEncoding::SetLang(Lang lang)
+{
+#ifdef WINDOWS
+	switch (lang)
+	{
+	case BearCore::BearEncoding::E_RUS:
+		LAnsiCode = 1251;
+		break;
+	case BearCore::BearEncoding::E_ENG:
+		LAnsiCode = 0;
+		break;
+	default:
+		LAnsiCode = 0;
+		break;
+	}
+#endif
 }

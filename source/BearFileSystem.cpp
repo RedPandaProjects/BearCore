@@ -307,6 +307,7 @@ void BearCore::BearFileSystem::SubPath(const bchar * name)
 	}
 }
 
+
 void BearCore::BearFileSystem::Update(const bchar * floder, const bchar * file, BearStringPath&path)
 {
 	
@@ -326,7 +327,51 @@ bool BearCore::BearFileSystem::ExistPath(const bchar * floder)
 	return m_source_paths.find(floder) != m_source_paths.end();
 }
 
-bool BearCore::BearFileSystem::ExistFloder(const bchar * floder, bsize id)
+bool BearCore::BearFileSystem::ExistDirectory(const bchar * path)
+{
+	if (!ExistPath(path))return false;
+	update(path);
+
+	auto item = m_paths.find(BearStringConteniar(path));
+	BEAR_ASSERT(m_paths.end() != item);
+
+	auto b = item->second.begin();
+	auto e = item->second.end();
+
+	while (b != e)
+	{
+		if (BearFileManager::DirectoryExists(**b))
+			return true;
+		b++;
+	}
+	return false;
+}
+
+bool BearCore::BearFileSystem::ExistDirectory(const bchar * path, const bchar * dir)
+{
+	if (!ExistPath(path))return false;
+	update(path);
+
+	auto item = m_paths.find(BearStringConteniar(path));
+	BEAR_ASSERT(m_paths.end() != item);
+
+	auto b = item->second.begin();
+	auto e = item->second.end();
+
+	while (b != e)
+	{
+		BearStringPath path_full;
+		BearString::Copy(path_full, **b);
+		BearString::Contact(path_full,BEAR_PATH);
+		BearString::Contact(path_full, dir);
+		if (BearFileManager::DirectoryExists(path_full))
+			return true;
+		b++;
+	}
+	return false;
+}
+
+bool BearCore::BearFileSystem::ExistDirectory(const bchar * floder, bsize id)
 {
 	if (!ExistPath(floder))return false;
 	update(floder);
@@ -338,7 +383,7 @@ bool BearCore::BearFileSystem::ExistFloder(const bchar * floder, bsize id)
 	return BearFileManager::DirectoryExists(*item->second[id]);
 }
 
-bool BearCore::BearFileSystem::ExistFloderAndUpdate(const bchar * floder, bsize id, BearStringPath&full)
+bool BearCore::BearFileSystem::ExistDirectoryAndUpdate(const bchar * floder, bsize id, BearStringPath&full)
 {
 	if (!ExistPath(floder))return false;
 	update(floder);

@@ -13,6 +13,34 @@ namespace BearCore
 	typedef bchar BearString4096[4096];
 	typedef bchar BearString8192[8192];
 	typedef bchar BearStringPath[MAX_PATH+1];
+
+	typedef bchar16 BearStringUnicode8[8];
+	typedef bchar16 BearStringUnicode16[16];
+	typedef bchar16 BearStringUnicode32[32];
+	typedef bchar16 BearStringUnicode64[64];
+	typedef bchar16 BearStringUnicode128[128];
+	typedef bchar16 BearStringUnicode256[256];
+	typedef bchar16 BearStringUnicode512[512];
+	typedef bchar16 BearStringUnicode1024[1024];
+	typedef bchar16 BearStringUnicode2048[2048];
+	typedef bchar16 BearStringUnicode4096[4096];
+	typedef bchar16 BearStringUnicode8192[8192];
+	typedef bchar16 BearStringUnicodePath[MAX_PATH + 1];
+
+
+	typedef bchar8 BearStringAnsi8[8];
+	typedef bchar8 BearStringAnsi16[16];
+	typedef bchar8 BearStringAnsi32[32];
+	typedef bchar8 BearStringAnsi64[64];
+	typedef bchar8 BearStringAnsi128[128];
+	typedef bchar8 BearStringAnsi256[256];
+	typedef bchar8 BearStringAnsi512[512];
+	typedef bchar8 BearStringAnsi1024[1024];
+	typedef bchar8 BearStringAnsi2048[2048];
+	typedef bchar8 BearStringAnsi4096[4096];
+	typedef bchar8 BearStringAnsi8192[8192];
+	typedef bchar8 BearStringAnsiPath[MAX_PATH + 1];
+
 #ifdef UNICODE
 #define BEAR_PRINT_ANSI "%S"
 #define BEAR_PRINT_UNICODE "%s"
@@ -27,74 +55,167 @@ namespace BearCore
 		static inline bsize GetSize(const bchar8*text);
 		static inline bsize GetSize(const bchar16*text);
 		template<bsize sizeBuffer>
-		static	inline void Contact(bchar(&dst)[sizeBuffer], const  bchar *src);
+		static	inline void Contact(bchar8(&dst)[sizeBuffer], const  bchar8 *src);
+		template<bsize sizeBuffer>
+		static	inline void Contact(bchar16(&dst)[sizeBuffer], const  bchar16 *src);
 		template<bsize sizeBuffer>
 		static inline void Copy(bchar16(&dst)[sizeBuffer], const  bchar16 *src);
 		static inline void Copy(bchar16*dst, bsize sizeBuffer, const  bchar16 *src);
 		template<bsize sizeBuffer>
 		static inline void Copy(bchar8(&dst)[sizeBuffer], const  bchar8 *src);
 		static inline void Copy(bchar8*dst, bsize sizeBuffer, const  bchar8 *src);
-		static inline const bchar* ToChar(const bchar* str, bchar ch);
-		static inline  bchar* ToChar(bchar* str, bchar ch);
-		static inline const bchar* ToCharWithEnd(const bchar* str, bchar ch);
-		static inline  bchar* ToCharWithEnd(bchar* str, bchar ch);
-		static inline const bchar* Find(const bchar* str, const  bchar *subStr);
-		static inline bchar* Find(bchar* str, const bchar *subStr);
-		static inline bchar* FindWithEnd(bchar* str, const bchar *subStr)
+		template<typename C>
+		static inline C*Duplicate(const C* src)
+		{
+			bsize size = GetSize(src);
+			C*dst = bear_alloc<C>(sizeof(C)*(size + 1));
+			Copy(dst, size+1, src);
+			return dst;
+		}
+		static inline const bchar8* ToChar(const bchar8* str, bchar8 ch);
+		static inline  bchar8* ToChar(bchar8* str, bchar8 ch);
+		static inline const bchar8* ToCharWithEnd(const bchar8* str, bchar8 ch);
+		static inline  bchar8* ToCharWithEnd(bchar8* str, bchar8 ch);
+
+		static inline const bchar16* ToChar(const bchar16* str, bchar16 ch);
+		static inline  bchar16* ToChar(bchar16* str, bchar16 ch);
+		static inline const bchar16* ToCharWithEnd(const bchar16* str, bchar16 ch);
+		static inline  bchar16* ToCharWithEnd(bchar16* str, bchar16 ch);
+
+
+		static inline const bchar8* Find(const bchar8* str, const  bchar8 *subStr);
+		static inline bchar8* Find(bchar8* str, const bchar8 *subStr);
+		static inline const bchar16* Find(const bchar16* str, const  bchar16 *subStr);
+		static inline bchar16* Find(bchar16* str, const bchar16 *subStr);
+
+		static inline bchar8* FindWithEnd(bchar8* str, const bchar8 *subStr)
 		{
 			bsize sizeSubStr = GetSize(subStr);
-			bchar*end = str + GetSize(str);
-			bchar*find = bear_find_if_of_end(str, end, [subStr, sizeSubStr](const bchar&item) {return bear_compare(&item, subStr, sizeSubStr) == 0; });
+			bchar8*end = str + GetSize(str);
+			bchar8*find = bear_find_if_of_end(str, end, [subStr, sizeSubStr](const bchar8&item) {return bear_compare(&item, subStr, sizeSubStr) == 0; });
 			if (find == end)
 			{
 				return 0;
 			}
 			return find;
 		}
-		static inline const bchar* FindWithEnd(const bchar* str, const bchar *subStr)
+		static inline const bchar8* FindWithEnd(const bchar8* str, const bchar8 *subStr)
 		{
 			bsize sizeSubStr = GetSize(str);
-			const bchar*end = str + GetSize(str);
-			const bchar*find = bear_find_if_of_end(str, end, [subStr, sizeSubStr](const bchar&item) {return bear_compare(&item, subStr, sizeSubStr) == 0; });
+			const bchar8*end = str + GetSize(str);
+			const bchar8*find = bear_find_if_of_end(str, end, [subStr, sizeSubStr](const bchar8&item) {return bear_compare(&item, subStr, sizeSubStr) == 0; });
 			if (find == end)
 			{
 				return 0;
 			}
 			return find;
 		}
+
+
+		static inline bchar16* FindWithEnd(bchar16* str, const bchar16 *subStr)
+		{
+			bsize sizeSubStr = GetSize(subStr);
+			bchar16*end = str + GetSize(str);
+			bchar16*find = bear_find_if_of_end(str, end, [subStr, sizeSubStr](const bchar16&item) {return bear_compare(&item, subStr, sizeSubStr) == 0; });
+			if (find == end)
+			{
+				return 0;
+			}
+			return find;
+		}
+		static inline const bchar16* FindWithEnd(const bchar16* str, const bchar16 *subStr)
+		{
+			bsize sizeSubStr = GetSize(str);
+			const bchar16*end = str + GetSize(str);
+			const bchar16*find = bear_find_if_of_end(str, end, [subStr, sizeSubStr](const bchar16&item) {return bear_compare(&item, subStr, sizeSubStr) == 0; });
+			if (find == end)
+			{
+				return 0;
+			}
+			return find;
+		}
+
 		template<bsize sizeBuffer>
-		static inline void Printf(bchar(&dst)[sizeBuffer], const bchar*str,...);
+		static inline void Printf(bchar8(&dst)[sizeBuffer], const bchar8*str,...);
 		template<bsize sizeBuffer>
-		static inline void PrintfVa(bchar(&dst)[sizeBuffer], const bchar*str, va_list va);
-		static inline void Scanf(const bchar*text, const bchar*str, ...);
-		static inline const bchar* SubSpaceInBegin(const bchar*text)
+		static inline void PrintfVa(bchar8(&dst)[sizeBuffer], const bchar8*str, va_list va);
+
+		template<bsize sizeBuffer>
+		static inline void Printf(bchar16(&dst)[sizeBuffer], const bchar16*str, ...);
+		template<bsize sizeBuffer>
+		static inline void PrintfVa(bchar16(&dst)[sizeBuffer], const bchar16*str, va_list va);
+
+		static inline int32 Scanf(const bchar8*text, const bchar8*str, ...);
+		static inline int32 Scanf(const bchar16*text, const bchar16*str, ...);
+
+		static inline const bchar8* SubSpaceInBegin(const bchar8*text)
 		{
 			while (true)
 			{
-				if (*text == TEXT('\n') || *text == TEXT('\r') || *text == TEXT(' ') || *text == TEXT('\t'))
+				if (*text == '\n' || *text == '\r' || *text == ' ' || *text == '\t')
 					text++;
 				else
 					return text;
 			}
 		}
-		static inline bchar* SubSpaceInBegin(bchar*text)
+		static inline bchar8* SubSpaceInBegin(bchar8*text)
+		{
+			while (true)
+			{
+				if (*text == '\n' || *text == '\r' || *text == ' ' || *text == '\t')
+					text++;
+				else
+					return text;
+			}
+		}
+		static inline bchar16* SubSpaceInBegin(bchar16*text)
 		{
 			while (*text)
 			{
-				if (*text == TEXT('\n') || *text == TEXT('\r') || *text == TEXT(' ') || *text == TEXT('\t'))
+				if (*text == L'\n' || *text == L'\r' || *text == L' ' || *text == L'\t')
 					text++;
 				else
 					return text;
 			}
 			return text;
 		}
-		static inline bchar* SubSpaceInEnd(bchar*text)
+		static inline const bchar16* SubSpaceInBegin(const bchar16*text)
 		{
-			bchar*end = text + GetSize(text);
+			while (*text)
+			{
+				if (*text == L'\n' || *text == L'\r' || *text == L' ' || *text == L'\t')
+					text++;
+				else
+					return text;
+			}
+			return text;
+		}
+		static inline bchar8* SubSpaceInEnd(bchar8*text)
+		{
+			bchar8*end = text + GetSize(text);
 			if (text != end)end--;
 			while (text <= end)
 			{
-				if (*end == TEXT('\n') || *end == TEXT('\r') || *end == TEXT(' ') || *end == TEXT('\t'))
+				if (*end == '\n' || *end == '\r' || *end == ' ' || *end =='\t')
+				{
+					*end = 0;
+					end--;
+
+				}
+				else
+				{
+					return text;
+				}
+			}
+			return text;
+		}
+		static inline bchar16* SubSpaceInEnd(bchar16*text)
+		{
+			bchar16*end = text + GetSize(text);
+			if (text != end)end--;
+			while (text <= end)
+			{
+				if (*text == L'\n' || *text == L'\r' || *text == L' ' || *text == L'\t')
 				{
 					*end = 0;
 					end--;
@@ -108,9 +229,9 @@ namespace BearCore
 			return text;
 		}
 		template<bsize sizeBuffer>
-		static inline const bchar* ReadTo(const bchar*text, bchar ch, bchar(&out)[sizeBuffer])
+		static inline const bchar8* ReadTo(const bchar8*text, bchar8 ch, bchar8(&out)[sizeBuffer])
 		{
-			const bchar*end = ToChar(text, ch);
+			const bchar8*end = ToChar(text, ch);
 			if (end)
 			{
 				bsize size = end - text;
@@ -129,9 +250,9 @@ namespace BearCore
 			}
 		}
 		template<bsize sizeBuffer>
-		static inline bchar* ReadTo(bchar*text, bchar ch, bchar(&out)[sizeBuffer])
+		static inline bchar8* ReadTo(bchar8*text, bchar8 ch, bchar8(&out)[sizeBuffer])
 		{
-			bchar*end = ToChar(text, ch);
+			bchar8*end = ToChar(text, ch);
 			if (end)
 			{
 				bsize size = end - text;
@@ -151,9 +272,54 @@ namespace BearCore
 		}
 
 		template<bsize sizeBuffer>
-		static inline const bchar* ReadTo(const bchar*text, const bchar* substr, bchar(&out)[sizeBuffer])
+		static inline const bchar16* ReadTo(const bchar16*text, bchar16 ch, bchar16(&out)[sizeBuffer])
 		{
-			const bchar*end = Find(text, substr);
+			const bchar16*end = ToChar(text, ch);
+			if (end)
+			{
+				bsize size = end - text;
+				if (size > sizeBuffer - 1)
+				{
+					size = sizeBuffer - 1;
+				}
+				bear_copy(out, text, size);
+				out[size] = 0;
+				return text + size + 1;
+			}
+			else
+			{
+				Copy(out, text);
+				return text + GetSize(text);
+			}
+		}
+		template<bsize sizeBuffer>
+		static inline bchar16* ReadTo(bchar16*text, bchar16 ch, bchar16(&out)[sizeBuffer])
+		{
+			bchar16*end = ToChar(text, ch);
+			if (end)
+			{
+				bsize size = end - text;
+				if (size > sizeBuffer - 1)
+				{
+					size = sizeBuffer - 1;
+				}
+				bear_copy(out, text, size);
+				out[size] = 0;
+				return text + size + 1;
+			}
+			else
+			{
+				Copy(out, text);
+				return text + GetSize(text);
+			}
+		}
+
+
+
+		template<bsize sizeBuffer>
+		static inline const bchar8* ReadTo(const bchar8*text, const bchar8* substr, bchar8(&out)[sizeBuffer])
+		{
+			const bchar8*end = Find(text, substr);
 			if (end)
 			{
 				bsize size = end - text;
@@ -173,9 +339,9 @@ namespace BearCore
 		}
 
 		template<bsize sizeBuffer>
-		static inline bchar* ReadTo(bchar*text, const bchar* substr, bchar(&out)[sizeBuffer])
+		static inline bchar8* ReadTo(bchar8*text, const bchar8* substr, bchar8(&out)[sizeBuffer])
 		{
-			bchar*end = Find(text, substr);
+			bchar8*end = Find(text, substr);
 			if (end)
 			{
 				bsize size = end - text;
@@ -194,8 +360,51 @@ namespace BearCore
 			}
 		}
 
+		template<bsize sizeBuffer>
+		static inline const bchar16* ReadTo(const bchar16*text, const bchar16* substr, bchar16(&out)[sizeBuffer])
+		{
+			const bchar16*end = Find(text, substr);
+			if (end)
+			{
+				bsize size = end - text;
+				if (size > sizeBuffer - 1)
+				{
+					size = sizeBuffer - 1;
+				}
+				bear_copy(out, text, size);
+				out[size] = 0;
+				return text + size + GetSize(substr);
+			}
+			else
+			{
+				Copy(out, text);
+				return text + GetSize(text);
+			}
+		}
 
-		static inline bsize CountElement(const bchar*text, const bchar* substr)
+		template<bsize sizeBuffer>
+		static inline bchar16* ReadTo(bchar16*text, const bchar16* substr, bchar16(&out)[sizeBuffer])
+		{
+			bchar16*end = Find(text, substr);
+			if (end)
+			{
+				bsize size = end - text;
+				if (size > sizeBuffer - 1)
+				{
+					size = sizeBuffer - 1;
+				}
+				bear_copy(out, text, size);
+				out[size] = 0;
+				return text + size + GetSize(substr);
+			}
+			else
+			{
+				Copy(out, text);
+				return text + GetSize(text);
+			}
+		}
+
+		static inline bsize CountElement(const bchar8*text, const bchar8* substr)
 		{
 			bsize count = 0;
 			while (text)
@@ -209,7 +418,35 @@ namespace BearCore
 			}
 			return count;
 		}
-		static inline bsize CountElement(const bchar*text, bchar ch)
+		static inline bsize CountElement(const bchar8*text, bchar8 ch)
+		{
+			bsize count = 0;
+			while (text)
+			{
+				text = ToChar(text, ch);
+				if (text)
+				{
+					count++;
+					text++;
+				}
+			}
+			return count;
+		}
+		static inline bsize CountElement(const bchar16*text, const bchar16* substr)
+		{
+			bsize count = 0;
+			while (text)
+			{
+				text = Find(text, substr);
+				if (text)
+				{
+					count++;
+					text++;
+				}
+			}
+			return count;
+		}
+		static inline bsize CountElement(const bchar16*text, bchar16 ch)
 		{
 			bsize count = 0;
 			while (text)
@@ -224,17 +461,26 @@ namespace BearCore
 			return count;
 		}
 
-
-		static inline bool Exist(const bchar*text, const bchar* substr)
+		static inline bool Exist(const bchar8*text, const bchar8* substr)
 		{
 			return Find(text, substr);
 		}
-		static inline bool ExistPossition(const bchar*text, bsize pos, const bchar*substr)
+		static inline bool Exist(const bchar16*text, const bchar16* substr)
+		{
+			return Find(text, substr);
+		}
+
+		static inline bool ExistPossition(const bchar8*text, bsize pos, const bchar8*substr)
 		{
 			return bear_compare(text + pos, substr, GetSize(substr)) == 0;
 		}
+		static inline bool ExistPossition(const bchar16*text, bsize pos, const bchar16*substr)
+		{
+			return bear_compare(text + pos, substr, GetSize(substr)) == 0;
+		}
+
 		template<bsize sizeBuffer>
-		static inline void GetElement(const bchar*text, bchar element, bsize id, bchar(&out)[sizeBuffer])
+		static inline void GetElement(const bchar8*text, bchar8 element, bsize id, bchar8(&out)[sizeBuffer])
 		{
 			if (id)
 			{
@@ -247,7 +493,7 @@ namespace BearCore
 			ReadTo(text, element, out);
 		}
 		template<bsize sizeBuffer>
-		static inline void GetElement(const bchar*text, const bchar *element, bsize id, bchar(&out)[sizeBuffer])
+		static inline void GetElement(const bchar8*text, const bchar8 *element, bsize id, bchar8(&out)[sizeBuffer])
 		{
 			bsize selement = GetSize(element);
 			if (id)
@@ -260,8 +506,39 @@ namespace BearCore
 			}
 			ReadTo(text, element, out);
 		}
-		static inline void  ToLower(bchar* str);
-		static inline void  ToUpper(bchar* str);
+
+		template<bsize sizeBuffer>
+		static inline void GetElement(const bchar16*text, bchar16 element, bsize id, bchar16(&out)[sizeBuffer])
+		{
+			if (id)
+			{
+				while (id)
+				{
+					text = ToChar(text, element) + 1;
+					id--;
+				}
+			}
+			ReadTo(text, element, out);
+		}
+		template<bsize sizeBuffer>
+		static inline void GetElement(const bchar16*text, const bchar16 *element, bsize id, bchar16(&out)[sizeBuffer])
+		{
+			bsize selement = GetSize(element);
+			if (id)
+			{
+				while (id)
+				{
+					text = Find(text, element) + selement;
+					id--;
+				}
+			}
+			ReadTo(text, element, out);
+		}
+
+		static inline void  ToLower(bchar8* str);
+		static inline void  ToUpper(bchar8* str);
+		static inline void  ToLower(bchar16* str);
+		static inline void  ToUpper(bchar16* str);
 		static inline int32   Compare(const bchar8*str1,const bchar8*str2);
 		static inline int32   Compare(const bchar16*str1, const bchar16*str2);
 	public:
@@ -481,19 +758,19 @@ namespace BearCore
 			}
 		}
 
-		inline bsize count_element(const bchar* substr)
+		inline bsize count_element(const bchar* substr)const
 		{
 			return CountElement(**this, substr);
 		}
-		inline bsize count_element(bchar ch)
+		inline bsize count_element(bchar ch)const
 		{
 			return CountElement(**this, ch);
 		}
-		inline bool exist(const bchar* substr)
+		inline bool exist(const bchar* substr) const
 		{
 			return Find(**this, substr);
 		}
-		inline bool exist_possition(bsize pos, const bchar*substr)
+		inline bool exist_possition(bsize pos, const bchar*substr)const
 		{
 			return ExistPossition(**this, pos, substr);
 		}
@@ -549,6 +826,34 @@ namespace BearCore
 			if (basic_string::size())
 				at(0) = 0;
 			this->_Get_data()._Mysize = 0;
+		}
+		inline int32 compare(const bchar*text)const
+		{
+			return Compare(**this, text);
+		}
+		inline bool operator==(const BearString&right)const
+		{
+			return compare(*right)==0;
+		}
+		inline bool operator==(const bchar*right)const
+		{
+			return compare(right)==0;
+		}
+		inline bool operator<(const BearString&right)const
+		{
+			return compare(*right) < 0;
+		}
+		inline bool operator<(const bchar*right)const
+		{
+			return compare(right) < 0;
+		}
+		inline bool operator>(const BearString&right)const
+		{
+			return compare(*right) > 0;
+		}
+		inline bool operator>(const bchar*right)const
+		{
+			return compare(right) > 0;
 		}
 		BEAR_FUNCTION_DELETE(const bchar*, c_str);
 		BEAR_FUNCTION_DELETE(size_type, find_first_not_of);

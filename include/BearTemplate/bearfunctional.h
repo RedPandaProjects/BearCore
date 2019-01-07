@@ -231,15 +231,56 @@ namespace BearCore
 	}
 	
 	template<typename C>
-	inline C bear_min(C a,C b)
+	inline C bear_min(C &&a,C&& b)
 	{
 		if (a > b)
 			return b;
 		return a;
 	}
-
 	template<typename C>
-	inline C bear_max(C a, C b)
+	inline C bear_min(const C &a, C &&b)
+	{
+		if (a > b)
+			return b;
+		return a;
+	}
+	template<typename C>
+	inline C bear_min(C &&a, const C& b)
+	{
+		if (a > b)
+			return b;
+		return a;
+	}
+	template<typename C>
+	inline C bear_min(const C &a, const C& b)
+	{
+		if (a > b)
+			return b;
+		return a;
+	}
+	template<typename C>
+	inline C bear_max(C&& a, C&& b)
+	{
+		if (a < b)
+			return b;
+		return a;
+	}
+	template<typename C>
+	inline C bear_max(const C& a, C&& b)
+	{
+		if (a < b)
+			return b;
+		return a;
+	}
+	template<typename C>
+	inline C bear_max(C&& a, const C& b)
+	{
+		if (a < b)
+			return b;
+		return a;
+	}
+	template<typename C>
+	inline C bear_max(const C& a, const C& b)
 	{
 		if (a < b)
 			return b;

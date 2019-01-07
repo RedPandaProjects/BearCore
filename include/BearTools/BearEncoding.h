@@ -67,5 +67,41 @@ namespace BearCore
 
 		static bchar16 ToUTF16(bchar16 c);
 		static bchar16 ToUTF16(bchar8 c);
+
+		template<typename C>
+		static BearMemoryRef<bchar> ToCurrent(const C*text, const C*end)
+		{
+#ifdef UNICODE
+			return ToUTF16(text, end);
+#else
+			return ToANSI(text, end);
+#endif
+		}
+		template<typename C>
+		static inline  BearMemoryRef<bchar> ToCurrent(const C*text)
+		{
+#ifdef UNICODE
+			return ToUTF16(text);
+#else
+			return ToANSI(text);
+#endif
+		}
+		template<typename C>
+		static inline  bchar ToCurrent( C text)
+		{
+#ifdef UNICODE
+			return ToUTF16(text);
+#else
+			return ToANSI(text);
+#endif
+		}
+
+		enum Lang
+		{
+			E_RUS,
+			E_ENG,
+		};
+		static void SetLang(Lang lang);
+
 	};
 }

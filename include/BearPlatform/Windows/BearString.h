@@ -10,13 +10,14 @@ namespace BearCore
 		return wcslen(text);
 	}
 	template<bsize sizeBuffer>
-	inline void BearString::Contact(bchar(&dst)[sizeBuffer], const  bchar *src)
+	inline void BearString::Contact(bchar8(&dst)[sizeBuffer], const  bchar8 *src)
 	{
-#ifdef UNICODE
-		wcscat_s(dst, sizeBuffer, src);
-#else
 		strcat_s(dst, sizeBuffer, src);
-#endif
+	}
+	template<bsize sizeBuffer>
+	inline void BearString::Contact(bchar16(&dst)[sizeBuffer], const  bchar16 *src)
+	{
+		wcscat_s(dst, sizeBuffer, src);
 	}
 	template<bsize sizeBuffer>
 	inline void BearString::Copy(bchar16(&dst)[sizeBuffer], const  bchar16 *src)
@@ -26,6 +27,7 @@ namespace BearCore
 	inline void BearString::Copy(bchar16*dst, bsize sizeBuffer, const  bchar16 *src)
 	{
 		wcscpy_s(dst, sizeBuffer, src);
+		
 	}
 	template<bsize sizeBuffer>
 	inline void BearString::Copy(bchar8(&dst)[sizeBuffer], const  bchar8 *src)
@@ -36,107 +38,144 @@ namespace BearCore
 	{
 		strcpy_s(dst, sizeBuffer, src);
 	}
-	inline const bchar* BearString::ToChar(const bchar* str, bchar ch)
+	
+	inline const bchar8* BearString::ToChar(const bchar8* str, bchar8 ch)
 	{
-#ifdef UNICODE
-		return wcschr(str, ch);
-#else
 		return strchr(str, ch);
-#endif
 	}
-	inline  bchar* BearString::ToChar(bchar* str, bchar ch)
+	inline  bchar8* BearString::ToChar(bchar8* str, bchar8 ch)
 	{
-#ifdef UNICODE
-		return wcschr(str, ch);
-#else
 		return strchr(str, ch);
-#endif
 	}
-	inline const bchar* BearString::ToCharWithEnd(const bchar* str, bchar ch)
+	inline const bchar8* BearString::ToCharWithEnd(const bchar8* str, bchar8 ch)
 	{
-		const bchar*end = str + GetSize(str);
-		const bchar*find = bear_find_if_of_end(str, end, [ch](bchar item) {return item == ch; });
+		const bchar8*end = str + GetSize(str);
+		const bchar8*find = bear_find_if_of_end(str, end, [ch](bchar8 item) {return item == ch; });
 		if (find == end)
 		{
 			return 0;
 		}
 		return find;
 	}
-	inline  bchar* BearString::ToCharWithEnd(bchar* str, bchar ch)
+	inline  bchar8* BearString::ToCharWithEnd(bchar8* str, bchar8 ch)
 	{
-		bchar*end = str + GetSize(str);
-		bchar*find = bear_find_if_of_end(str, end, [ch](bchar item) {return item == ch; });
+		bchar8*end = str + GetSize(str);
+		bchar8*find = bear_find_if_of_end(str, end, [ch](bchar8 item) {return item == ch; });
 		if (find == end)
 		{
 			return 0;
 		}
 		return find;
 	}
-	inline const bchar* BearString::Find(const bchar* str, const  bchar *subStr)
+
+
+	inline const bchar16* BearString::ToChar(const bchar16* str, bchar16 ch)
 	{
-#ifdef UNICODE
-		return wcsstr(str, subStr);
-#else
-		return strstr(str, subStr);
-#endif
+		return wcschr(str, ch);
 	}
-	inline bchar* BearString::Find(bchar* str, const bchar *subStr)
+	inline  bchar16* BearString::ToChar(bchar16* str, bchar16 ch)
 	{
-#ifdef UNICODE
-		return wcsstr(str, subStr);
-#else
+		return wcschr(str, ch);
+	}
+	inline const bchar16* BearString::ToCharWithEnd(const bchar16* str, bchar16 ch)
+	{
+		const bchar16*end = str + GetSize(str);
+		const bchar16*find = bear_find_if_of_end(str, end, [ch](bchar16 item) {return item == ch; });
+		if (find == end)
+		{
+			return 0;
+		}
+		return find;
+	}
+	inline  bchar16* BearString::ToCharWithEnd(bchar16* str, bchar16 ch)
+	{
+		bchar16*end = str + GetSize(str);
+		bchar16*find = bear_find_if_of_end(str, end, [ch](bchar16 item) {return item == ch; });
+		if (find == end)
+		{
+			return 0;
+		}
+		return find;
+	}
+
+
+	inline const bchar8* BearString::Find(const bchar8* str, const  bchar8 *subStr)
+	{
 		return strstr(str, subStr);
-#endif
+	}
+	inline bchar8* BearString::Find(bchar8* str, const bchar8 *subStr)
+	{
+		return strstr(str, subStr);
+	}
+
+	inline const bchar16* BearString::Find(const bchar16* str, const  bchar16 *subStr)
+	{
+		return wcsstr(str, subStr);
+	}
+	inline bchar16* BearString::Find(bchar16* str, const bchar16 *subStr)
+	{
+		return wcsstr(str, subStr);
 	}
 
 	template<bsize sizeBuffer>
-	inline void BearString::Printf(bchar(&dst)[sizeBuffer], const bchar*str, ...)
+	inline void BearString::Printf(bchar8(&dst)[sizeBuffer], const bchar8*str, ...)
 	{
 		va_list va;
 		va_start(va, str);
-#ifdef UNICODE
-		vswprintf_s(dst, sizeBuffer, str, va);
-#else
 		vsprintf_s(dst, sizeBuffer, str, va);
-#endif
 		va_end(va);
 	}
 	template<bsize sizeBuffer>
-	inline void BearString::PrintfVa(bchar(&dst)[sizeBuffer], const bchar*str, va_list va)
+	inline void BearString::PrintfVa(bchar8(&dst)[sizeBuffer], const bchar8*str, va_list va)
 	{
-#ifdef UNICODE
-		vswprintf_s(dst, sizeBuffer, str, va);
-#else
 		vsprintf_s(dst, sizeBuffer, str, va);
-#endif
 	}
-	inline void BearString::Scanf(const bchar*text, const bchar*str, ...)
+
+	template<bsize sizeBuffer>
+	inline void BearString::Printf(bchar16(&dst)[sizeBuffer], const bchar16*str, ...)
 	{
 		va_list va;
 		va_start(va, str);
-#ifdef UNICODE
-		vswscanf(text, str, va);
-#else
-		vsscanf(text, str, va);
-#endif
+		vswprintf_s(dst, sizeBuffer, str, va);
 		va_end(va);
 	}
-	 inline void  BearString::ToLower(bchar* str)
+	template<bsize sizeBuffer>
+	inline void BearString::PrintfVa(bchar16(&dst)[sizeBuffer], const bchar16*str, va_list va)
 	{
-#ifdef UNICODE
-		_wcslwr_s(str, wcslen(str) + 1);
-#else
+		vswprintf_s(dst, sizeBuffer, str, va);
+	}
+	inline int32 BearString::Scanf(const bchar8*text, const bchar8*str, ...)
+	{
+		va_list va;
+		va_start(va, str);
+		int32 result = vsscanf(text, str, va);
+		va_end(va);
+		return result;
+	}
+	inline int32 BearString::Scanf(const bchar16*text, const bchar16*str, ...)
+	{
+		va_list va;
+		va_start(va, str);
+		int32 result = vswscanf(text, str, va);
+		va_end(va);
+		return result;
+	}
+	 inline void  BearString::ToLower(bchar8* str)
+	{
 		_strlwr_s(str, strlen(str) + 1);
-#endif
 	}
-	 inline void  BearString::ToUpper(bchar* str)
+	 inline void  BearString::ToUpper(bchar8* str)
 	{
-#ifdef UNICODE
-		_wcsupr_s(str,wcslen(str)+1);
-#else
 		_strupr_s(str, strlen(str) + 1);
-#endif
 	}
+	 inline void  BearString::ToLower(bchar16* str)
+	 {
+		 _wcslwr_s(str, wcslen(str) + 1);
+	 }
+	 inline void  BearString::ToUpper(bchar16* str)
+	 {
+		 _wcsupr_s(str, wcslen(str) + 1);
+	 }
 	 inline int32   BearString::Compare(const bchar8*str1, const bchar8*str2)
 	{
 		return strcmp(str1, str2);

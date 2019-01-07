@@ -8,20 +8,22 @@ namespace  BearCore
 		BearFileSystem();
 		~BearFileSystem();
 
-		void UpdatePath(const bchar*floder, bsize id,BearStringPath&path);
+		void UpdatePath(const bchar*path, bsize id,BearStringPath&path_out);
 
 
-		void Update(const bchar*floder, const bchar*file, BearStringPath&path);
-		void Update(const bchar*floder, const bchar*file, const bchar*e, BearStringPath&path);
+		void Update(const bchar*path, const bchar*file, BearStringPath&path_out);
+		void Update(const bchar*path, const bchar*file, const bchar*e, BearStringPath&path_out);
 		
-		bool ExistFloder(const bchar*floder, bsize id);
-		bool ExistFloderAndUpdate(const bchar*floder, bsize id, BearStringPath&path);
-		bool ExistFileAndUpdate(const bchar*floder, const bchar*file, BearStringPath&path);
-		bool ExistFile(const bchar*floder, const bchar*file);
-		bool ExistFileAndUpdate(const bchar*floder, const bchar*file, const bchar*e, BearStringPath&path);
-		bool ExistFile(const bchar*floder, const bchar*file, const bchar*e);
+		bool ExistDirectory(const bchar*path);
+		bool ExistDirectory(const bchar*path,const bchar*directory);
+		bool ExistDirectory(const bchar*path,bsize id);
+		bool ExistDirectoryAndUpdate(const bchar*path,bsize id, BearStringPath&path_out);
+		bool ExistFileAndUpdate(const bchar*path, const bchar*file, BearStringPath&path_out);
+		bool ExistFile(const bchar*path, const bchar*file);
+		bool ExistFileAndUpdate(const bchar*path, const bchar*file, const bchar*e, BearStringPath&path_out);
+		bool ExistFile(const bchar*path, const bchar*file, const bchar*e);
 
-		void CreatePath(const bchar*floder, bsize id);
+		void CreatePath(const bchar*path, bsize id);
 
 		bool LoadFromFile(const bchar*file,BearEncoding::Encoding type);
 		void LoadFromStream(const BearInputStream&file, BearEncoding::Encoding type);

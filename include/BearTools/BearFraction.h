@@ -9,7 +9,7 @@ namespace BearCore
 		BearFraction(const BearFraction&right);
 		void Copy(const BearFraction&right);
 		void Swap(BearFraction&right);
-		BearFraction &operator=(const BearFraction&right);
+		BearFraction &operator=(const BearFraction&right); 
 		BearFraction &operator=(BearFraction&&right);
 
 		BearFraction(uint64 c, uint64 b);

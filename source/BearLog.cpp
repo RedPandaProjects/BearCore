@@ -5,7 +5,27 @@ static BearCore::BearMutex LogMutex;
 static BearCore::BearLogCallBack LogCallBack=0;
 BearCore::BearStringPath LogFileOut=TEXT("");
 
-
+#ifdef DEBUG
+void BearCore::BearLog::DebugPrintf(const bchar * text, ...)
+{
+	if (!LogFileOut[0])return;
+	BearMutexLock lock(LogMutex);
+	BearString8192 var1;
+	va_list va;
+	va_start(va, text);
+	BearString::PrintfVa(var1, text, va);
+	va_end(va);
+#if  defined(WINDOWS)&&defined(DEBUG)
+	OutputDebugString(var1);
+	OutputDebugString(TEXT("\r\n"));
+#endif
+	char text866[8192];
+	CharToOem(var1, text866);
+	printf(text866);
+	printf("\r\n");
+	Push(var1);
+}
+#endif
 void BearCore::BearLog::Printf(const bchar * text, ...)
 {
 	if (!LogFileOut[0])return;

@@ -15,6 +15,7 @@ namespace BearCore
 		{
 			return BearString().append_printf(TEXT("%d," BEAR_PRINT_ANSI), GetBuildImpl(__DATE__, year, month, day), __DATE__);
 		}
+		BEAR_FUNCTION_DEBUG(static void, DebugPrintf, const bchar * text, ...);
 	private:
 		static void Push( bchar*string);
 		static int32 GetBuildImpl(const char* date, int32 year, int32 month, int32 day);
