@@ -440,7 +440,7 @@ bool BearCore::BearFileSystem::ExistFileAndUpdate(const bchar * floder, const bc
 	return false;
 }
 
-void BearCore::BearFileSystem::CreatePath(const bchar * floder, bsize id)
+void BearCore::BearFileSystem::CreateDirectory(const bchar * floder, bsize id)
 {
 	BearStringPath p, f,t;
 	t[0] = 0;

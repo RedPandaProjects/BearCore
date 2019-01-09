@@ -23,7 +23,7 @@ namespace  BearCore
 		bool ExistFileAndUpdate(const bchar*path, const bchar*file, const bchar*e, BearStringPath&path_out);
 		bool ExistFile(const bchar*path, const bchar*file, const bchar*e);
 
-		void CreatePath(const bchar*path, bsize id);
+		void CreateDirectory(const bchar*path, bsize id);
 
 		bool LoadFromFile(const bchar*file,BearEncoding::Encoding type);
 		void LoadFromStream(const BearInputStream&file, BearEncoding::Encoding type);

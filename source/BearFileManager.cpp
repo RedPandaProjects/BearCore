@@ -67,14 +67,48 @@ int64 BearCore::BearFileManager::FileSize(const bchar * name)
 
 
 
-BearCore::BearFileManager::FileTime BearCore::BearFileManager::GetTime—reationFile(const bchar * file)
+BearCore::BearFileManager::FileTime BearCore::BearFileManager::GetFileCreateTime(const bchar * file)
 {
-	return FileTime();
+	BearCore::BearFileManager::FileTime ft;
+	HANDLE fH;
+	FILETIME creationTime;
+	SYSTEMTIME sysTime;
+	fH = CreateFile(file, GENERIC_READ, 0, 0, OPEN_EXISTING, 0, 0);
+	if (fH != INVALID_HANDLE_VALUE)
+	{
+		GetFileTime(fH, &creationTime, 0, 0);
+		FileTimeToSystemTime(&creationTime, &sysTime);
+		ft.Year = sysTime.wYear + 1900;
+		ft.Month = sysTime.wMonth + 1;
+		ft.Day = sysTime.wDay;
+		ft.Hour = sysTime.wHour;
+		ft.Minute = sysTime.wMinute;
+		ft.Second = sysTime.wSecond;
+		CloseHandle(fH);
+	}
+	return ft;
 }
 
-BearCore::BearFileManager::FileTime BearCore::BearFileManager::GetTime—hangeFile(const bchar * file)
+BearCore::BearFileManager::FileTime BearCore::BearFileManager::GetFileLastWriteTime(const bchar * file)
 {
-	return FileTime();
+	BearCore::BearFileManager::FileTime ft;
+	HANDLE fH;
+	FILETIME creationTime;
+	SYSTEMTIME sysTime;
+	fH = CreateFile(file, GENERIC_READ, 0, 0, OPEN_EXISTING, 0, 0);
+	if (fH != INVALID_HANDLE_VALUE)
+	{
+		GetFileTime(fH, 0, 0, &creationTime);
+		FileTimeToSystemTime(&creationTime, &sysTime);
+		ft.Year = sysTime.wYear + 1900;
+		ft.Month = sysTime.wMonth + 1;
+		ft.Day = sysTime.wDay;
+		ft.Hour = sysTime.wHour;
+		ft.Minute = sysTime.wMinute;
+		ft.Second = sysTime.wSecond;
+		CloseHandle(fH);
+	}
+	return ft;
 }
 
 BearCore::BearString BearCore::BearFileManager::GetFileNameAndExtension(const bchar * FullPathAndFile)
