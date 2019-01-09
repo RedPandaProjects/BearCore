@@ -101,7 +101,11 @@ BearCore::BearString BearCore::BearFileManager::GetFileName(const bchar * FullPa
 
 BearCore::BearString BearCore::BearFileManager::GetPathFile(const bchar * FullPathAndFile)
 {
-	return BearString();
+	BearString temp(FullPathAndFile);
+	if (temp.to_char_with_end(TEXT('\\')))
+		**temp = 0;
+	temp.seek(0);
+	return temp;
 }
 
 bool BearCore::BearFileManager::FileMove(const bchar * name, const bchar * newname)

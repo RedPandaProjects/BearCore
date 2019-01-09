@@ -225,7 +225,33 @@ bool BearCore::BearFileSystem::Delete(const bchar * path, const bchar * file, co
 	return false;
 }
 
-void BearCore::BearFileSystem::GetFiles(BearVector<BearString>& files, const bchar * path, const bchar * e)
+void BearCore::BearFileSystem::GetDirectories(BearVector<BearString>& files, const bchar * path)
+{
+	update(path);
+	auto item = m_paths.find(BearStringConteniar(path, false));
+	BEAR_ASSERT(m_paths.end() != item);
+	auto begin = item->second.begin();
+	auto end = item->second.end();
+	while (begin != end)
+	{
+		BearVector<BearString> temp;
+		BearFileManager::FindDirectories(temp, **begin, false, false);
+		auto begins = temp.begin();
+		auto ends = temp.end();
+		while (begins != ends)
+		{
+			auto item2 = bear_lower_bound(files.begin(), files.end(), *begins);
+			if (item2 == files.end() || *item2 != *begins)
+			{
+				files.insert(bear_lower_bound(files.begin(), files.end(), *begins), *begins);
+			}
+			begins++;
+		}
+		begin++;
+	}
+}
+
+void BearCore::BearFileSystem::GetFiles(BearVector<BearString>& files, const bchar * path, const bchar * e, bool subPath)
 {
 	update(path);
 	auto item = m_paths.find(BearStringConteniar(path,false));
@@ -235,7 +261,7 @@ void BearCore::BearFileSystem::GetFiles(BearVector<BearString>& files, const bch
 	while (begin != end)
 	{
 		BearVector<BearString> temp;
-		BearFileManager::FindFiles(temp, **begin, e, false, false);
+		BearFileManager::FindFiles(temp, **begin, e, false, subPath);
 		auto begins = temp.begin();
 		auto ends= temp.end();
 		while (begins != ends)

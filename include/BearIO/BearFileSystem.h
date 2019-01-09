@@ -44,7 +44,8 @@ namespace  BearCore
 		bool Delete(const bchar*path, const bchar*file);
 		bool Delete(const bchar*path, const bchar*file, const bchar*e);
 
-		void GetFiles(BearVector<BearString>&files, const bchar*path, const bchar*e);
+		void GetDirectories(BearVector<BearString>&files, const bchar*path);
+		void GetFiles(BearVector<BearString>&files, const bchar*path, const bchar*e,bool subPath=false);
 
 		void Clear();
 
