@@ -4,6 +4,7 @@ namespace BearCore
 	class BEARTOOL_API BearInputStream
 	{
 	public:
+		BearInputStream();
 		uint8 ReadUint8()const;
 		uint16 ReadUint16()const;
 		uint32 ReadUint32()const;
@@ -37,5 +38,7 @@ namespace BearCore
 		virtual bsize Tell()const = 0;
 		virtual bsize Size()const = 0;
 		virtual void Destory() = 0;
+	private:
+		mutable bsize m_last_pos;
 	};
 };

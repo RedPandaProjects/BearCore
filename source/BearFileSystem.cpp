@@ -1,4 +1,8 @@
 #include "BearCore.hpp"
+#include <locale.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 BEARTOOL_API  BearCore::BearFileSystem*BearCore::FS = 0;
 void BearCore::BearFileSystem::decoder(BearINI & ini)
 {
@@ -117,7 +121,6 @@ void BearCore::BearFileSystem::decoderPath(SourcePath & path, BearString & strin
 	}
 	path.priority = 0;
 }
-
 bool BearCore::BearFileSystem::LoadFromFile(const bchar * file, BearEncoding::Encoding type)
 {
 	BearINI ini;
@@ -235,7 +238,7 @@ void BearCore::BearFileSystem::GetDirectories(BearVector<BearString>& files, con
 	while (begin != end)
 	{
 		BearVector<BearString> temp;
-		BearFileManager::FindDirectories(temp, **begin, false, false);
+		BearFileManager::FindDirectories(temp, **begin,TEXT("*"), false, false);
 		auto begins = temp.begin();
 		auto ends = temp.end();
 		while (begins != ends)
@@ -424,6 +427,7 @@ bool BearCore::BearFileSystem::ExistDirectoryAndUpdate(const bchar * floder, bsi
 
 bool BearCore::BearFileSystem::ExistFileAndUpdate(const bchar * floder, const bchar * file, BearStringPath&path)
 {
+	if (!ExistPath(floder))return false;
 	update(floder);
 	auto item = m_paths.find(BearStringConteniar(floder));
 	BEAR_ASSERT(m_paths.end() != item);

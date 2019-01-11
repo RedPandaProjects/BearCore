@@ -1,4 +1,4 @@
-#pragma warning (disable:4127 4239 4100 4251 4201)
+#pragma warning (disable:4127 4239 4100 4251 4201 4756)
 
 typedef signed   char int8;
 typedef unsigned char uint8;

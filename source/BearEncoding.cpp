@@ -14,7 +14,6 @@ struct Initializer
 	inline void Initialize()
 	{
 		if (ConverterUTF16)return;
-		setlocale(0, "");
 		ConverterUTF16 = new std::wstring_convert<std::codecvt<bchar16, bchar8, std::mbstate_t>, bchar16 >;
 		ConverterUTF8 = new std::wstring_convert<std::codecvt_utf8_utf16<bchar16>, bchar16 >;
 

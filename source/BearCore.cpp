@@ -4,12 +4,20 @@
 #pragma warning(disable:4091)
 #include <dbghelp.h> // MiniDump flags
 #endif
+
+#include <locale.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
 extern BearCore::BearVector<BearCore::BearStringConteniar> *LogData ;
 static bool bInitialize=false;
 extern BearCore::BearStringPath LogFileOut;
+
 void BearCore::Initialize(const bchar * app_name, const bchar * log_path, const bchar * email)
 {
 	BEAR_ASSERT(!bInitialize);
+	
 	BearMemory::DebugOff();
 	BearString::Copy(LogFileOut, log_path);
 	BearString::Contact(LogFileOut, BEAR_PATH);
@@ -39,8 +47,14 @@ void BearCore::Initialize(const bchar * app_name, const bchar * log_path, const 
 	BT_SetAppName(app_name);
 #endif
 	bInitialize = true;
-
+	
+	//setlocale(LC_ALL, "en_US.utf8");
 }
+
+
+
+
+
 
 BEARTOOL_API void BearCore::Destroy()
 {

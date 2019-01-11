@@ -4,7 +4,11 @@ bool BearCore::BearFileManager::FileCopy(const bchar * in, const bchar * out)
 }
 bool BearCore::BearFileManager::DirectoryCreate(const bchar * path)
 {
-	return CreateDirectory(path, NULL) || GetLastError() == ERROR_ALREADY_EXISTS;
+#ifdef UNICODE
+	return CreateDirectoryW(path, NULL) || GetLastError() == ERROR_ALREADY_EXISTS;
+#else
+	return CreateDirectoryA(path, NULL) || GetLastError() == ERROR_ALREADY_EXISTS;
+#endif
 }
 
 bool BearCore::BearFileManager::DirectoryExists(const bchar * name)
@@ -53,7 +57,7 @@ static void WinFind(BearCore::BearVector<BearCore::BearString>& list, const bcha
 			}
 			if (file.cFileName[0] == TEXT('.'))
 			{
-				if (file.cFileName[1] == 0 || (file.cFileName[1] == TEXT('.') || file.cFileName[2] == 0))
+				if (file.cFileName[1] == 0 || ((file.cFileName[1] == TEXT('.') && file.cFileName[2] == 0)))
 				{
 						continue;
 				}

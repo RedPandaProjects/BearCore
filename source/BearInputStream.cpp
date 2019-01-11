@@ -1,5 +1,8 @@
 #include "BearCore.hpp"
 #define READT(type) type t=0; Read(&t,sizeof(t)); return t;
+BearCore::BearInputStream::BearInputStream():m_last_pos(-1)
+{
+}
 uint8 BearCore::BearInputStream::ReadUint8()const
 {
 	READT(uint8);
@@ -142,8 +145,18 @@ jump_01:
 
 bsize BearCore::BearInputStream::GoToChunk(uint32 type_) const
 {
+	if (m_last_pos != bsize(-1))
+	{
+		Seek(m_last_pos);
+		uint32 type = ReadUint32();
+		uint32 size_ = ReadUint32();
+		BEAR_FATALERROR((size_ + Tell()) <= Size(), TEXT("для части [%d] не верный размер [%d]"), type_, size_);
+		if (type_ == type)
+			return size_;
+	}
 	while (!Eof())
 	{
+		m_last_pos = Tell();
 		uint32 type = ReadUint32();
 		uint32 size_ = ReadUint32();
 		BEAR_FATALERROR((size_ + Tell()) <= Size(), TEXT("для части [%d] не верный размер [%d]"), type_, size_);
@@ -151,5 +164,6 @@ bsize BearCore::BearInputStream::GoToChunk(uint32 type_) const
 			return size_;
 		Seek(static_cast<bsize>(Tell() + size_));
 	}
+	m_last_pos = -1;
 	return 0;
 }
