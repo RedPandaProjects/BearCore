@@ -87,6 +87,7 @@ BearCore::BearStreamRef< BearCore::BearInputStream> BearCore::BearFileStream::Re
 
 	BearMemoryStream *temp = bear_new<BearMemoryStream>();
 	temp->Write(*this->Read(size),size);
+	temp->Seek(0);
 	return temp;
 }
 

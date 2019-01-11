@@ -154,12 +154,17 @@ bsize BearCore::BearInputStream::GoToChunk(uint32 type_) const
 		if (type_ == type)
 			return size_;
 	}
+	Seek(0);
 	while (!Eof())
 	{
 		m_last_pos = Tell();
 		uint32 type = ReadUint32();
 		uint32 size_ = ReadUint32();
-		BEAR_FATALERROR((size_ + Tell()) <= Size(), TEXT("для части [%d] не верный размер [%d]"), type_, size_);
+		if ((size_ + Tell()) > Size())
+		{
+			m_last_pos = -1;
+			return 0;
+		}
 		if (type_ == type)
 			return size_;
 		Seek(static_cast<bsize>(Tell() + size_));
