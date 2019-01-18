@@ -78,8 +78,8 @@ BearCore::BearFileManager::FileTime BearCore::BearFileManager::GetFileCreateTime
 	{
 		GetFileTime(fH, &creationTime, 0, 0);
 		FileTimeToSystemTime(&creationTime, &sysTime);
-		ft.Year = sysTime.wYear + 1900;
-		ft.Month = sysTime.wMonth + 1;
+		ft.Year = sysTime.wYear;
+		ft.Month = sysTime.wMonth;
 		ft.Day = sysTime.wDay;
 		ft.Hour = sysTime.wHour;
 		ft.Minute = sysTime.wMinute;
@@ -100,8 +100,8 @@ BearCore::BearFileManager::FileTime BearCore::BearFileManager::GetFileLastWriteT
 	{
 		GetFileTime(fH, 0, 0, &creationTime);
 		FileTimeToSystemTime(&creationTime, &sysTime);
-		ft.Year = sysTime.wYear + 1900;
-		ft.Month = sysTime.wMonth + 1;
+		ft.Year = sysTime.wYear;
+		ft.Month = sysTime.wMonth ;
 		ft.Day = sysTime.wDay;
 		ft.Hour = sysTime.wHour;
 		ft.Minute = sysTime.wMinute;

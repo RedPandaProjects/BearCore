@@ -28,36 +28,36 @@ namespace  BearCore
 			bsize Second;
 			inline bool operator<(const FileTime&time)const
 			{
-				if (time.Year != time.Year)
-					return time.Year < time.Year;
-				else if (time.Month != time.Month)
-					return time.Month < time.Month;
-				else if (time.Day != time.Day)
-					return time.Day < time.Day;
-				else if (time.Hour != time.Hour)
-					return time.Hour < time.Hour;
-				else if (time.Minute != time.Minute)
-					return time.Minute < time.Minute;
-				return time.Second < time.Second;
+				if (Year != time.Year)
+					return Year < time.Year;
+				else if (Month != time.Month)
+					return Month < time.Month;
+				else if (Day != time.Day)
+					return Day < time.Day;
+				else if (Hour != time.Hour)
+					return Hour < time.Hour;
+				else if (Minute != time.Minute)
+					return Minute < time.Minute;
+				return Second < time.Second;
 			}
 			inline bool operator>(const FileTime&time)const
 			{
-				if (time.Year != time.Year)
-					return time.Year > time.Year;
-				else if (time.Month != time.Month)
-					return time.Month > time.Month;
-				else if (time.Day != time.Day)
-					return time.Day > time.Day;
-				else if (time.Hour != time.Hour)
-					return time.Hour > time.Hour;
-				else if (time.Minute != time.Minute)
-					return time.Minute > time.Minute;
-				return time.Second > time.Second;
+				if (Year != time.Year)
+					return Year > time.Year;
+				else if (Month != time.Month)
+					return Month > time.Month;
+				else if (Day != time.Day)
+					return Day > time.Day;
+				else if (Hour != time.Hour)
+					return Hour > time.Hour;
+				else if (Minute != time.Minute)
+					return Minute > time.Minute;
+				return Second > time.Second;
 			}
 
 			inline bool operator==(const FileTime&time)const
 			{
-				if (time.Year == time.Year&&time.Month == time.Month&&time.Day == time.Day&&time.Hour == time.Hour&&time.Minute == time.Minute&& time.Second == time.Second)
+				if (Year == time.Year&&Month == time.Month&&Day == time.Day&&Hour == time.Hour&&Minute == time.Minute&&Second == time.Second)
 					return true;
 				return false;
 			}

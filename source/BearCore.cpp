@@ -48,7 +48,7 @@ void BearCore::Initialize(const bchar * app_name, const bchar * log_path, const 
 #endif
 	bInitialize = true;
 	
-	//setlocale(LC_ALL, "en_US.utf8");
+	setlocale(LC_TIME,"");
 }
 
 
