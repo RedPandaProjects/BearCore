@@ -15,6 +15,7 @@ namespace BearCore
 		}
 		static bool CheckProject(const bchar*name);
 		static void Destory();
+		static void UnLoad(const bchar*name);
 	private:
 		static void * GetFunctionInProjectImpl(const bchar*name, const bchar*function);
 	};

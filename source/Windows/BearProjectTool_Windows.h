@@ -1,4 +1,5 @@
 #include "BearCore.hpp"
+#include "..\..\include\BearProjects\BearProjectTool.h"
 struct lib
 {
 	HMODULE Module;
@@ -53,6 +54,15 @@ inline void BearCore::BearProjectTool::Destory()
 		begin++;
 	}
 	Libs.clear();
+}
+inline void BearCore::BearProjectTool::UnLoad(const bchar * name)
+{
+	auto Item = Libs.find(BearStringConteniar(name, false));
+	if (Item != Libs.end())
+	{
+		FreeLibrary(Item->second.Module);
+		Libs.erase(Item);
+	}
 }
 void * BearCore::BearProjectTool::GetFunctionInProjectImpl(const bchar * name, const bchar * function)
 {
