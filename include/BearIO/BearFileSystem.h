@@ -30,7 +30,7 @@ namespace  BearCore
 		bool LoadFromFile(const bchar*file,BearEncoding::Encoding type);
 		void LoadFromStream(const BearInputStream&file, BearEncoding::Encoding type);
 		void LoadFromBuffer(const BearBufferedReader&file, BearEncoding::Encoding type);
-
+		void SetPackage(const bchar*fspath,const bchar*path);
 		void ReadConfig(const bchar*path, const bchar*file, const bchar*e, BearINI&ini, BearEncoding::Encoding coding,BearIncluder*includer=&GIncluderDefault);
 		void ReadConfig(const bchar*path, const bchar*file, BearINI&ini, BearEncoding::Encoding coding, BearIncluder*includer = &GIncluderDefault);
 
@@ -68,7 +68,19 @@ namespace  BearCore
 		};
 		void decoderPath(SourcePath&path, BearString&string);
 		BearMap< BearStringConteniar, BearVector<SourcePath>> m_source_paths;
+		
+		void GetFilesFromPackage(BearVector<BearString>&files, const bchar*path, const bchar*e, bool subPath = false);
+		BearVector<BearPackage> m_packages;
 
+		bool RegisterFile(const bchar*full_path);
+		void RegisterFiles();
+		struct File
+		{
+			File() :package(0) {}
+			BearString package_path;
+			BearPackage*package;
+		};
+		BearMap<BearStringConteniar, File> m_files;
 	};
 	BEARTOOL_API extern BearFileSystem*FS;
 }

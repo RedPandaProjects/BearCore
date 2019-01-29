@@ -86,6 +86,7 @@ BearCore::BearStreamRef< BearCore::BearInputStream> BearCore::BearFileStream::Re
 	if (!size)return BearCore::BearStreamRef<BearCore::BearInputStream>();
 
 	BearMemoryStream *temp = bear_new<BearMemoryStream>();
+	temp->Resize(size);
 	temp->Write(*this->Read(size),size);
 	temp->Seek(0);
 	return temp;
@@ -96,10 +97,6 @@ void BearCore::BearFileStream::Swap(BearFileStream & right)
 	bear_swap(right.m_file, m_file);
 	bear_swap(right.m_mode, m_mode);
 }
-
-
-
-
 
 void BearCore::BearFileStream::Destory()
 {

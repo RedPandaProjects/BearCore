@@ -48,7 +48,7 @@ bool BearCore::BearFileManager::DirectoryMove(const bchar * path, const bchar * 
 }
 
 
-int64 BearCore::BearFileManager::FileSize(const bchar * name)
+bsize BearCore::BearFileManager::GetFileSize(const bchar * name)
 {
 
 	FILE*file = 0;
@@ -58,11 +58,11 @@ int64 BearCore::BearFileManager::FileSize(const bchar * name)
 	fopen_s(&file, name, "rb");
 #endif
 	if (!file)
-		return -1;
+		return 0;
 	fseek(file, 0, SEEK_END);
 	int64 size = ftell(file);
 	fclose(file);
-	return size;
+	return static_cast<bsize>(size);
 }
 
 
@@ -150,3 +150,87 @@ bool BearCore::BearFileManager::FileMove(const bchar * name, const bchar * newna
 	return rename(name, newname) != -1;
 #endif
 }
+
+void BearCore::BearFileManager::PathOptimization(bchar * in)
+{
+	bchar*path = in;
+	bchar*path_lost = in;
+	bchar* b = in;
+	bchar* e = in+BearString::GetSize(in);
+	{
+		const bchar*shift = b;
+		while (*shift == BEAR_PATH[0])
+		{
+			shift++;
+		}
+		if (shift - b )
+		{
+			bear_move(b , shift, BearString::GetSize(shift) + 1);
+		}
+	}
+	while (b != e)
+	{
+	
+
+		if (*b == BEAR_PATH[0])
+		{
+			
+			const bchar*shift = b;
+			while (*shift == BEAR_PATH[0])
+			{
+				shift++;
+			}
+			if (shift - b > 1)
+			{
+				bear_move(b + 1, shift, BearString::GetSize(shift) + 1);
+				path = in;
+				b = in;
+				e = in + BearString::GetSize(in);
+				continue;
+			}
+	
+			path_lost = path;
+			path = b;
+		
+		}
+		if (b[0] == TEXT('.') && b[1] == TEXT('.') && b[2]!= TEXT('.') && path != in)
+		{
+			if (path_lost[0] == BEAR_PATH[0])
+			{
+				if (bear_compare(&path_lost[1], TEXT(".."), 2) == 0 && path_lost[3] != TEXT('.')) {
+
+					b++;
+					continue;
+				}
+			}
+			else
+			{
+				if (bear_compare(&path_lost[0], TEXT(".."), 2) == 0 && path_lost[2] != TEXT('.')) {
+
+					b++;
+					continue;
+				}
+			}
+			
+			b += 2;
+			bear_move(path_lost, b, BearString::GetSize(b) + 1);
+			path = in;
+			path_lost = in;
+			b = in;
+			e = in + BearString::GetSize(in);
+			continue;
+		}
+		b++;
+	}
+
+	{
+		e = in + BearString::GetSize(in) - 1;
+		while (b != e && *e == BEAR_PATH[0])
+		{
+			e[0] = 0;
+			e--;
+		}
+	}
+}
+
+

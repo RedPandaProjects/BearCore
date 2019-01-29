@@ -14,7 +14,22 @@ namespace  BearCore
 		static bool DirectoryRename(const bchar*path, const bchar* newpath);
 		static bool DirectoryMove(const bchar*path, const bchar* newpath);
 		static bool FileCopy(const bchar* file, const bchar*newfile);
-		static int64 FileSize(const bchar*name);
+		static void PathOptimization(bchar*in);
+
+		template<bsize sizeBuffer>
+		static inline void PathCombine(bchar(&in)[sizeBuffer], const bchar*str)
+		{
+			BearString::Contact(in, BEAR_PATH);
+			BearString::Contact(in, str);
+			PathOptimization(in);
+		}
+		template<bsize sizeBuffer,  class...A>
+		static inline void PathCombine(bchar(&in)[sizeBuffer], const bchar*str,const A*...a)
+		{
+			PathCombine(in, str);
+			PathCombine(in,a...);
+		}
+		static bsize GetFileSize(const bchar*name);
 		static void GetWorkPath(BearStringPath&path);
 		static void GetApplicationPath(BearStringPath&path);
 		struct FileTime

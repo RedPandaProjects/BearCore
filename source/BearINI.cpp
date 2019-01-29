@@ -89,11 +89,18 @@ void BearCore::BearINI::decoder(const BearBufferedReader & base, BearEncoding::E
 		str.sub_space_in_begin();
 		if (str.to_char(TEXT(';')))
 		{
-			str--;
-			if (**str != TEXT('\\'))
+			if (str.tell() == 0)
 			{
-				str++;
 				**str = 0;
+			}
+			else
+			{
+				str--;
+				if (**str != TEXT('\\'))
+				{
+					str++;
+					**str = 0;
+				}
 			}
 		}
 		str.seek(0);

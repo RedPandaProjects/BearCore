@@ -11,6 +11,7 @@ namespace BearCore
 		static void SetCallBack(BearLogCallBack call_back);
 		static const BearVector<BearStringConteniar>&Lock();
 		static void Unlock();
+		static void SetFile(const bchar*file);
 		inline static BearString GetBuild(int32 year, int32 month, int32 day)
 		{
 			return BearString().append_printf(TEXT("%d," BEAR_PRINT_ANSI), GetBuildImpl(__DATE__, year, month, day), __DATE__);

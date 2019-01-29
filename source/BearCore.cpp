@@ -10,19 +10,22 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <lzo/lzoconf.h>
+#include <lzo/lzo1x.h>
+#include <zlib/zlib.h>
+
 extern BearCore::BearVector<BearCore::BearStringConteniar> *LogData ;
 static bool bInitialize=false;
 extern BearCore::BearStringPath LogFileOut;
+extern lzo_voidp GLZOWrkmem;
 
-void BearCore::Initialize(const bchar * app_name, const bchar * log_path, const bchar * email)
+z_stream GzlibStream;
+void BearCore::Initialize(const bchar * app_name,  const bchar * email)
 {
 	BEAR_ASSERT(!bInitialize);
-	
+	bear_fill(GzlibStream);
+
 	BearMemory::DebugOff();
-	BearString::Copy(LogFileOut, log_path);
-	BearString::Contact(LogFileOut, BEAR_PATH);
-	BearString::Contact(LogFileOut, app_name);
-	BearString::Contact(LogFileOut, TEXT(".txt"));
 	LogData = new BearVector<BearStringConteniar>;
 	LogData->reserve(1024);
 	BearLog::Printf(TEXT("BearCore build %s"), *BearLog::GetBuild(2015, 07, 27));
@@ -49,6 +52,10 @@ void BearCore::Initialize(const bchar * app_name, const bchar * log_path, const 
 	bInitialize = true;
 	
 	setlocale(LC_TIME,"");
+
+	BEAR_FATALERROR(lzo_init() == LZO_E_OK, TEXT("Неудалось инцылизировать LZO"));
+
+	BEAR_FATALERROR(inflateInit(&GzlibStream) == Z_OK, TEXT("Неудалось инцылизировать zlib"));	inflateEnd(&GzlibStream);
 }
 
 
@@ -58,7 +65,9 @@ void BearCore::Initialize(const bchar * app_name, const bchar * log_path, const 
 
 BEARTOOL_API void BearCore::Destroy()
 {
+
 	BEAR_ASSERT(bInitialize);
+	if (GLZOWrkmem)bear_free(GLZOWrkmem);
 	BearProjectTool::Destory();
 	BearLog::Flush();
 	BearMemory::DebugOff();

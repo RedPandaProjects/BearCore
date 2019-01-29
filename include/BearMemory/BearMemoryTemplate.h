@@ -24,7 +24,7 @@ namespace BearCore
 	template<typename C>
 	inline void bear_move(C*dst, const C * src, bsize count)
 	{
-		memmove(dst , dst, sizeof(C)*count);
+		memmove(dst , src, sizeof(C)*count);
 	}
 	inline void bear_move(void*dst,const void * src, bsize size)
 	{

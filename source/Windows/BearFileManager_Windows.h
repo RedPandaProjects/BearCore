@@ -1,7 +1,10 @@
+
 bool BearCore::BearFileManager::FileCopy(const bchar * in, const bchar * out)
 {
 	return CopyFile(in, out, false);
 }
+
+
 bool BearCore::BearFileManager::DirectoryCreate(const bchar * path)
 {
 #ifdef UNICODE
@@ -23,13 +26,15 @@ bool BearCore::BearFileManager::DirectoryExists(const bchar * name)
 void BearCore::BearFileManager::GetWorkPath(BearStringPath & path)
 {
 	GetCurrentDirectory(MAX_PATH , path);
+	PathOptimization(path);
 }
 
 void BearCore::BearFileManager::GetApplicationPath(BearStringPath & path)
 {
 
 	GetModuleFileName(GetModuleHandle(NULL), path, MAX_PATH);
-	BearString::ToCharWithEnd(path, TEXT('\\'))[0] = 0;
+	BearString::ToCharWithEnd(path, BEAR_PATH[0])[0] = 0;
+	PathOptimization(path);
 }
 
 

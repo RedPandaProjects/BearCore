@@ -82,6 +82,8 @@
 #include "BearTools/BearIncluder.h"
 #include "BearParser/BearINI.h"
 
+#include "BearIO/BearFilePackageStream.h"
+#include "BearIO/BearPackage.h"
 #include "BearIO/BearFileSystem.h"
 
 #include "BearTemplate/BearMultiplicatorDefine.h"
@@ -89,3 +91,7 @@
 
 #include "BearTools/BearThread.h"
 #include "BearTools/BearMutex.h"
+
+#include "BearTools/BearCompressor.h"
+
+

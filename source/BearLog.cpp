@@ -8,7 +8,7 @@ BearCore::BearStringPath LogFileOut=TEXT("");
 #ifdef DEBUG
 void BearCore::BearLog::DebugPrintf(const bchar * text, ...)
 {
-	if (!LogFileOut[0])return;
+	
 	BearMutexLock lock(LogMutex);
 	BearString8192 var1;
 	va_list va;
@@ -28,7 +28,7 @@ void BearCore::BearLog::DebugPrintf(const bchar * text, ...)
 #endif
 void BearCore::BearLog::Printf(const bchar * text, ...)
 {
-	if (!LogFileOut[0])return;
+
 	BearMutexLock lock(LogMutex);
 	BearString8192 var1;
 	va_list va;
@@ -48,7 +48,12 @@ void BearCore::BearLog::Printf(const bchar * text, ...)
 
 void BearCore::BearLog::Flush()
 {
-	if (!LogFileOut[0])return;
+	if (!LogFileOut[0])
+	{
+		LogData->clear();
+		return;
+		
+	}
 	BearMutexLock lock(LogMutex);
 	auto b = LogData->begin();
 	auto e = LogData->end();
@@ -81,6 +86,11 @@ const BearCore::BearVector<BearCore::BearStringConteniar>& BearCore::BearLog::Lo
 void BearCore::BearLog::Unlock()
 {
 	LogMutex.Unlock();
+}
+
+void BearCore::BearLog::SetFile(const bchar * file)
+{
+	BearString::Copy(LogFileOut, file);
 }
 
 
