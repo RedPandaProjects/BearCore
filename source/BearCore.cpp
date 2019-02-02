@@ -18,6 +18,7 @@ extern BearCore::BearVector<BearCore::BearStringConteniar> *LogData ;
 static bool bInitialize=false;
 extern BearCore::BearStringPath LogFileOut;
 extern lzo_voidp GLZOWrkmem;
+extern void CALLBACK GErrorHandler(INT_PTR);
 
 z_stream GzlibStream;
 void BearCore::Initialize(const bchar * app_name,  const bchar * email)
@@ -48,6 +49,7 @@ void BearCore::Initialize(const bchar * app_name,  const bchar * email)
 	BT_SetSupportEMail(email);
 	BT_SetDumpType(MiniDumpWithDataSegs | MiniDumpWithIndirectlyReferencedMemory);
 	BT_SetAppName(app_name);
+	BT_SetPreErrHandler(GErrorHandler, 0);
 #endif
 	bInitialize = true;
 	

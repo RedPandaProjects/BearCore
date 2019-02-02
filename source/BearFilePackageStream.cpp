@@ -60,6 +60,7 @@ bsize BearCore::BearFilePackageStream::Seek(bsize tell) const
 		m_tell = m_size;
 	else 
 		m_tell = tell;
+	if (m_size)m_file.Seek(m_ptr + m_tell);
 	return m_tell;
 }
 
@@ -101,7 +102,7 @@ void BearCore::BearFilePackageStream::read_impl(void * data, bsize size) const
 {
 	if (m_tell + size > m_size)size = m_size - m_tell;
 	m_file.Read(data, size);
-	m_tell =+size;
+	m_tell += size;
 }
 
 

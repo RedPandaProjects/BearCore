@@ -70,6 +70,7 @@ namespace  BearCore
 		BearMap< BearStringConteniar, BearVector<SourcePath>> m_source_paths;
 		
 		void GetFilesFromPackage(BearVector<BearString>&files, const bchar*path, const bchar*e, bool subPath = false);
+		void GetDirectoriesFromPackage(BearVector<BearString>&files, const bchar*path);
 		BearVector<BearPackage> m_packages;
 
 		bool RegisterFile(const bchar*full_path);

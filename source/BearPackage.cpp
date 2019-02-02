@@ -26,6 +26,7 @@ void BearCore::BearPackage::Compressor(const bchar * file_out, const bchar*path_
 			SavePathToFile[0] = 0; PathToFile[0] = 0;
 			BearFileManager::PathCombine(PathToFile, path_to_files, **b);
 			BearFileManager::PathCombine(SavePathToFile, path_for_archive, **b);
+			BearString::ToLower(SavePathToFile);
 			Fout.WriteString(SavePathToFile, BearEncoding::UTF16);
 		
 			Fout.WriteUint64(static_cast<uint64>(BearFileManager::GetFileSize(PathToFile)));
@@ -86,6 +87,22 @@ bool BearCore::BearPackage::ExistFile(const bchar * file)
 	return m_files.find(BearStringConteniar(file,false))!=m_files.end();
 }
 
+void BearCore::BearPackage::GetFiles(BearVector<BearString>& files)
+{
+	auto begin = m_files.begin();
+	auto end = m_files.end();
+	while (begin != end)
+	{
+		BearString str_new = *begin->first;
+		auto item2 = bear_lower_bound(files.begin(), files.end(), str_new);
+		if (item2 == files.end() || *item2 != str_new)
+		{
+			files.insert(bear_lower_bound(files.begin(), files.end(), *begin->first), str_new);
+		}
+		begin++;
+	}
+}
+
 void BearCore::BearPackage::GetFiles(BearVector<BearString>&files, const bchar*e, bool subpath)
 {
 	BearStringPath path;
@@ -124,6 +141,31 @@ void BearCore::BearPackage::GetFiles(BearVector<BearString>&files, const bchar*e
 			if (item2 == files.end() || *item2 != *begin->first)
 			{
 				files.insert(bear_lower_bound(files.begin(), files.end(), *begin->first), *begin->first);
+			}
+		}
+		begin++;
+	}
+}
+
+void BearCore::BearPackage::GetDirectories(BearVector<BearString>& dirs, const bchar * e)
+{
+	bsize es = BearString::GetSize(e);
+	auto begin = m_files.begin();
+	auto end = m_files.end();
+	while (begin != end)
+	{
+		if (BearString::ExistPossition(*begin->first, 0, e))
+		{
+			const bchar*path = *begin->first+es+1;
+			if (BearString::CountElement(path, BEAR_PATH[0]) == 1)
+			{
+				BearStringPath dir;
+				BearString::ReadTo(path, BEAR_PATH[0], dir);
+				auto item2 = bear_lower_bound(dirs.begin(), dirs.end(), dir);
+				if (item2 == dirs.end() || *item2 != dir)
+				{
+					dirs.insert(bear_lower_bound(dirs.begin(), dirs.end(), dir), dir);
+				}
 			}
 		}
 		begin++;

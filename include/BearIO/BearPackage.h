@@ -10,7 +10,9 @@ namespace BearCore
 		static void Compressor(const bchar*file_out,const bchar*path_to_files, const bchar*pathfs_for_archive, const bchar*path_for_archive, BearVector<BearString>&file_list);
 		bool LoadFromFile(const bchar*file);
 		bool ExistFile(const bchar*file);
+		void GetFiles(BearVector<BearString>&files);
 		void GetFiles( BearVector<BearString>&files,const bchar*e,bool subpath);
+		void GetDirectories(BearVector<BearString>&dirs, const bchar*path);
 		BearFilePackageStream FileOpen(const bchar*file);
 		void Clear();
 		BearPackage(const BearPackage&package);

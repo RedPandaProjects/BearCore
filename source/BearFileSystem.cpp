@@ -54,7 +54,7 @@ void BearCore::BearFileSystem::update(const bchar * name)
 		{
 			BearStringPath path;
 			BearFileManager::GetWorkPath(path);
-			
+			BearString::ToLower(path);
 			BearVector<BearString> paths;
 			paths.push_back(path);
 			m_paths.insert(name, paths);
@@ -63,6 +63,7 @@ void BearCore::BearFileSystem::update(const bchar * name)
 		{
 			BearStringPath path;
 			BearFileManager::GetApplicationPath(path);
+			BearString::ToLower(path);
 			BearVector<BearString> paths;
 			paths.push_back(path);
 			m_paths.insert(name, paths);
@@ -121,6 +122,7 @@ void BearCore::BearFileSystem::decoderPath(SourcePath & path, BearString & strin
 		BearString::Copy(path.path, path.parent);
 		path.parent[0] = 0;
 	}
+	BearString::ToLower(path.path);
 	BearFileManager::PathOptimization(path.path);
 	path.priority = 0;
 }
@@ -140,6 +142,23 @@ void BearCore::BearFileSystem::GetFilesFromPackage(BearVector<BearString>& files
 			BearString::Copy(E, file_path_in_bpk);
 			BearFileManager::PathCombine(E, e);
 			begin->GetFiles( files, E, subPath);
+		}
+		begin++;
+	}
+}
+void BearCore::BearFileSystem::GetDirectoriesFromPackage(BearVector<BearString>& files, const bchar * path)
+{
+	auto begin = m_packages.begin();
+	auto end = m_packages.end();
+	while (begin != end)
+	{
+		BearStringPath fullpath;
+		UpdatePath(*begin->GetFS(), 0, fullpath);
+		BearString::Contact(fullpath, BEAR_PATH);
+		if (BearString::Find(path, fullpath))
+		{
+			const bchar* file_path_in_bpk = path + BearString::GetSize(fullpath);
+			begin->GetDirectories(files, file_path_in_bpk);
 		}
 		begin++;
 	}
@@ -181,11 +200,26 @@ bool BearCore::BearFileSystem::RegisterFile(const bchar * full_path)
 void BearCore::BearFileSystem::RegisterFiles()
 {
 	if (m_files.size())return;
-	auto begin = m_packages.begin();
-	auto end = m_packages.end();
-	while (begin != end)
+	BearVector<BearString> files;
 	{
+		auto begin = m_packages.begin();
+		auto end = m_packages.end();
+		while (begin != end)
+		{
+			begin->GetFiles(files);
+			BearStringPath path;
+			auto begin1 = files.begin();
+			auto end1 = files.end();
+			while (begin1 != end1)
+			{
+				Update(*begin->GetFS(), **begin1, path);
+				begin1++;
+			}
+			files.clear_not_free();
+			begin++;
+		}
 	}
+		
 }
 bool BearCore::BearFileSystem::LoadFromFile(const bchar * file, BearEncoding::Encoding type)
 {
@@ -234,7 +268,9 @@ void BearCore::BearFileSystem::SetPackage(const bchar * fspath, const bchar * pa
 		BEAR_ASSERT( m_packages.back().LoadFromFile(fullpath));
 		begin++;
 	}
-
+#ifdef RELEASE
+	RegisterFiles();
+#endif
 }
 
 void BearCore::BearFileSystem::ReadConfig(const bchar * path, const bchar * file, const bchar * e, BearINI & ini, BearEncoding::Encoding coding,  BearIncluder*includer )
@@ -336,6 +372,7 @@ void BearCore::BearFileSystem::GetDirectories(BearVector<BearString>& files, con
 	auto end = item->second.end();
 	while (begin != end)
 	{
+		GetDirectoriesFromPackage(files, **begin);
 		BearVector<BearString> temp;
 		BearFileManager::FindDirectories(temp, **begin,TEXT("*"), false, false);
 		auto begins = temp.begin();
@@ -540,6 +577,7 @@ bool BearCore::BearFileSystem::ExistFileAndUpdate(const bchar * floder, const bc
 		BearString::Copy(path, **begin);
 		BearString::Contact(path, BEAR_PATH);
 		BearString::Contact(path, file);
+		BearString::ToLower(path);
 		if (RegisterFile(path))return true;
 		begin++;
 	}
