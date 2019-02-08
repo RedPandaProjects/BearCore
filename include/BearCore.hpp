@@ -3,8 +3,9 @@
 #include "BearPlatform/Windows/BearWindowsType.h"
 #include "BearPlatform/Windows/BearProjectsDefines.h"
 #elif LINUX
+
 #else
-#error BearCore на данной платформе не поддерживается
+#error BearCore пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 #endif
 
 #ifdef BEAR_CORE_EXPORTS
@@ -93,5 +94,3 @@
 #include "BearTools/BearMutex.h"
 
 #include "BearTools/BearCompressor.h"
-
-
