@@ -1,6 +1,6 @@
 #pragma once
 #ifdef WINDOWS
-#include "Windows/BearMultiplicatorDefine.h"
+#include "../BearPlatform/Windows/BearMultiplicatorDefine.h"
 #elif LINUX
-#include "Linux/BearMultiplicatorDefine.h"
+#include "../BearPlatform/Linux/BearMultiplicatorDefine.h"
 #endif

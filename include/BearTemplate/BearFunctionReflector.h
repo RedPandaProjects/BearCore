@@ -6,14 +6,14 @@ namespace  BearCore
 		template<class C>
 		struct BearFunctionReturner
 		{
-			inline C&operator()(void*a) 
+			inline C&operator()(void*a)
 			{
 				return *(C*)a;
 			}
-		}; 
+		};
 		template<>
 		struct BearFunctionReturner<void>
-		{ 
+		{
 			inline void operator()(void*a)
 			{}
 		};
@@ -44,7 +44,7 @@ namespace  BearCore
 			inline void operator()(F f, int)
 			{
 				 f();
-			} 
+			}
 		};
 
 
@@ -111,7 +111,7 @@ namespace  BearCore
 
 	class BearArgumentContainer
 	{
-		
+
 	public:
 		virtual void Destroy() = 0;
 		virtual void*Get()=0;
@@ -162,7 +162,7 @@ namespace  BearCore
 	template<typename T, typename ...Args>
 	void bear_make_arguments_impl(BearArgumentsList&args_list, const T&t, Args... args)
 	{
-		arg_list.push_back(bear_new<BearArgumentContainerMaker<T>>(t));
+		args_list.push_back(bear_new<BearArgumentContainerMaker<T>>(t));
 		bear_make_arguments_impl(args_list, args...);
 	}
 	template<typename T>
@@ -171,7 +171,7 @@ namespace  BearCore
 		args_list.push_back(bear_new<BearArgumentContainerMaker<T>>( t));
 	}
 
-	
+
 
 	class BearFunctionRef
 	{
@@ -180,7 +180,7 @@ namespace  BearCore
 		template<class R>
 		inline R CallWithArgumentsList(void**stack)
 		{
-			return Impl::BearFunctionReturner<bear_remove_reference<R>::type>()(Call(stack));
+			return Impl::BearFunctionReturner<typename bear_remove_reference<R>::type>()(Call(stack));
 		}
 		template<class R>
 		inline R CallWithArgumentsList(const BearArgumentsList&args)
@@ -194,9 +194,9 @@ namespace  BearCore
 				stack[i++] = (*begin)->Get();
 				begin++;
 			}
-			return Impl::BearFunctionReturner<bear_remove_reference<R>::type>()(Call(stack));
+			return Impl::BearFunctionReturner<typename bear_remove_reference<R>::type>()(Call(stack));
 		}
-#define CALL_IN_REF 
+#define CALL_IN_REF
 #define NAMEINCLUDE "BearFunctionReflectorMaker.h"
 #include "BearMultiplicator.h"
 #undef CALL_IN_REF
@@ -204,7 +204,7 @@ namespace  BearCore
 		virtual void* Call(void**args) = 0;
 
 	private:
-	};	
+	};
 	template<class C,typename F>
 	class BearFunctionRefMaker:public BearFunctionRef
 	{
@@ -216,7 +216,7 @@ namespace  BearCore
 		{
 			bear_delete(this);
 		}
-	
+
 #define CALL_IN_MAKER
 #define NAMEINCLUDE "BearFunctionReflectorMaker.h"
 #include "BearMultiplicator.h"
@@ -233,12 +233,12 @@ namespace  BearCore
 	template<typename P,class...A>
 	inline  BearFunctionRef*bear_create_function_ref(P(*f)(A...))
 	{
-		return bear_new< BearFunctionRefMaker<bear_remove_reference<bear_remove_void<P>::type>::type, decltype(f)>>(f);
+		return bear_new< BearFunctionRefMaker<typename bear_remove_reference<typename bear_remove_void<P>::type>::type, decltype(f)>>(f);
 	}
 	template<typename P>
 	inline BearFunctionRef*bear_create_function_ref(P(*f)())
 	{
-		return bear_new< BearFunctionRefMaker<bear_remove_reference<bear_remove_void<P>::type>::type, decltype(f)>>(f);
+		return bear_new< BearFunctionRefMaker<typename bear_remove_reference<typename bear_remove_void<P>::type>::type, decltype(f)>>(f);
 	}
 
 
@@ -249,7 +249,7 @@ namespace  BearCore
 		template<class R>
 		inline R CallWithArgumentsList(void*cl,void**stack)
 		{
-			return Impl::BearFunctionReturner<bear_remove_reference<R>::type>()(Call(cl,stack));
+			return Impl::BearFunctionReturner<typename bear_remove_reference<R>::type>()(Call(cl,stack));
 		}
 		template<class CL,class R>
 		inline R CallWithArgumentsList(CL*cl,const BearArgumentsList&args)
@@ -263,7 +263,7 @@ namespace  BearCore
 				stack[i++] = (*begin)->Get();
 				begin++;
 			}
-			return Impl::BearFunctionReturner<bear_remove_reference<R>::type>()(Call((void*)cl,stack));
+			return Impl::BearFunctionReturner<typename bear_remove_reference<R>::type>()(Call((void*)cl,stack));
 		}
 #define CALL_IN_REF_CL
 #define NAMEINCLUDE "BearFunctionReflectorMaker.h"
@@ -305,22 +305,22 @@ namespace  BearCore
 	template<class CL, typename P, class...A>
 	inline  BearClassFunctionRef*bear_create_class_function_ref(P(CL::*f)(A...))
 	{
-		return bear_new< BearClassFunctionRefMaker<bear_remove_reference<bear_remove_void<P>::type>::type, decltype(f)>>(f);
+		return bear_new< BearClassFunctionRefMaker<typename bear_remove_reference<typename bear_remove_void<P>::type>::type, decltype(f)>>(f);
 	}
 	template<class CL, typename P>
 	inline BearClassFunctionRef*bear_create_class_function_ref(P(CL::*f)())
 	{
-		return bear_new< BearClassFunctionRefMaker<bear_remove_reference<bear_remove_void<P>::type>::type, decltype(f)>>(f);
+		return bear_new< BearClassFunctionRefMaker<typename bear_remove_reference<typename bear_remove_void<P>::type>::type, decltype(f)>>(f);
 	}
 
 	template<class CL, typename P, class...A>
 	inline  BearClassFunctionRef*bear_create_class_function_ref(P(*f)(CL*,A...))
 	{
-		return bear_new< BearClassFunctionRefMaker<bear_remove_reference<bear_remove_void<P>::type>::type, decltype(f)>>(f);
+		return bear_new< BearClassFunctionRefMaker<typename bear_remove_reference<typename bear_remove_void<P>::type>::type, decltype(f)>>(f);
 	}
 	template<class CL, typename P>
 	inline BearClassFunctionRef*bear_create_class_function_ref(P(*f)(CL*))
 	{
-		return bear_new< BearClassFunctionRefMaker<bear_remove_reference<bear_remove_void<P>::type>::type, decltype(f)>>(f);
+		return bear_new< BearClassFunctionRefMaker<typename bear_remove_reference<typename bear_remove_void<P>::type>::type, decltype(f)>>(f);
 	}
 }

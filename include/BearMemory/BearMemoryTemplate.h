@@ -44,17 +44,6 @@ namespace BearCore
 	{
 		bear_fill(&c, 1);
 	}
-
-	template<typename C>
-	inline void bear_swap(C*a, C*b, bsize count)
-	{
-		C*end = a + count;
-		while (a != end)
-		{
-			bear_swap(*a, *b);
-			a++; b++;
-		}
-	}
 	template<typename C>
 	inline void bear_swap(C&a, C&b)
 	{
@@ -87,11 +76,22 @@ namespace BearCore
 			BearMemory::Swap(&a, &b, sizeof(C));
 		}
 	}
+	template<typename C>
+	inline void bear_swap(C*a, C*b, bsize count)
+	{
+		C*end = a + count;
+		while (a != end)
+		{
+			bear_swap<C>(*a, *b);
+			a++; b++;
+		}
+	}
+
 	inline void bear_swap(void*a, void*b, bsize size)
 	{
 		bear_swap<char>(reinterpret_cast<char*>(a), reinterpret_cast<char*>(b), size);
 	}
-	
+
 	template<typename C>
 	inline bint bear_compare(const C*a, const C*b, bsize count)
 	{

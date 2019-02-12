@@ -7,8 +7,8 @@ namespace BearCore
 	private:
 		typedef	std::map<Key, T, C, BearMemoryAllocator<std::pair<Key, T>>> map;
 	public:
-		BearMap(BearMap&&right) : map(right) {}
-		BearMap(const BearMap&right) : map(right) {}
+		BearMap(BearMap&&right) : 	map::map(right) {}
+		BearMap(const BearMap&right) : 	map::map(right) {}
 		inline void copy(const BearMap&right) { (*this) = right; }
 		inline void copy(BearMap&&right) { (*this) = right; }
 		inline BearMap&operator=(const BearMap&right)
@@ -46,6 +46,6 @@ namespace BearCore
 		{
 			map::insert(std::pair<Key, T>(k, T()));
 		}
-		void clear_not_free() { erase(begin(), end()); }
+		void clear_not_free() { 	map::erase(	map::begin(), 	map::end()); }
 	};
 }

@@ -569,7 +569,7 @@ namespace BearCore
 		}
 		inline bchar* operator*()
 		{
-			if (!basic_string::size() || basic_string::size() == m_tell)return TEXT("");
+			if (!basic_string::size() || basic_string::size() == m_tell)return (bchar*)TEXT("");
 			return &at(m_tell);
 		}
 
@@ -823,9 +823,13 @@ namespace BearCore
 		inline void clear_no_free()
 		{
 			m_tell = 0;
+#ifdef WINDOWS
 			if (basic_string::size())
 				at(0) = 0;
 			this->_Get_data()._Mysize = 0;
+#else
+		basic_string::erase(begin(),end());
+#endif
 		}
 		inline int32 compare(const bchar*text)const
 		{
@@ -863,10 +867,10 @@ namespace BearCore
 	private:
 		bsize m_tell;
 	};
-	
+
 };
 #ifdef WINDOWS
 #include "..\BearPlatform\Windows\BearString.h"
 #elif LINUX
-
+#include "../BearPlatform/Linux/BearString.h"
 #endif

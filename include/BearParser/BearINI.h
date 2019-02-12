@@ -19,7 +19,7 @@ namespace BearCore
 		BearINI&operator=(const BearINI&right);
 		BearINI&operator=(BearINI&&right);
 		void Clear();
-		
+
 		struct section
 		{
 			BearString parent;
@@ -27,8 +27,8 @@ namespace BearCore
 		};
 		BearMap<BearStringConteniar, section> sections;
 
-		BearVector<BearString>&Key(const bchar*section, const bchar*key, BearString&&default);
-		BearVector<BearString>&Key(const bchar*section, const bchar*key, const BearString&default);
+		BearVector<BearString>&Key(const bchar*section, const bchar*key, BearString&&def);
+		BearVector<BearString>&Key(const bchar*section, const bchar*key, const BearString&def);
 		const BearVector<BearString>&Key(const bchar*section, const bchar*key)const;
 		BearVector<BearString>&Key(const bchar*section, const bchar*key);
 		section&Section(const bchar*section);

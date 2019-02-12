@@ -85,11 +85,11 @@ namespace BearCore
 		}
 		cl &operator[](bptr id)
 		{
-			return cl_array[id];
+			return array[id];
 		}
 		const cl &operator[](bptr id) const
 		{
-			return cl_array[id];
+			return array[id];
 		}
 		union
 		{

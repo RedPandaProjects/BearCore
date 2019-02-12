@@ -5,13 +5,13 @@ namespace BearCore
 	{
 	public:
 		BEAR_CLASS_NO_COPY(BearThread);
-		// регистрацыя потока (функцыя и её аргументы);
-		template<class F,class ...args>
-		BearThread(F function,args&&...args):m_id(0),m_thread(0)
+		// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ);
+		template<class F,class ...A>
+		BearThread(F function,A&&...args):m_id(0),m_thread(0)
 		{
 			bear_make_arguments(m_arg, args...);
 			m_fun = bear_create_function_ref(function);
-			
+
 		}
 		template<class F>
 		BearThread(F function) :m_id(0), m_thread(0)
@@ -19,19 +19,19 @@ namespace BearCore
 			m_fun = bear_create_function_ref(function);
 
 		}
-		//запустить
+		//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 		void Join(const char*name);
-		//ожидать пока закончится поток. нельзя в самом потоки исполнить функцыю
+		//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ. пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 		void Wait();
-		//быстрое проекрашение работы потока
+		//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 		void Terminate();
 
 		void Swap(BearThread&Thread);
 
 		~BearThread();
-	private:  
+	private:
 		void RunThread(const char*name, void * fun, void * arg);
-		
+
 		mutable void* m_id;
 		mutable	uint32 m_thread;
 		mutable	BearFunctionRef* m_fun;

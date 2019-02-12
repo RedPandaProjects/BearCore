@@ -3,7 +3,8 @@
 #include "BearPlatform/Windows/BearWindowsType.h"
 #include "BearPlatform/Windows/BearProjectsDefines.h"
 #elif LINUX
-
+#include "BearPlatform/Linux/BearLinuxType.h"
+#include "BearPlatform/Linux/BearProjectsDefines.h"
 #else
 #error BearCore �� ������ ��������� �� ��������������
 #endif
@@ -17,7 +18,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <vector>
-#include<map>
+#include <map>
 #include <typeinfo>
 
 #include "BearTools/BearClass.h"
@@ -29,6 +30,7 @@
 
 #include "BearCoreInitializer.h"
 
+#include "BearTemplate/BearFunctional.h"
 #include "BearTemplate/BearAlgorithm.h"
 
 #include "BearTools/BearString.h"
@@ -40,8 +42,6 @@
 #include "BearDebug/BearDebug.h"
 
 #include "BearDebug/BearDebugDefines.h"
-
-#include "BearTemplate/BearFunctional.h"
 
 #include "BearTools/BearFlags.h"
 
