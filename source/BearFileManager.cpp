@@ -1,35 +1,11 @@
 #include "BearCore.hpp"
 #ifdef WINDOWS
 #include "Windows/BearFileManager_Windows.h"
-#elif LINUX
-#endif
 #include <sys/stat.h>
 #include <io.h>
-
-
-bool BearCore::BearFileManager::FileExists(const bchar * name)
-{
-	struct _stat buffer;
-#ifdef UNICODE
-	int exist = _wstat(name, &buffer);
-#else
-	int exist = _stat(name, &buffer);
+#elif LINUX
+#include "Linux/BearFileManager_Linux.h"
 #endif
-	if (exist == 0)
-		return true;
-	else // -1
-		return false;
-}
-
-bool BearCore::BearFileManager::FileDelete(const bchar * name)
-{
-#ifdef UNICODE
-	return _wremove(name) != -1;
-#else
-	return remove(name) != -1;
-#endif
-}
-
 
 
 bool BearCore::BearFileManager::DirectoryDelete(const bchar * name, bool deleteall)
@@ -47,70 +23,6 @@ bool BearCore::BearFileManager::DirectoryMove(const bchar * path, const bchar * 
 	return false;
 }
 
-
-bsize BearCore::BearFileManager::GetFileSize(const bchar * name)
-{
-
-	FILE*file = 0;
-#ifdef UNICODE
-	_wfopen_s(&file, name, TEXT("rb"));
-#else
-	fopen_s(&file, name, "rb");
-#endif
-	if (!file)
-		return 0;
-	fseek(file, 0, SEEK_END);
-	int64 size = ftell(file);
-	fclose(file);
-	return static_cast<bsize>(size);
-}
-
-
-
-BearCore::BearFileManager::FileTime BearCore::BearFileManager::GetFileCreateTime(const bchar * file)
-{
-	BearCore::BearFileManager::FileTime ft;
-	HANDLE fH;
-	FILETIME creationTime;
-	SYSTEMTIME sysTime;
-	fH = CreateFile(file, GENERIC_READ, 0, 0, OPEN_EXISTING, 0, 0);
-	if (fH != INVALID_HANDLE_VALUE)
-	{
-		GetFileTime(fH, &creationTime, 0, 0);
-		FileTimeToSystemTime(&creationTime, &sysTime);
-		ft.Year = sysTime.wYear;
-		ft.Month = sysTime.wMonth;
-		ft.Day = sysTime.wDay;
-		ft.Hour = sysTime.wHour;
-		ft.Minute = sysTime.wMinute;
-		ft.Second = sysTime.wSecond;
-		CloseHandle(fH);
-	}
-	return ft;
-}
-
-BearCore::BearFileManager::FileTime BearCore::BearFileManager::GetFileLastWriteTime(const bchar * file)
-{
-	BearCore::BearFileManager::FileTime ft;
-	HANDLE fH;
-	FILETIME creationTime;
-	SYSTEMTIME sysTime;
-	fH = CreateFile(file, GENERIC_READ, 0, 0, OPEN_EXISTING, 0, 0);
-	if (fH != INVALID_HANDLE_VALUE)
-	{
-		GetFileTime(fH, 0, 0, &creationTime);
-		FileTimeToSystemTime(&creationTime, &sysTime);
-		ft.Year = sysTime.wYear;
-		ft.Month = sysTime.wMonth ;
-		ft.Day = sysTime.wDay;
-		ft.Hour = sysTime.wHour;
-		ft.Minute = sysTime.wMinute;
-		ft.Second = sysTime.wSecond;
-		CloseHandle(fH);
-	}
-	return ft;
-}
-
 BearCore::BearString BearCore::BearFileManager::GetFileNameAndExtension(const bchar * FullPathAndFile)
 {
 	BearString temp(FullPathAndFile);
@@ -123,7 +35,7 @@ BearCore::BearString BearCore::BearFileManager::GetFileNameAndExtension(const bc
 BearCore::BearString BearCore::BearFileManager::GetFileName(const bchar * FullPathAndFile)
 {
 	BearString temp(FullPathAndFile);
-	if (temp.to_char_with_end(TEXT('.')))
+	if (temp.to_char_with_end(TEXT(".")[0]))
 		**temp = 0;
 	temp.seek(0);
 	if (temp.to_char_with_end(BEAR_PATH[0]))
@@ -136,23 +48,29 @@ BearCore::BearString BearCore::BearFileManager::GetFileName(const bchar * FullPa
 BearCore::BearString BearCore::BearFileManager::GetPathFile(const bchar * FullPathAndFile)
 {
 	BearString temp(FullPathAndFile);
-	if (temp.to_char_with_end(TEXT('\\')))
+	if (temp.to_char_with_end(BEAR_PATH[0]))
 		**temp = 0;
 	temp.seek(0);
 	return temp;
 }
 
-bool BearCore::BearFileManager::FileMove(const bchar * name, const bchar * newname)
-{
-#ifdef UNICODE
-	return _wrename(name, newname) != -1;
-#else
-	return rename(name, newname) != -1;
-#endif
-}
+
 
 void BearCore::BearFileManager::PathOptimization(bchar * in)
 {
+	{
+		bchar* b = in;
+		while (*b)
+		{
+#ifdef WINDOWS
+			if(*b==TEXT("/")[0])
+#else
+			if(*b==TEXT("\\")[0])
+#endif
+			*b=BEAR_PATH[0];
+			b++;
+		}
+	}
 	bchar*path = in;
 	bchar*path_lost = in;
 	bchar* b = in;
@@ -170,11 +88,11 @@ void BearCore::BearFileManager::PathOptimization(bchar * in)
 	}
 	while (b != e)
 	{
-	
+
 
 		if (*b == BEAR_PATH[0])
 		{
-			
+
 			const bchar*shift = b;
 			while (*shift == BEAR_PATH[0])
 			{
@@ -188,16 +106,16 @@ void BearCore::BearFileManager::PathOptimization(bchar * in)
 				e = in + BearString::GetSize(in);
 				continue;
 			}
-	
+
 			path_lost = path;
 			path = b;
-		
+
 		}
-		if (b[0] == TEXT('.') && b[1] == TEXT('.') && b[2]!= TEXT('.') && path != in)
+		if (b[0] == TEXT(".")[0] && b[1] == TEXT(".")[0] && b[2]!= TEXT(".")[0] && path != in)
 		{
 			if (path_lost[0] == BEAR_PATH[0])
 			{
-				if (bear_compare(&path_lost[1], TEXT(".."), 2) == 0 && path_lost[3] != TEXT('.')) {
+				if (bear_compare(&path_lost[1], TEXT(".."), 2) == 0 && path_lost[3] != TEXT(".")[0]) {
 
 					b++;
 					continue;
@@ -205,13 +123,13 @@ void BearCore::BearFileManager::PathOptimization(bchar * in)
 			}
 			else
 			{
-				if (bear_compare(&path_lost[0], TEXT(".."), 2) == 0 && path_lost[2] != TEXT('.')) {
+				if (bear_compare(&path_lost[0], TEXT(".."), 2) == 0 && path_lost[2] != TEXT(".")[0]) {
 
 					b++;
 					continue;
 				}
 			}
-			
+
 			b += 2;
 			bear_move(path_lost, b, BearString::GetSize(b) + 1);
 			path = in;
@@ -233,4 +151,117 @@ void BearCore::BearFileManager::PathOptimization(bchar * in)
 	}
 }
 
+static void FindDirectory(BearCore::BearVector<BearCore::BearString>& list, const bchar * path, const bchar * curent_path, const bchar* fileextension)
+{
+	BearCore::BearVector<BearCore::BearString> temp;
+	BearCore::BearStringPath path_temp;
+	BearCore::BearString::Copy(path_temp, path);
+	if (curent_path&&*curent_path)
+	{
+		BearCore::BearString::Contact(path_temp, BEAR_PATH);
+		BearCore::BearString::Contact(path_temp, curent_path);
+	}
+
+
+
+	Find(temp, path_temp, fileextension, false, false);
+
+	auto begin = temp.begin();
+	auto end = temp.end();
+	while (begin != end)
+	{
+		path_temp[0] = 0;
+		if (curent_path&&*curent_path)
+		{
+			BearCore::BearString::Copy(path_temp, curent_path);
+			BearCore::BearString::Contact(path_temp, BEAR_PATH);
+		}
+
+		BearCore::BearString::Contact(path_temp, **begin);
+		begin->assign(path_temp);
+
+		FindDirectory(list, path, path_temp, fileextension);
+		begin++;
+	}
+	list.insert(list.end(), temp.begin(), temp.end());
+}
+void FindDirectory(BearCore::BearVector<BearCore::BearString>& list, const bchar * path, const bchar* fileextension)
+{
+	BearCore::BearVector<BearCore::BearString> temp;
+	BearCore::BearStringPath path_temp;
+	BearCore::BearString::Copy(path_temp, path);
+	 
+	Find(temp, path, fileextension, true, false);
+	auto begin = temp.begin();
+	auto end = temp.end();
+	while (begin != end)
+	{
+		FindDirectory(list, **begin, fileextension);
+
+		begin++;
+	}
+
+	if(temp.size())
+	
+	list.insert(list.end(), temp.begin(), temp.end());
+}
+
+void BearCore::BearFileManager::FindFiles(BearVector<BearString>& list, const bchar * path, const bchar * fileextension, bool allpath, bool all)
+{
+	Find(list, path, fileextension, allpath);
+	if (all)
+	{
+		if (allpath)
+		{
+			BearCore::BearVector<BearCore::BearString> path_list;
+			FindDirectories(path_list, path, TEXT("*"), true, true);
+			auto begin = path_list.begin(), end = path_list.end();
+			while (begin != end)
+			{
+				Find(list, **begin, fileextension, allpath);
+				begin++;
+
+			}
+		}
+		else
+		{
+			BearCore::BearVector<BearCore::BearString> path_list, file_list;
+			FindDirectories(path_list, path, TEXT("*"), false, true);
+
+			auto begin = path_list.begin(), end = path_list.end();
+			while (begin != end)
+			{
+				BearStringPath path_temp;
+				BearCore::BearString::Copy(path_temp, path);
+				BearCore::BearString::Contact(path_temp, BEAR_PATH);
+				BearCore::BearString::Contact(path_temp, **begin);
+
+				Find(file_list, path_temp, fileextension, false);
+				auto begin1 = file_list.begin(), end1 = file_list.end();
+				while (begin1 != end1)
+				{
+					BearStringPath temp1;
+					BearCore::BearString::Copy(temp1, **begin);
+					BearCore::BearString::Contact(temp1, BEAR_PATH);
+					BearCore::BearString::Contact(temp1, **begin1);
+					list.push_back(temp1);
+					begin1++;
+				}
+				file_list.clear();
+				begin++;
+			}
+
+		}
+	}
+}
+
+void BearCore::BearFileManager::FindDirectories(BearVector<BearString>& list, const bchar * path, const bchar * fileextension, bool allpath, bool all)
+{
+	if (!all)
+		Find(list, path, fileextension, allpath, false);
+	else if (allpath)
+		FindDirectory(list, path, fileextension);
+	else
+		FindDirectory(list, path, TEXT(""), fileextension);
+}
 

@@ -1,10 +1,9 @@
-#include "BearCore.hpp"
-#include "..\..\include\BearProjects\BearProjectTool.h"
+
 struct lib
 {
 	HMODULE Module;
 	BearCore::BearMap<BearCore::BearStringConteniar, FARPROC> Procs;
-}; 
+};
 BearCore::BearMap<BearCore::BearStringConteniar, lib> Libs;
 bool BearCore::BearProjectTool::CheckProject(const bchar * name)
 {
@@ -96,7 +95,7 @@ void * BearCore::BearProjectTool::GetFunctionInProjectImpl(const bchar * name, c
 		BearString::Contact(fullname, TEXT(".dll"));
 		lib obj;
 		obj.Module = LoadLibrary(fullname);
-		BEAR_FATALERROR(obj.Module, TEXT("Неудалось загрузить %s ошибка %x"), fullname, GetLastError());
+		BEAR_FATALERROR(obj.Module, TEXT("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ %s пїЅпїЅпїЅпїЅпїЅпїЅ %x"), fullname, GetLastError());
 		Libs.insert(name_project, obj);
 		Item = Libs.find(BearStringConteniar(name_project, false));
 	}
@@ -104,7 +103,7 @@ void * BearCore::BearProjectTool::GetFunctionInProjectImpl(const bchar * name, c
 	if (ItemProc == Item->second.Procs.end())
 	{
 		FARPROC proc = GetProcAddress(Item->second.Module, *BearEncoding::ToANSI(function));
-		BEAR_FATALERROR(proc, TEXT("Неудалось загрузить %s в библиотеки %x"), function, name);
+		BEAR_FATALERROR(proc, TEXT("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ %s пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ %x"), function, name);
 		Item->second.Procs.insert(function, proc);
 		return proc;
 	}

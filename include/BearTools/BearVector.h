@@ -22,7 +22,7 @@ namespace BearCore
 
 		typename vector::const_reference operator[] (bsize pos) const { BEAR_ASSERT(pos<vector::size());  return (*(vector::begin() + pos)); }
 		typename vector::reference operator[] (bsize pos) { BEAR_ASSERT(pos < vector::size());  return (*(vector::begin() + pos)); }
-		void clear_not_free() { erase(vector::begin(), vector::end()); }
+		void clear_not_free() { vector::erase(vector::begin(), vector::end()); }
 		BearMemoryRef<C> popData() { auto ptr = BearMemoryRef<C>(&vector::at(0), true); this->_Myfirst() = vector::pointer(); this->_Mylast() = vector::pointer(); this->_Myend() = vector::pointer(); return ptr; }
 
 	};

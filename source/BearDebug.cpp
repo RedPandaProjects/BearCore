@@ -1,34 +1,43 @@
 #include "BearCore.hpp"
+#ifdef WINDOWS
 #include "BugTrap.h"
-static void(*LCallBack)(void) = 0;
-
-void BearCore::BearDebug::DebugBreak()
-{
-	__debugbreak();
-}
-
-extern BearCore::BearStringPath LogFileOut;
-
+#pragma warning(disable:4091)
+#include <dbghelp.h> // MiniDump flags
 void CALLBACK GErrorHandler(INT_PTR)
 {
-#ifdef WINDOWS
 	if (LCallBack)LCallBack();
 	BearCore::BearLog::Flush();
 	BT_AddLogFile(LogFileOut);
 	BT_SaveSnapshot(0);
+}
+
+#elif LINUX
+#include <signal.h>
+#endif
+static void(*LCallBack)(void) = 0;
+
+void BearCore::BearDebug::DebugBreak()
+{
+#ifdef WINDOWS
+	__debugbreak();
+#else
+   __builtin_trap();
 #endif
 }
+
+extern BearCore::BearStringPath LogFileOut;
+
 
 void BearCore::BearDebug::FatalError(const bchar * chenk, const bchar * name, const bchar * function_name, uint32 line, const bchar * text, ...)
 {
 	BearString str;
 
-	str.append(TEXT("\r\nОшибка в файле:")).append(name);
-	str.append(TEXT("\r\nМесто проблемы:")).append(chenk);
-	str.append(TEXT("\r\nФункция:")).append(function_name);
-	str.append(TEXT("\r\nСтрока:"));
+	str.append(TEXT("\r\nпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ:")).append(name);
+	str.append(TEXT("\r\nпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ:")).append(chenk);
+	str.append(TEXT("\r\nпїЅпїЅпїЅпїЅпїЅпїЅпїЅ:")).append(function_name);
+	str.append(TEXT("\r\nпїЅпїЅпїЅпїЅпїЅпїЅ:"));
 	str.append_printf(TEXT("%u"),line);
-	str.append(TEXT("\r\nКоментарий:"));
+	str.append(TEXT("\r\nпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ:"));
 	va_list va;
 	va_start(va, text);
 	str.append_printf_va(text, va);
@@ -68,5 +77,9 @@ void BearCore::BearDebug::SetCallBack(void(*callback)(void))
 
 void BearCore::BearDebug::ShowMessage(const bchar * title, const bchar * text)
 {
+#ifdef WINDOWS
 	MessageBox(NULL, text, title, MB_ICONERROR);
+#elif LINUX
+	//printf(text);
+#endif
 }

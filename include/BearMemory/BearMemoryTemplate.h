@@ -124,7 +124,7 @@ namespace BearCore
 		return c;
 	}
 	template<typename C, typename...D>
-	C*bear_new(D&...d)
+	C*bear_new(const D&...d)
 	{
 		C*c = reinterpret_cast<C*>(BearMemory::Malloc(sizeof(C)
 #ifdef DEBUG
@@ -134,7 +134,17 @@ namespace BearCore
 		new(c)C(d...);
 		return c;
 	}
-
+	template<typename C, typename...D>
+	C*bear_new(D&&...d)
+	{
+		C*c = reinterpret_cast<C*>(BearMemory::Malloc(sizeof(C)
+#ifdef DEBUG
+			, typeid(C).name()
+#endif
+		));
+		new(c)C(d...);
+		return c;
+	}
 	template<typename C>
 	C*bear_realloc(C*old, bsize new_count)
 	{

@@ -1,23 +1,7 @@
 ﻿#include "BearCore.hpp"
-#include <time.h>
-#include <ctime>
-LARGE_INTEGER getFrequency()
-{
-	LARGE_INTEGER frequency;
-	QueryPerformanceFrequency(&frequency);
-	return frequency;
-}
-BearCore::BearTime BearCore::BearTimer::GetCurrentTime() const
-{
-	HANDLE currentThread = GetCurrentThread();
-	DWORD_PTR previousMask = SetThreadAffinityMask(currentThread, 1);
+#ifdef WINDOWS
+#include "Windows/BearTimer_Windows.h"
+#elif LINUX
+#include "Linux/BearTimer_Linux.h"
+#endif 
 
-	static LARGE_INTEGER frequency = getFrequency();
-
-	LARGE_INTEGER time;
-	QueryPerformanceCounter(&time);
-
-	SetThreadAffinityMask(currentThread, previousMask);
-	
-	return /*BearCore::BearTime(int32(std::clock()));*/BearTime(1000000 * time.QuadPart / frequency.QuadPart);
-}

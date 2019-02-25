@@ -13,6 +13,8 @@ namespace BearCore
 	private:
 #ifdef WINDOWS
 		CRITICAL_SECTION m_mutex;
+#elif LINUX 
+		pthread_mutex_t m_mutex;
 #endif
 	};
 	class BearMutexLock

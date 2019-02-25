@@ -1,4 +1,5 @@
 #include "BearCore.hpp"
+#include <math.h>
 static void multiply (float* result, const float* matrix1, const float* matrix2)
 {
 	result[0] = (matrix1[0] * matrix2[0]) + (matrix1[1] * matrix2[4]) + (matrix1[2] * matrix2[8]) + (matrix1[3] * matrix2[12]);
@@ -139,8 +140,8 @@ BearCore::BearMatrix & BearCore::BearMatrix::Scale(float x, float y, float z)
 BearCore::BearMatrix & BearCore::BearMatrix::RotateX(float x)
 {
 	BuildIdentity();
-	float cosa = static_cast<float>(cos(x));
-	float sina = static_cast<float>(sin(x));
+	float cosa = static_cast<float>(cosf(x));
+	float sina = static_cast<float>(sinf(x));
 	m_matrix[5] = cosa;
 	m_matrix[6] = sina;
 	m_matrix[9] = -sina;
@@ -151,8 +152,8 @@ BearCore::BearMatrix & BearCore::BearMatrix::RotateX(float x)
 BearCore::BearMatrix & BearCore::BearMatrix::RotateY(float y)
 {
 	BuildIdentity();
-	float cosa = static_cast<float>(cos(y));
-	float sina = static_cast<float>(sin(y));
+	float cosa = static_cast<float>(cosf(y));
+	float sina = static_cast<float>(sinf(y));
 	m_matrix[0] = cosa;
 	m_matrix[2] = -sina;
 	m_matrix[8] = sina;
@@ -163,8 +164,8 @@ BearCore::BearMatrix & BearCore::BearMatrix::RotateY(float y)
 BearCore::BearMatrix & BearCore::BearMatrix::RotateZ(float z)
 {
 	BuildIdentity();
-	float cosa = static_cast<float>(cos(z));
-	float sina = static_cast<float>(sin(z));
+	float cosa = static_cast<float>(cosf(z));
+	float sina = static_cast<float>(sinf(z));
 	m_matrix[0] = cosa;
 	m_matrix[1] = sina;
 	m_matrix[4] = -sina;

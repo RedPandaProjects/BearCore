@@ -87,7 +87,7 @@ void BearCore::BearINI::decoder(const BearBufferedReader & base, BearEncoding::E
 		base.ReadStringToLine(str, typetext);
 		str.seek(0);
 		str.sub_space_in_begin();
-		if (str.to_char(TEXT(';')))
+		if (str.to_char(TEXT(";")[0]))
 		{
 			if (str.tell() == 0)
 			{
@@ -96,7 +96,7 @@ void BearCore::BearINI::decoder(const BearBufferedReader & base, BearEncoding::E
 			else
 			{
 				str--;
-				if (**str != TEXT('\\'))
+				if (**str != TEXT("\\")[0])
 				{
 					str++;
 					**str = 0;
@@ -109,9 +109,9 @@ void BearCore::BearINI::decoder(const BearBufferedReader & base, BearEncoding::E
 		{
 			str.seek(str.tell() + 9);
 			str.sub_space_in_begin();
-			BEAR_FATALERROR(**str==TEXT('"'), TEXT("Некоретный импорт [%s]"), **str);
+			BEAR_FATALERROR(**str==TEXT("\"")[0], TEXT("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ [%s]"), **str);
 			str.sub_space_in_end();
-			BEAR_FATALERROR((*str)[str.size()-1] == TEXT('"'), TEXT("Некоретный импорт [%s]"), **str);
+			BEAR_FATALERROR((*str)[str.size()-1] == TEXT("\"")[0], TEXT("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ [%s]"), **str);
 			(*str)[str.size() - 1] = 0;
 		
 			decoder(**includer->OpenAsBuffer(*str), typetext, includer);
@@ -119,15 +119,15 @@ void BearCore::BearINI::decoder(const BearBufferedReader & base, BearEncoding::E
 		}
 		if (!**str)
 			continue;
-		if (str[0] == TEXT('['))
+		if (str[0] == TEXT("[")[0])
 		{
 
 
 			str++;
 			bchar*data = *str;
-			BEAR_FATALERROR(str.to_char(TEXT(']')), TEXT("Нет конца в [%s]"), data);
+			BEAR_FATALERROR(str.to_char(TEXT("]")[0]), TEXT("пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ [%s]"), data);
 			str.sub_space_in_begin();
-			bchar *sec_name_end = *str; str.to_char(TEXT(':'));
+			bchar *sec_name_end = *str; str.to_char(TEXT(":")[0]);
 			str.sub_space_in_begin();
 			str.sub_space_in_end();
 			bchar *parent_name = *str;
@@ -139,8 +139,8 @@ void BearCore::BearINI::decoder(const BearBufferedReader & base, BearEncoding::E
 				parent_name++;
 				section sec;
 				sec.parent = parent_name;
-				//BEAR_FATALERROR(parent != sections.end(), TEXT("Не найден родитель [%s]"), parent_name);
-				sections.insert(data, sec);
+				//BEAR_FATALERROR(parent != sections.end(), TEXT("пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ [%s]"), parent_name);
+				sections.insert(BearStringConteniar( data), sec);
 			}
 			else
 			{
@@ -153,10 +153,10 @@ void BearCore::BearINI::decoder(const BearBufferedReader & base, BearEncoding::E
 		else
 		{
 			if (!*str)continue;
-			BEAR_FATALERROR(current_section != sections.end(), TEXT("Некоректный ini файл"));
+			BEAR_FATALERROR(current_section != sections.end(), TEXT("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ ini пїЅпїЅпїЅпїЅ"));
 			bchar*data = *str;
-			str.to_char(TEXT('='));
-			bchar*key_data = TEXT("");
+			str.to_char(TEXT("=")[0]);
+			bchar*key_data =(bchar*) TEXT("");
 			if (**str) {
 				**str = 0;
 				str++;
@@ -223,7 +223,7 @@ void BearCore::BearINI::coder(BearOutputStream & base, BearEncoding::Encoding ty
 
 }
 
-BearCore::BearVector<BearCore::BearString>& BearCore::BearINI::Key(const bchar * section, const bchar * key, BearString && default)
+BearCore::BearVector<BearCore::BearString>& BearCore::BearINI::Key(const bchar * section, const bchar * key, BearString && def)
 {
 	auto sec = sections.find(BearStringConteniar(section, false));
 	while (sec != sections.end())
@@ -249,11 +249,11 @@ BearCore::BearVector<BearCore::BearString>& BearCore::BearINI::Key(const bchar *
 	}
 	sec->second.keys.insert(key);
 	auto k = sec->second.keys.find(BearStringConteniar(key, false));
-	k->second.push_back(section);
+	k->second.push_back(def);
 	return 	k->second;
 }
 
-BearCore::BearVector<BearCore::BearString>& BearCore::BearINI::Key(const bchar * section, const bchar * key, const BearString & default)
+BearCore::BearVector<BearCore::BearString>& BearCore::BearINI::Key(const bchar * section, const bchar * key, const BearString & def)
 {
 	auto sec = sections.find(BearStringConteniar(section, false));
 	while (sec == sections.end())
@@ -279,25 +279,25 @@ BearCore::BearVector<BearCore::BearString>& BearCore::BearINI::Key(const bchar *
 	}
 	sec->second.keys.insert(key);
 	auto k = sec->second.keys.find(BearStringConteniar(key, false));
-	k->second.push_back(section);
+	k->second.push_back(def);
 	return 	k->second;
 }
 
 const BearCore::BearVector<BearCore::BearString>& BearCore::BearINI::Key(const bchar * section, const bchar * key) const
 {
 	auto sec = sections.find(BearStringConteniar(section, false));
-	BEAR_FATALERROR(sec != sections.end(), TEXT("Не найдена секция [%s]"), section);
+	BEAR_FATALERROR(sec != sections.end(), TEXT("пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ [%s]"), section);
 	auto k = sec->second.keys.find(BearStringConteniar(key, false));
-	BEAR_FATALERROR(k != sec->second.keys.end(), TEXT("Не найдена ключь [%s] в секции [%s]"), key, section);
+	BEAR_FATALERROR(k != sec->second.keys.end(), TEXT("пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ [%s] пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ [%s]"), key, section);
 	return 	k->second;
 }
 
 BearCore::BearVector< BearCore::BearString>& BearCore::BearINI::Key(const bchar * section, const bchar * key)
 {
 	auto sec = sections.find(BearStringConteniar(section, false));
-	BEAR_FATALERROR(sec != sections.end(), TEXT("Не найдена секция [%s]"), section);
+	BEAR_FATALERROR(sec != sections.end(), TEXT("пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ [%s]"), section);
 	auto k = sec->second.keys.find(BearStringConteniar(key, false));
-	BEAR_FATALERROR(k != sec->second.keys.end(), TEXT("Не найдена ключь [%s] в секции [%s]"), key, section);
+	BEAR_FATALERROR(k != sec->second.keys.end(), TEXT("пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ [%s] пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ [%s]"), key, section);
 	return 	k->second;
 }
 

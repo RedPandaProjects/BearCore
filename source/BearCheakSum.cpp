@@ -152,7 +152,7 @@ void BearCore::BearCheckSum::SHA256(void * data, bsize size, uint8 sha[])
 	SHA256Final(&ctx, sha);
 }
 
-static BOOL crc32_ready = FALSE;
+static bool crc32_ready = false;
 static uint32 crc32_table[256];
 
 inline uint32 Reflect(uint32 ref, int8 ch)
@@ -170,9 +170,9 @@ inline uint32 Reflect(uint32 ref, int8 ch)
 
 void crc32_init()
 {
-	
+
 	uint32 ulPolynomial = 0x04c11db7;
-	
+
 	for (int i = 0; i <= 0xFF; i++)
 	{
 		crc32_table[i] = Reflect(i, 8) << 24;
@@ -187,7 +187,7 @@ uint32 BearCore::BearCheckSum::CRC32(const void * data, bsize size)
 	if (!crc32_ready)
 	{
 		crc32_init();
-		crc32_ready = TRUE;
+		crc32_ready = true;
 	}
 
 	uint32 ulCRC = 0xffffffff;

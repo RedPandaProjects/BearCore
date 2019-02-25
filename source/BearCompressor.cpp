@@ -15,7 +15,7 @@ bsize BearCore::BearLZO::Compressor(const void * in_, void * out_, bsize size_bl
 	lzo_uint in_len= size_block;
 	lzo_uint out_len;
 	r = lzo1x_1_compress(in, in_len, out, &out_len, GLZOWrkmem);
-	BEAR_FATALERROR(r == LZO_E_OK, TEXT("LZO:Неудачная компресия"));
+	BEAR_FATALERROR(r == LZO_E_OK, TEXT("LZO:РќРµ СѓРґР°Р»РѕСЃСЊ РёРЅРµС†С‹Р»РёР·РёСЂРѕРІР°С‚СЊ"));
 	return static_cast<bsize>(out_len);
 }
 
@@ -26,7 +26,7 @@ bsize BearCore::BearLZO::Decompressor(const void * in_, void * out_, bsize size_
 	lzo_bytep out = static_cast<lzo_bytep>(out_);
 	lzo_uint in_len = size_block; lzo_uint out_len;
 	r = lzo1x_decompress(in, in_len, out, &out_len, NULL);
-	BEAR_FATALERROR(r == LZO_E_OK, TEXT("LZO:Неудачная декомпресия"));
+	BEAR_FATALERROR(r == LZO_E_OK, TEXT("LZO:РќРµ СѓРґР°Р»РѕСЃСЊ РёРЅРµС†С‹Р»РёР·РёСЂРѕРІР°С‚СЊ"));
 	return static_cast<bsize>(out_len);
 }
 
@@ -58,7 +58,7 @@ BearCore::BearZLIB::~BearZLIB()
 	case BearCore::BearZLIB::Z_Fast:
 	case BearCore::BearZLIB::Z_Best:
 		deflateEnd(reinterpret_cast<z_stream*>(m_ptr));
-		
+
 		break;
 	default:
 		inflateEnd(reinterpret_cast<z_stream*>(m_ptr));

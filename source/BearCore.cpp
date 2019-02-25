@@ -18,7 +18,10 @@ extern BearCore::BearVector<BearCore::BearStringConteniar> *LogData ;
 static bool bInitialize=false;
 extern BearCore::BearStringPath LogFileOut;
 extern lzo_voidp GLZOWrkmem;
+
+#ifdef WINDOWS
 extern void CALLBACK GErrorHandler(INT_PTR);
+#endif
 
 z_stream GzlibStream;
 void BearCore::Initialize(const bchar * app_name,  const bchar * email)
@@ -36,14 +39,14 @@ void BearCore::Initialize(const bchar * app_name,  const bchar * email)
 	BT_SetActivityType(BTA_SHOWUI);
 	BT_SetDialogMessage(
 		BTDM_INTRO2,
-		TEXT("Неизветная ошибка!!!")
+		TEXT("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ!!!")
 	);
 	BT_SetDialogMessage(
 		BTDM_INTRO1,
-		TEXT("Отправить по почте!!!")
+		TEXT("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ!!!")
 	);
 	BT_SetReportFormat(BTRF_TEXT);
-	BT_SetFlags(/**/BTF_DETAILEDMODE | /**BTF_EDIETMAIL | /**/BTF_ATTACHREPORT /**| BTF_LISTPROCESSES /**| BTF_SHOWADVANCEDUI /**| BTF_SCREENCAPTURE/**/);
+	BT_SetFlags(/**/BTF_DETAILEDMODE | /**BTF_EDIETMAIL |*/BTF_ATTACHREPORT /**| BTF_LISTPROCESSES *| BTF_SHOWADVANCEDUI *| BTF_SCREENCAPTURE*/);
 
 	if(email)
 	BT_SetSupportEMail(email);
@@ -52,12 +55,12 @@ void BearCore::Initialize(const bchar * app_name,  const bchar * email)
 	BT_SetPreErrHandler(GErrorHandler, 0);
 #endif
 	bInitialize = true;
-	
+
 	setlocale(LC_TIME,"");
 
-	BEAR_FATALERROR(lzo_init() == LZO_E_OK, TEXT("Неудалось инцылизировать LZO"));
+	BEAR_FATALERROR(lzo_init() == LZO_E_OK, TEXT("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ LZO"));
 
-	BEAR_FATALERROR(inflateInit(&GzlibStream) == Z_OK, TEXT("Неудалось инцылизировать zlib"));	inflateEnd(&GzlibStream);
+	BEAR_FATALERROR(inflateInit(&GzlibStream) == Z_OK, TEXT("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ zlib"));	inflateEnd(&GzlibStream);
 }
 
 

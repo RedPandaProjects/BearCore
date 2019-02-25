@@ -38,7 +38,7 @@ void BearCore::BearFileManager::GetApplicationPath(BearStringPath & path)
 }
 
 
-static void WinFind(BearCore::BearVector<BearCore::BearString>& list, const bchar* path, const bchar* ext, bool full_path, bool findFile = true)
+static void Find(BearCore::BearVector<BearCore::BearString>& list, const bchar* path, const bchar* ext, bool full_path, bool findFile = true)
 {
 	WIN32_FIND_DATA file;
 	BearCore::BearStringPath full;
@@ -86,121 +86,98 @@ static void WinFind(BearCore::BearVector<BearCore::BearString>& list, const bcha
 	}
 	FindClose(search_handle);
 }
-static void WinFindDirectory(BearCore::BearVector<BearCore::BearString>& list, const bchar * path, const bchar * curent_path, const bchar* fileextension)
+
+bool BearCore::BearFileManager::FileExists(const bchar * name)
 {
-	BearCore::BearVector<BearCore::BearString> temp;
-	BearCore::BearStringPath path_temp;
-	BearCore::BearString::Copy(path_temp, path);
-	if (curent_path&&*curent_path)
-	{
-		BearCore::BearString::Contact(path_temp, BEAR_PATH);
-		BearCore::BearString::Contact(path_temp, curent_path);
-	}
-
-
-
-	WinFind(temp, path_temp, fileextension, false, false);
-
-	auto begin = temp.begin();
-	auto end = temp.end();
-	while (begin != end)
-	{
-		path_temp[0] = 0;
-		if (curent_path&&*curent_path)
-		{
-			BearCore::BearString::Copy(path_temp, curent_path);
-			BearCore::BearString::Contact(path_temp, BEAR_PATH);
-		}
-
-		BearCore::BearString::Contact(path_temp, **begin);
-		begin->assign(path_temp);
-
-		WinFindDirectory(list, path, path_temp, fileextension);
-		begin++;
-	}
-	list.insert(list.end(), temp.begin(), temp.end());
-}
-void WinFindDirectory(BearCore::BearVector<BearCore::BearString>& list, const bchar * path, const bchar* fileextension)
-{
-	BearCore::BearVector<BearCore::BearString> temp;
-	BearCore::BearStringPath path_temp;
-	BearCore::BearString::Copy(path_temp, path);
-	 
-	WinFind(temp, path, fileextension, true, false);
-	auto begin = temp.begin();
-	auto end = temp.end();
-	while (begin != end)
-	{
-		WinFindDirectory(list, **begin, fileextension);
-
-		begin++;
-	}
-
-	if(temp.size())
-	
-	list.insert(list.end(), temp.begin(), temp.end());
-}
-
-void BearCore::BearFileManager::FindFiles(BearVector<BearString>& list, const bchar * path, const bchar * fileextension, bool allpath, bool all)
-{
-	WinFind(list, path, fileextension, allpath);
-	if (all)
-	{
-		if (allpath)
-		{
-			BearCore::BearVector<BearCore::BearString> path_list;
-			FindDirectories(path_list, path, TEXT("*"), true, true);
-			auto begin = path_list.begin(), end = path_list.end();
-			while (begin != end)
-			{
-				WinFind(list, **begin, fileextension, allpath);
-				begin++;
-
-			}
-		}
-		else
-		{
-			BearCore::BearVector<BearCore::BearString> path_list, file_list;
-			FindDirectories(path_list, path, TEXT("*"), false, true);
-
-			auto begin = path_list.begin(), end = path_list.end();
-			while (begin != end)
-			{
-				BearStringPath path_temp;
-				BearCore::BearString::Copy(path_temp, path);
-				BearCore::BearString::Contact(path_temp, BEAR_PATH);
-				BearCore::BearString::Contact(path_temp, **begin);
-
-				WinFind(file_list, path_temp, fileextension, false);
-				auto begin1 = file_list.begin(), end1 = file_list.end();
-				while (begin1 != end1)
-				{
-					BearStringPath temp1;
-					BearCore::BearString::Copy(temp1, **begin);
-					BearCore::BearString::Contact(temp1, BEAR_PATH);
-					BearCore::BearString::Contact(temp1, **begin1);
-					list.push_back(temp1);
-					begin1++;
-				}
-				file_list.clear();
-				begin++;
-			}
-
-		}
-	}
-}
-
-void BearCore::BearFileManager::FindDirectories(BearVector<BearString>& list, const bchar * path, const bchar * fileextension, bool allpath, bool all)
-{
-	if (!all)
-		WinFind(list, path, fileextension, allpath, false);
-	else if (allpath)
-		WinFindDirectory(list, path, fileextension);
-	else
-		WinFindDirectory(list, path, TEXT(""), fileextension);
+	struct _stat buffer;
+#ifdef UNICODE
+	int exist = _wstat(name, &buffer);
+#else
+	int exist = _stat(name, &buffer);
+#endif
+	if (exist == 0)
+		return true;
+	else // -1
+		return false;
 }
 
 
 
+bool BearCore::BearFileManager::FileDelete(const bchar * name)
+{
+#ifdef UNICODE
+	return _wremove(name) != -1;
+#else
+	return remove(name) != -1;
+#endif
+}
+
+bsize BearCore::BearFileManager::GetFileSize(const bchar * name)
+{
+
+	FILE*file = 0;
+#ifdef UNICODE
+	_wfopen_s(&file, name, TEXT("rb"));
+#else
+	fopen_s(&file, name, "rb");
+#endif
+	if (!file)
+		return 0;
+	fseek(file, 0, SEEK_END);
+	int64 size = ftell(file);
+	fclose(file);
+	return static_cast<bsize>(size);
+}
 
 
+BearCore::BearFileManager::FileTime BearCore::BearFileManager::GetFileCreateTime(const bchar * file)
+{
+	BearCore::BearFileManager::FileTime ft;
+	HANDLE fH;
+	FILETIME creationTime;
+	SYSTEMTIME sysTime;
+	fH = CreateFile(file, GENERIC_READ, 0, 0, OPEN_EXISTING, 0, 0);
+	if (fH != INVALID_HANDLE_VALUE)
+	{
+		GetFileTime(fH, &creationTime, 0, 0);
+		FileTimeToSystemTime(&creationTime, &sysTime);
+		ft.Year = sysTime.wYear;
+		ft.Month = sysTime.wMonth;
+		ft.Day = sysTime.wDay;
+		ft.Hour = sysTime.wHour;
+		ft.Minute = sysTime.wMinute;
+		ft.Second = sysTime.wSecond;
+		CloseHandle(fH);
+	}
+	return ft;
+}
+
+BearCore::BearFileManager::FileTime BearCore::BearFileManager::GetFileLastWriteTime(const bchar * file)
+{
+	BearCore::BearFileManager::FileTime ft;
+	HANDLE fH;
+	FILETIME creationTime;
+	SYSTEMTIME sysTime;
+	fH = CreateFile(file, GENERIC_READ, 0, 0, OPEN_EXISTING, 0, 0);
+	if (fH != INVALID_HANDLE_VALUE)
+	{
+		GetFileTime(fH, 0, 0, &creationTime);
+		FileTimeToSystemTime(&creationTime, &sysTime);
+		ft.Year = sysTime.wYear;
+		ft.Month = sysTime.wMonth ;
+		ft.Day = sysTime.wDay;
+		ft.Hour = sysTime.wHour;
+		ft.Minute = sysTime.wMinute;
+		ft.Second = sysTime.wSecond;
+		CloseHandle(fH);
+	}
+	return ft;
+}
+bool BearCore::BearFileManager::FileMove(const bchar * name, const bchar * newname)
+{
+#ifdef UNICODE
+	return _wrename(name, newname) != -1;
+#else
+	return rename(name, newname) != -1;
+#endif
+}

@@ -199,107 +199,134 @@ namespace BearCore
 			return;
 		}
 	}
-	template <typename T, typename C,typename L>
-	inline T bear_upper_bound(T begin, T end, C&& val,L&&comp)
+	template <typename T, typename C,typename L=BearDefaultCompare>
+	inline T bear_upper_bound(T begin, T end, C&& val,L&&comp = BearDefaultCompare())
+	{
+		return	Impl::impl_upper_bound(begin, end, val, comp);
+	}
+	template <typename T, typename C, typename L=BearDefaultCompare>
+	inline T bear_upper_bound(T begin, T end, C& val, L&&comp = BearDefaultCompare())
 	{
 		return	Impl::impl_upper_bound(begin, end, val, comp);
 	}
 	template <typename T, typename C, typename L>
-	inline T bear_upper_bound(T begin, T end, C& val, L&&comp)
+	inline T bear_upper_bound(T begin, T end, C&& val, L&comp)
 	{
 		return	Impl::impl_upper_bound(begin, end, val, comp);
 	}
-	template <typename T, typename C, typename L= BearDefaultCompare>
-	inline T bear_upper_bound(T begin, T end, C&& val, L&comp = BearDefaultCompare())
-	{
-		return	Impl::impl_upper_bound(begin, end, val, comp);
-	}
-	template <typename T, typename C, typename L= BearDefaultCompare>
-	inline T bear_upper_bound(T begin, T end, C& val, L&comp = BearDefaultCompare())
+	template <typename T, typename C, typename L>
+	inline T bear_upper_bound(T begin, T end, C& val, L&comp )
 	{
 		return	Impl::impl_upper_bound(begin, end, val, comp);
 	}
 
-	template <typename T, typename C, typename L>
-	inline T bear_lower_bound(T begin, T end, C&& val, L&&comp)
+	template <typename T, typename C, typename L=BearDefaultCompare>
+	inline T bear_lower_bound(T begin, T end, C&& val, L&&comp=BearDefaultCompare())
 	{
 		return	Impl::impl_lower_bound(begin, end, val, comp);
 	}
-	template <typename T, typename C, typename L>
-	inline T bear_lower_bound(T begin, T end, C& val, L&&comp)
+	template <typename T, typename C, typename L=BearDefaultCompare>
+	inline T bear_lower_bound(T begin, T end, C& val, L&&comp= BearDefaultCompare())
 	{
 	return	Impl::impl_lower_bound(begin, end, val, comp);
 	}
-	template <typename T, typename C, typename L= BearDefaultCompare>
-	inline T bear_lower_bound(T begin, T end, C&& val, L&comp=BearDefaultCompare())
+	template <typename T, typename C, typename L>
+	inline T bear_lower_bound(T begin, T end, C&& val, L&comp)
 	{
 		return	Impl::impl_lower_bound(begin, end, val, comp);
 	}
-	template <typename T, typename C, typename L= BearDefaultCompare>
-	inline T bear_lower_bound(T begin, T end, C& val, L&comp= BearDefaultCompare())
+	template <typename T, typename C, typename L>
+	inline T bear_lower_bound(T begin, T end, C& val, L&comp)
 	{
 		return	Impl::impl_lower_bound(begin, end, val, comp);
 	}
 
-	template<typename T, typename C = BearDefaultCompare>
-	inline void bear_make_heap(T begin, T end, C&Comp = BearDefaultCompare() )
-	{
-		Impl::impl_make_heap(begin, end, Comp, BearDefaultSwap());
-	}
-	template<typename T, typename C>
-	inline void bear_make_heap(T begin, T end, C&&Comp )
-	{
-		Impl::impl_make_heap(begin, end, Comp, BearDefaultSwap());
-	}
 
 
 
-	template<typename T, typename C = BearDefaultCompare, typename S = BearDefaultSwap>
-	inline void bear_pop_heap(T begin, T end, C&Comp = BearDefaultCompare())
+
+	template<typename T, typename C ,typename S=BearDefaultSwap>
+	inline void bear_make_heap(T begin, T end, C&Comp,S&&Swap=BearDefaultSwap())
 	{
-		Impl::impl_pop_heap(begin, end, Comp, BearDefaultSwap());
+		Impl::impl_make_heap(begin, end, Comp,Swap );
 	}
-	template<typename T, typename C, typename S = BearDefaultSwap>
-	inline void bear_pop_heap(T begin, T end, C&&Comp )
+	template<typename T, typename C ,typename S>
+	inline void bear_make_heap(T begin, T end, C&Comp,S&Swap)
 	{
-		Impl::impl_pop_heap(begin, end, Comp, BearDefaultSwap());
+		Impl::impl_make_heap(begin, end, Comp,Swap );
+	}
+	template<typename T, typename C=BearDefaultCompare,typename S=BearDefaultSwap>
+	inline void bear_make_heap(T begin, T end, C&&Comp = BearDefaultCompare() ,S&&Swap = BearDefaultSwap() )
+	{
+		Impl::impl_make_heap(begin, end, Comp, Swap);
 	}
 
-
-	template<typename T, typename C = BearDefaultCompare>
-	inline void bear_sort_heap(T begin, T end, C&Comp = BearDefaultCompare() )
+	
+	template<typename T, typename C ,typename S=BearDefaultSwap>
+	inline void bear_pop_heap(T begin, T end, C&Comp,S&&Swap=BearDefaultSwap())
 	{
-		Impl::impl_sort_heap(begin, end, Comp, BearDefaultSwap());
+		Impl::impl_pop_heap(begin, end, Comp,Swap );
 	}
-	template<typename T, typename C>
-	inline void bear_sort_heap(T begin, T end, C&&Comp )
+	template<typename T, typename C ,typename S>
+	inline void bear_pop_heap(T begin, T end, C&Comp,S&Swap)
 	{
-		Impl::impl_sort_heap(begin, end, Comp,  BearDefaultSwap());
+		Impl::impl_pop_heap(begin, end, Comp,Swap );
+	}
+	template<typename T, typename C=BearDefaultCompare,typename S=BearDefaultSwap>
+	inline void bear_pop_heap(T begin, T end, C&&Comp = BearDefaultCompare() ,S&&Swap = BearDefaultSwap() )
+	{
+		Impl::impl_pop_heap(begin, end, Comp, Swap);
+	}
+	
+	template<typename T, typename C ,typename S=BearDefaultSwap>
+	inline void bear_sort_heap(T begin, T end, C&Comp,S&&Swap=BearDefaultSwap())
+	{
+		Impl::impl_sort_heap(begin, end, Comp,Swap );
+	}
+	template<typename T, typename C ,typename S>
+	inline void bear_sort_heap(T begin, T end, C&Comp,S&Swap)
+	{
+		Impl::impl_sort_heap(begin, end, Comp,Swap );
+	}
+	template<typename T, typename C=BearDefaultCompare,typename S=BearDefaultSwap>
+	inline void bear_sort_heap(T begin, T end, C&&Comp = BearDefaultCompare() ,S&&Swap = BearDefaultSwap() )
+	{
+		Impl::impl_sort_heap(begin, end, Comp, Swap);
 	}
 
 
-	template<typename T, typename C = BearDefaultCompare>
-	inline void bear_push_heap(T begin, T end, C&Comp = BearDefaultCompare())
+		
+	template<typename T, typename C ,typename S=BearDefaultSwap>
+	inline void bear_push_heap(T begin, T end, C&Comp,S&&Swap=BearDefaultSwap())
 	{
-		Impl::impl_push_heap(begin, end, Comp, BearDefaultSwap());
+		Impl::impl_push_heap(begin, end, Comp,Swap );
 	}
-	template<typename T, typename C, typename S = BearDefaultSwap>
-	inline void bear_push_heap(T begin, T end, C&&Comp)
+	template<typename T, typename C ,typename S>
+	inline void bear_push_heap(T begin, T end, C&Comp,S&Swap)
 	{
-		Impl::impl_push_heap(begin, end, Comp, BearDefaultSwap());
+		Impl::impl_push_heap(begin, end, Comp,Swap );
+	}
+	template<typename T, typename C=BearDefaultCompare,typename S=BearDefaultSwap>
+	inline void bear_push_heap(T begin, T end, C&&Comp = BearDefaultCompare() ,S&&Swap = BearDefaultSwap() )
+	{
+		Impl::impl_push_heap(begin, end, Comp, Swap);
 	}
 
 
-
-	template<typename T, typename C = BearDefaultCompare>
-	inline void bear_sort(T begin, T end, C&Comp = BearDefaultCompare())
+	template<typename T, typename C,typename S >
+	inline void bear_sort(T begin, T end, C&Comp,S&Swap  )
 	{
-		Impl::impl_sort(begin, end, Comp, BearDefaultSwap());
+		Impl::impl_sort(begin, end, Comp, Swap);
 	}
-	template<typename T, typename C>
-	inline void bear_sort(T begin, T end, C&&Comp)
+		template<typename T, typename C ,typename S=BearDefaultSwap>
+	inline void bear_sort(T begin, T end, C&Comp ,S&&Swap = BearDefaultSwap() )
 	{
-		Impl::impl_sort(begin, end, Comp, BearDefaultSwap());
+		Impl::impl_sort(begin, end, Comp,Swap);
+	}
+	template<typename T, typename C=BearDefaultCompare,typename S=BearDefaultSwap>
+	inline void bear_sort(T begin, T end, C&&Comp = BearDefaultCompare(),S&&Swap = BearDefaultSwap())
+	{
+		Impl::impl_sort(begin, end, Comp, Swap);
 	}
 
 

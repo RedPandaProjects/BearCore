@@ -41,6 +41,7 @@
 
 #include "BearDebug/BearDebug.h"
 
+#include "BearTools/BearDefines.h"
 #include "BearDebug/BearDebugDefines.h"
 
 #include "BearTools/BearFlags.h"
@@ -69,7 +70,6 @@
 
 #include "BearProjects/BearProjectTool.h"
 
-#include "BearTools/BearDefines.h"
 
 #include "BearTools/BearFraction.h"
 

@@ -9,7 +9,7 @@ typedef char bchar8;
 typedef wchar_t bchar16;
 typedef int8 bcharu8;
 #ifdef UNICODE
-#define TEXT_I(a) L ## a
+#define TEXT_I(a) L ## #a
 #define TEXT(a) TEXT_I(a)
 typedef  bchar16 bchar;
 #else

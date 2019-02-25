@@ -7,14 +7,14 @@ BearCore::BearIncluder::BearIncluder()
 BearCore::BearStreamRef< BearCore::BearInputStream> BearCore::BearIncluder::OpenAsStream(const bchar * name)
 {
 	BearFileStream *File = bear_new<BearFileStream>();
-	BEAR_FATALERROR(File->Open(name), TEXT("Неудалось загрузить [%s]"), name);
+	BEAR_FATALERROR(File->Open(name), TEXT("РќРµСѓРґР°Р»РѕСЃСЊ РѕС‚РєСЂС‹С‚СЊ [%s]"), name);
 	return BearStreamRef<BearInputStream>(File);
 }
 
 BearCore::BearStreamRef< BearCore::BearBufferedReader> BearCore::BearIncluder::OpenAsBuffer(const bchar * name)
 {
 	BearFileStream File;
-	BEAR_FATALERROR(File.Open(name), TEXT("Неудалось загрузить [%s]"), name);
+	BEAR_FATALERROR(File.Open(name), TEXT("РќРµСѓРґР°Р»РѕСЃСЊ РѕС‚РєСЂС‹С‚СЊ [%s]"), name);
 	return BearStreamRef<BearBufferedReader>(bear_new<BearMemoryStream>(File));
 }
 

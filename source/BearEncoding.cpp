@@ -1,7 +1,18 @@
 #include "BearCore.hpp"
-
 #include <codecvt>
-std::wstring_convert<std::codecvt<bchar16, bchar8, std::mbstate_t>, bchar16> *ConverterUTF16;
+#include <string>
+#include <locale>
+
+template<typename I, typename E, typename S>
+struct codecvt :public std::codecvt<I, E, S>
+{
+~codecvt()
+{ }
+};
+
+
+
+std::wstring_convert<::codecvt<bchar16, bchar8, std::mbstate_t>, bchar16>* ConverterUTF16;
 std::wstring_convert<std::codecvt_utf8_utf16<bchar16>, bchar16> *ConverterUTF8;
 
 #ifdef WINDOWS
@@ -14,7 +25,7 @@ struct Initializer
 	inline void Initialize()
 	{
 		if (ConverterUTF16)return;
-		ConverterUTF16 = new std::wstring_convert<std::codecvt<bchar16, bchar8, std::mbstate_t>, bchar16 >;
+		ConverterUTF16 = new std::wstring_convert<::codecvt<bchar16, bchar8, std::mbstate_t>, bchar16 >;
 		ConverterUTF8 = new std::wstring_convert<std::codecvt_utf8_utf16<bchar16>, bchar16 >;
 
 	}
@@ -25,6 +36,8 @@ struct Initializer
 	}
 };
 Initializer initializer;
+
+
 BearCore::BearMemoryRef<bchar8> BearCore::BearEncoding::ToANSI(const bchar8 * text, const bchar8 * end)
 {
 	bchar8 * temp = bear_alloc<bchar8>(end-text+1);
@@ -36,9 +49,9 @@ BearCore::BearMemoryRef<bchar8> BearCore::BearEncoding::ToANSI(const bchar8 * te
 BearCore::BearMemoryRef<bchar8> BearCore::BearEncoding::ToANSI(const bchar16 * text, const bchar16 * end)
 {
 	initializer.Initialize();
-	std::wstring_convert<std::codecvt<bchar16, bchar8, std::mbstate_t>, bchar16> convert;
+	std::wstring_convert<::codecvt<bchar16, bchar8, std::mbstate_t>, bchar16> convert;
 	std::string str = convert.to_bytes(text, end);
-	return ToANSI(&*str.begin(), str.end()._Ptr);
+	return ToANSI(&*str.begin(),(&*str.begin())+str.size());
 }
 
 BearCore::BearMemoryRef<bchar8> BearCore::BearEncoding::ToANSI(const bcharu8 * text, const bcharu8 * end)
@@ -56,7 +69,7 @@ BearCore::BearMemoryRef<bchar16> BearCore::BearEncoding::ToUTF16(const bchar8 * 
 #else
 	initializer.Initialize();
 	std::wstring str = ConverterUTF16->from_bytes(text, end);
-	return ToUTF16(&*str.begin(), str.end()._Ptr);
+	return ToUTF16(&*str.begin(), (&*str.begin())+str.size());
 #endif
 }
 
@@ -72,7 +85,7 @@ BearCore::BearMemoryRef<bchar16> BearCore::BearEncoding::ToUTF16(const bcharu8 *
 {
 	initializer.Initialize();
 	std::wstring str = ConverterUTF8->from_bytes(reinterpret_cast<const char *> (text), reinterpret_cast<const char *> (end));
-	return ToUTF16(&*str.begin(), str.end()._Ptr);
+	return ToUTF16(&*str.begin(),(&*str.begin())+str.size());
 }
 
 BearCore::BearMemoryRef<bcharu8> BearCore::BearEncoding::ToUTF8(const bchar8 * text, const bchar8 * end)
@@ -84,7 +97,7 @@ BearCore::BearMemoryRef<bcharu8> BearCore::BearEncoding::ToUTF8(const bchar16 * 
 {
 	initializer.Initialize();
 	std::string str = ConverterUTF8->to_bytes(text, end);
-	return ToUTF8((const bcharu8*)&*str.begin(), (const bcharu8*)str.end()._Ptr);
+	return ToUTF8((const bcharu8*)&*str.begin(), (const bcharu8*)((&*str.begin())+str.size()));
 }
 
 BearCore::BearMemoryRef<bcharu8> BearCore::BearEncoding::ToUTF8(const bcharu8 * text, const bcharu8 * end)

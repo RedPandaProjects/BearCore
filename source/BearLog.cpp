@@ -1,5 +1,7 @@
 #include "BearCore.hpp"
+#ifdef WINDOWS
 #include "BugTrap.h"
+#endif
 BearCore::BearVector<BearCore::BearStringConteniar> *LogData=0;
 static BearCore::BearMutex LogMutex;
 static BearCore::BearLogCallBack LogCallBack=0;
@@ -19,10 +21,15 @@ void BearCore::BearLog::DebugPrintf(const bchar * text, ...)
 	OutputDebugString(var1);
 	OutputDebugString(TEXT("\r\n"));
 #endif
+#ifdef WINDOWS
 	char text866[8192];
 	CharToOem(var1, text866);
 	printf(text866);
 	printf("\r\n");
+#elif LINUX
+	wprintf(var1);
+	wprintf(TEXT("\n"));
+#endif
 	Push(var1);
 }
 #endif
@@ -39,10 +46,15 @@ void BearCore::BearLog::Printf(const bchar * text, ...)
 	OutputDebugString(var1);
 	OutputDebugString(TEXT("\r\n"));
 #endif
+#ifdef WINDOWS
 	char text866[8192];
 	CharToOem(var1, text866);
 	printf(text866);
 	printf("\r\n");
+#elif LINUX
+	wprintf(var1);
+	wprintf(TEXT("\n"));
+#endif
 	Push(var1);
 }
 
@@ -65,7 +77,7 @@ void BearCore::BearLog::Flush()
 #ifdef WINDOWS
 		LogFile.Write(TEXT("\r\n"), sizeof(bchar) * 2);
 #else
-		LogFile.Write(TEXT("\\n"), sizeof(bchar) * 2);
+		LogFile.Write((void*)TEXT("\n"), sizeof(bchar) * 2);
 #endif
 		b++;
 	}
@@ -100,10 +112,10 @@ void BearCore::BearLog::Push(bchar * string)
 	bsize cur = 0;
 	for (bsize i = 0; string[i]; i++)
 	{
-		if (string[i] == TEXT('\r'))
+		if (string[i] == TEXT("\r")[0])
 		{
 			string[i] = 0;
-			if (string[i + 1] == TEXT('\n'))
+			if (string[i + 1] == TEXT("\n")[0])
 				i++;
 			i++;	
 			if (string[cur]) {
@@ -112,7 +124,7 @@ void BearCore::BearLog::Push(bchar * string)
 			}
 			cur = i;
 		}
-		else if (string[i] == TEXT('\n'))
+		else if (string[i] == TEXT("\n")[0])
 		{
 			string[i] = 0;
 			i++;	
