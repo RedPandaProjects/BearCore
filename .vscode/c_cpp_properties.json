@@ -1,0 +1,82 @@
+{
+	"configurations": [
+		{
+			"name": "Linux-Debug",
+			"includePath": [
+			"/home/bear/Рабочий стол/BearSDK/projects/bear/bearcore/source",
+			"/home/bear/Рабочий стол/BearSDK/projects/components/tinyxml/include",
+			"/home/bear/Рабочий стол/BearSDK/projects/components/BugTrap/source/Client",
+			"/home/bear/Рабочий стол/BearSDK/projects/components/zlib/include",
+			"/home/bear/Рабочий стол/BearSDK/projects/components/lzo/include",
+			"/home/bear/Рабочий стол/BearSDK/projects/bear/bearcore/include"
+			],
+			"defines": [
+			"BEAR_CORE_EXPORTS",
+			"_ITERATOR_DEBUG_LEVEL=0",
+			"LINUX",
+			"_LINUX64",
+			"X64",
+			"DEBUG",
+			"_DEBUG",
+			"_UNICODE",
+			"UNICODE"
+			],
+			"compilerPath": "/usr/bin/gcc",
+			"cStandard": "c11",
+			"cppStandard": "c++14",
+			"intelliSenseMode": "gcc-x64"
+		},
+		{
+			"name": "Linux-Mixed",
+			"includePath": [
+			"/home/bear/Рабочий стол/BearSDK/projects/bear/bearcore/source",
+			"/home/bear/Рабочий стол/BearSDK/projects/components/tinyxml/include",
+			"/home/bear/Рабочий стол/BearSDK/projects/components/BugTrap/source/Client",
+			"/home/bear/Рабочий стол/BearSDK/projects/components/zlib/include",
+			"/home/bear/Рабочий стол/BearSDK/projects/components/lzo/include",
+			"/home/bear/Рабочий стол/BearSDK/projects/bear/bearcore/include"
+			],
+			"defines": [
+			"BEAR_CORE_EXPORTS",
+			"_ITERATOR_DEBUG_LEVEL=0",
+			"LINUX",
+			"_LINUX64",
+			"X64",
+			"DEBUG",
+			"MIXED",
+			"_UNICODE",
+			"UNICODE"
+			],
+			"compilerPath": "/usr/bin/gcc",
+			"cStandard": "c11",
+			"cppStandard": "c++14",
+			"intelliSenseMode": "gcc-x64"
+		},
+		{
+			"name": "Linux-Release",
+			"includePath": [
+			"/home/bear/Рабочий стол/BearSDK/projects/bear/bearcore/source",
+			"/home/bear/Рабочий стол/BearSDK/projects/components/tinyxml/include",
+			"/home/bear/Рабочий стол/BearSDK/projects/components/BugTrap/source/Client",
+			"/home/bear/Рабочий стол/BearSDK/projects/components/zlib/include",
+			"/home/bear/Рабочий стол/BearSDK/projects/components/lzo/include",
+			"/home/bear/Рабочий стол/BearSDK/projects/bear/bearcore/include"
+			],
+			"defines": [
+			"BEAR_CORE_EXPORTS",
+			"_ITERATOR_DEBUG_LEVEL=0",
+			"LINUX",
+			"_LINUX64",
+			"X64",
+			"NDEBUG",
+			"_UNICODE",
+			"UNICODE"
+			],
+			"compilerPath": "/usr/bin/gcc",
+			"cStandard": "c11",
+			"cppStandard": "c++14",
+			"intelliSenseMode": "gcc-x64"
+		}
+	],
+	"version": 4
+}
