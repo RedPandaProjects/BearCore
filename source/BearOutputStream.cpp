@@ -71,7 +71,7 @@ void BearCore::BearOutputStream::BeginChunk(int32 id)
 
 void BearCore::BearOutputStream::EndChunk()
 {
-	BEAR_ASSERT(m_tell_Chunk >= 0);
+	BEAR_RASSERT(m_tell_Chunk >= 0);
 	if (Tell() < 0)return;
 	int64 size = Tell() - m_tell_Chunk;
 	Seek(static_cast<bsize>(m_tell_Chunk));

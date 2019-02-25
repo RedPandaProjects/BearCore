@@ -58,9 +58,9 @@ void BearCore::Initialize(const bchar * app_name,  const bchar * email)
 
 	setlocale(LC_TIME,"");
 
-	BEAR_FATALERROR(lzo_init() == LZO_E_OK, TEXT("��������� �������������� LZO"));
+	BEAR_FATALERROR(lzo_init() == LZO_E_OK, TEXT("LZO Не поддерживается"));
 
-	BEAR_FATALERROR(inflateInit(&GzlibStream) == Z_OK, TEXT("��������� �������������� zlib"));	inflateEnd(&GzlibStream);
+	BEAR_FATALERROR(inflateInit(&GzlibStream) == Z_OK, TEXT("ZLIB Не поддерживается"));	inflateEnd(&GzlibStream);
 }
 
 

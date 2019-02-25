@@ -111,5 +111,4 @@ void BearCore::BearFilePackageStream::OpenFile()
 	if (m_size == 0)return;
 	BEAR_ASSERT(m_file.Open(*m_file_name));
 	m_file.Seek(m_ptr + m_tell);
-
 }

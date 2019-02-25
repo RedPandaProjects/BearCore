@@ -150,7 +150,7 @@ bsize BearCore::BearInputStream::GoToChunk(uint32 type_) const
 		Seek(m_last_pos);
 		uint32 type = ReadUint32();
 		uint32 size_ = ReadUint32();
-		BEAR_FATALERROR((size_ + Tell()) <= Size(), TEXT("Блок под индексом [%d] повреждён размер [%d]"), type_, size_);
+		BEAR_FATALERROR((size_ + Tell()) <= Size(), TEXT("Блок под индексом [%d] повреждён. Размер [%u]"), type_, size_);
 		if (type_ == type)
 			return size_;
 	}

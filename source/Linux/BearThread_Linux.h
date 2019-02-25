@@ -22,7 +22,7 @@ void BearCore::BearThread::Wait()
 {
 	if (m_active)
 	{
-		BEAR_FATALERROR(pthread_equal(pthread_self(), m_thread) == 0, TEXT("����� �� ����� ����� ������ ����"));
+		BEAR_FATALERROR(pthread_equal(pthread_self(), m_thread) == 0, TEXT("Паток не может ждать себя"));
         pthread_join(m_thread, NULL);
         m_active=false;
 	}

@@ -1,4 +1,6 @@
 #include "BearCore.hpp"
+static void(*LCallBack)(void) = 0;
+extern BearCore::BearStringPath LogFileOut;
 #ifdef WINDOWS
 #include "BugTrap.h"
 #pragma warning(disable:4091)
@@ -14,7 +16,7 @@ void CALLBACK GErrorHandler(INT_PTR)
 #elif LINUX
 #include <signal.h>
 #endif
-static void(*LCallBack)(void) = 0;
+
 
 void BearCore::BearDebug::DebugBreak()
 {
@@ -25,7 +27,7 @@ void BearCore::BearDebug::DebugBreak()
 #endif
 }
 
-extern BearCore::BearStringPath LogFileOut;
+
 
 
 void BearCore::BearDebug::FatalError(const bchar * chenk, const bchar * name, const bchar * function_name, uint32 line, const bchar * text, ...)

@@ -11,7 +11,7 @@ void BearCore::BearPackage::Compressor(const bchar * file_out, const bchar*path_
 
 	BearFileStream Fout;
 
-	BEAR_ASSERT(Fout.Open(file_out, BearFileStream::M_Write));
+	BEAR_RASSERT(Fout.Open(file_out, BearFileStream::M_Write));
 
 	Fout.WriteInt32(BearPackageVersion);
 	Fout.WriteString(pathfs_for_archive, BearEncoding::UTF16);

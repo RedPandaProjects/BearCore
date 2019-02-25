@@ -15,7 +15,7 @@ bsize BearCore::BearLZO::Compressor(const void * in_, void * out_, bsize size_bl
 	lzo_uint in_len= size_block;
 	lzo_uint out_len;
 	r = lzo1x_1_compress(in, in_len, out, &out_len, GLZOWrkmem);
-	BEAR_FATALERROR(r == LZO_E_OK, TEXT("LZO:Не удалось инецылизировать"));
+	BEAR_FATALERROR(r == LZO_E_OK, TEXT("LZO:Не удалось инициализировать "));
 	return static_cast<bsize>(out_len);
 }
 
@@ -26,7 +26,7 @@ bsize BearCore::BearLZO::Decompressor(const void * in_, void * out_, bsize size_
 	lzo_bytep out = static_cast<lzo_bytep>(out_);
 	lzo_uint in_len = size_block; lzo_uint out_len;
 	r = lzo1x_decompress(in, in_len, out, &out_len, NULL);
-	BEAR_FATALERROR(r == LZO_E_OK, TEXT("LZO:Не удалось инецылизировать"));
+	BEAR_FATALERROR(r == LZO_E_OK, TEXT("LZO:Не удалось инициализировать "));
 	return static_cast<bsize>(out_len);
 }
 
@@ -48,7 +48,7 @@ BearCore::BearZLIB::BearZLIB(ZLIBType type):m_type(type)
 		ret = inflateInit(reinterpret_cast<z_stream*>(m_ptr));
 		break;
 	}
-	BEAR_ASSERT(ret == Z_OK);
+	BEAR_RASSERT(ret == Z_OK);
 }
 
 BearCore::BearZLIB::~BearZLIB()
@@ -99,7 +99,7 @@ bool BearCore::BearZLIB::Run()
 		{
 			int res = inflate(&strm, Z_NO_FLUSH);
 			if (res == Z_STREAM_END)return true;
-			BEAR_ASSERT(res == Z_OK);
+			BEAR_RASSERT(res == Z_OK);
 		}
 		return strm.avail_in == 0;
 	}
@@ -109,7 +109,7 @@ bool BearCore::BearZLIB::Run()
 		while (strm.avail_in != 0 && strm.avail_out != 0)
 		{
 			int res = deflate(&strm, Z_NO_FLUSH);
-			BEAR_ASSERT(res == Z_OK);
+			BEAR_RASSERT(res == Z_OK);
 		}
 		return strm.avail_in == 0;
 	}
@@ -124,7 +124,7 @@ bool BearCore::BearZLIB::Stop()
 		if (strm.avail_out == 0)return false;
 		deflate_res = deflate(&strm, Z_FINISH);
 	}
-	BEAR_ASSERT(deflate_res == Z_STREAM_END);
+	BEAR_RASSERT(deflate_res == Z_STREAM_END);
 	return true;
 }
 

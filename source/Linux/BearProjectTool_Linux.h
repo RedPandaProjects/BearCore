@@ -98,7 +98,7 @@ void * BearCore::BearProjectTool::GetFunctionInProjectImpl(const bchar * name, c
 		BearString::Contact(fullname, TEXT(".so"));
 		lib obj;
 		obj.Module = dlopen(*BearEncoding::ToANSI( fullname), RTLD_LAZY);
-		BEAR_FATALERROR(obj.Module, TEXT("��������� ��������� %s ������ %x"), fullname, 0x0);
+		BEAR_FATALERROR(obj.Module, TEXT("Бибилиотека %s не сущесвтует или повреждена"), fullname);
 		Libs.insert(name_project, obj);
 		Item = Libs.find(BearStringConteniar(name_project, false));
 	}
@@ -106,7 +106,7 @@ void * BearCore::BearProjectTool::GetFunctionInProjectImpl(const bchar * name, c
 	if (ItemProc == Item->second.Procs.end())
 	{
 		void* proc = dlsym(Item->second.Module, *BearEncoding::ToANSI(function));
-		BEAR_FATALERROR(proc, TEXT("��������� ��������� %s � ���������� %x"), function, name);
+		BEAR_FATALERROR(proc, TEXT("Функция %s не существует в библиотеке %s"), function, name);
 		Item->second.Procs.insert(function, proc);
 		return proc;
 	}

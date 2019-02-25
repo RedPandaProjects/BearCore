@@ -109,9 +109,9 @@ void BearCore::BearINI::decoder(const BearBufferedReader & base, BearEncoding::E
 		{
 			str.seek(str.tell() + 9);
 			str.sub_space_in_begin();
-			BEAR_FATALERROR(**str==TEXT("\"")[0], TEXT("���������� ������ [%s]"), **str);
+			BEAR_FATALERROR(**str==TEXT("\"")[0], TEXT("Неожиданный конец [%s]"), **str);
 			str.sub_space_in_end();
-			BEAR_FATALERROR((*str)[str.size()-1] == TEXT("\"")[0], TEXT("���������� ������ [%s]"), **str);
+			BEAR_FATALERROR((*str)[str.size()-1] == TEXT("\"")[0], TEXT("Неожиданный конец [%s]"), **str);
 			(*str)[str.size() - 1] = 0;
 		
 			decoder(**includer->OpenAsBuffer(*str), typetext, includer);
@@ -125,7 +125,7 @@ void BearCore::BearINI::decoder(const BearBufferedReader & base, BearEncoding::E
 
 			str++;
 			bchar*data = *str;
-			BEAR_FATALERROR(str.to_char(TEXT("]")[0]), TEXT("��� ����� � [%s]"), data);
+			BEAR_FATALERROR(str.to_char(TEXT("]")[0]), TEXT("Нет конца в название секции [%s]"), data);
 			str.sub_space_in_begin();
 			bchar *sec_name_end = *str; str.to_char(TEXT(":")[0]);
 			str.sub_space_in_begin();
@@ -153,7 +153,7 @@ void BearCore::BearINI::decoder(const BearBufferedReader & base, BearEncoding::E
 		else
 		{
 			if (!*str)continue;
-			BEAR_FATALERROR(current_section != sections.end(), TEXT("����������� ini ����"));
+			BEAR_FATALERROR(current_section != sections.end(), TEXT("Ключи без Секции!!!"));
 			bchar*data = *str;
 			str.to_char(TEXT("=")[0]);
 			bchar*key_data =(bchar*) TEXT("");
@@ -286,18 +286,18 @@ BearCore::BearVector<BearCore::BearString>& BearCore::BearINI::Key(const bchar *
 const BearCore::BearVector<BearCore::BearString>& BearCore::BearINI::Key(const bchar * section, const bchar * key) const
 {
 	auto sec = sections.find(BearStringConteniar(section, false));
-	BEAR_FATALERROR(sec != sections.end(), TEXT("�� ������� ������ [%s]"), section);
+	BEAR_FATALERROR(sec != sections.end(), TEXT("Секция [%s] не существует "), section);
 	auto k = sec->second.keys.find(BearStringConteniar(key, false));
-	BEAR_FATALERROR(k != sec->second.keys.end(), TEXT("�� ������� ����� [%s] � ������ [%s]"), key, section);
+	BEAR_FATALERROR(k != sec->second.keys.end(), TEXT("Ключь в секции [%s] не сущесвтует [%s]"), key, section);
 	return 	k->second;
 }
 
 BearCore::BearVector< BearCore::BearString>& BearCore::BearINI::Key(const bchar * section, const bchar * key)
 {
 	auto sec = sections.find(BearStringConteniar(section, false));
-	BEAR_FATALERROR(sec != sections.end(), TEXT("�� ������� ������ [%s]"), section);
+	BEAR_FATALERROR(sec != sections.end(), TEXT("Секция [%s] не существует"), section);
 	auto k = sec->second.keys.find(BearStringConteniar(key, false));
-	BEAR_FATALERROR(k != sec->second.keys.end(), TEXT("�� ������� ����� [%s] � ������ [%s]"), key, section);
+	BEAR_FATALERROR(k != sec->second.keys.end(), TEXT("Ключь в секции [%s] не сущесвтует [%s]"), key, section);
 	return 	k->second;
 }
 

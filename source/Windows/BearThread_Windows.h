@@ -24,7 +24,7 @@ void BearCore::BearThread::Wait()
 {
 	if (m_id)
 	{
-		BEAR_FATALERROR(m_thread != GetCurrentThreadId(), TEXT("����� �� ����� ����� ������ ����"));
+		BEAR_FATALERROR(m_thread != GetCurrentThreadId(), TEXT("Паток не может ждать себя"));
 		WaitForSingleObject(m_id, INFINITE);
 		CloseHandle((HANDLE)m_id);
 		m_id = 0;
