@@ -18,7 +18,7 @@
 ////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////
 #define BEAR_COMMA() ,
-#define BEAR_NIL
+#define BEAR_NIL()
 ////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////
 #define BEAR_IF_0(text,text1) text1
@@ -27,7 +27,7 @@
 #define BEAR_IF(bool_,text,text1) BEAR_IF_I(bool_,text,text1)
 #define BEAR_IF_I(bool_,text,text1) BEAR_IF_ ## bool_(text,text1)
 ////////////////////////////////////////////////////////////////////
-#define BEAR_IF_COMMA_I(count) BEAR_IF(BEAR_TO_BOOL(count), BEAR_COMMA ,BEAR_NIL)
+#define BEAR_IF_COMMA_I(count) BEAR_IF(BEAR_TO_BOOL(count), BEAR_COMMA ,BEAR_NIL)()
 #define BEAR_IF_COMMA(count) BEAR_IF_COMMA_I(count)
 ////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////
@@ -49,5 +49,5 @@
 #define BEAR_REPEAT_7(parm,text)  BEAR_REPEAT_6(parm,text) parm(text,6)
 #define BEAR_REPEAT_8(parm,text)  BEAR_REPEAT_7(parm,text) parm(text,7)
 #define BEAR_REPEAT_9(parm,text)  BEAR_REPEAT_8(parm,text) parm(text,8)
-#define BEAR_REPEAT_10(parm,text)   BEAR_REPEAT_9(parm,text) parm(text,9)
+#define BEAR_REPEAT_10(parm,text) BEAR_REPEAT_9(parm,text) parm(text,9)
 ////////////////////////////////////////////////////////////////////
