@@ -37,13 +37,14 @@ bool BearCore::BearProjectTool::CheckProject(const bchar * name)
 #endif
 		BearString::Contact(fullname, TEXT(".so"));
 		lib obj;
+		BearLog::DebugPrintf(TEXT("Проверка библиотеки " BEAR_PRINT_CURRENT),fullname);
 		obj.Module = dlopen(*BearEncoding::ToANSI( fullname), RTLD_LAZY);
 		if(obj.Module) Libs.insert(name_project, obj);
 		return obj.Module;
 	}
 	return false;
 }
-inline void BearCore::BearProjectTool::Destory()
+void BearCore::BearProjectTool::Destory()
 {
 	auto begin = Libs.begin();
 	auto end = Libs.end();
@@ -55,7 +56,7 @@ inline void BearCore::BearProjectTool::Destory()
 	}
 	Libs.clear();
 }
-inline void BearCore::BearProjectTool::UnLoad(const bchar * name)
+void BearCore::BearProjectTool::UnLoad(const bchar * name)
 {
 	auto Item = Libs.find(BearStringConteniar(name, false));
 	if (Item != Libs.end())
@@ -98,7 +99,8 @@ void * BearCore::BearProjectTool::GetFunctionInProjectImpl(const bchar * name, c
 		BearString::Contact(fullname, TEXT(".so"));
 		lib obj;
 		obj.Module = dlopen(*BearEncoding::ToANSI( fullname), RTLD_LAZY);
-		BEAR_FATALERROR(obj.Module, TEXT("Бибилиотека %s не сущесвтует или повреждена"), fullname);
+		BearLog::DebugPrintf(TEXT("Загрузка Библиотеки " BEAR_PRINT_CURRENT),fullname);
+		BEAR_FATALERROR(obj.Module, TEXT("Бибилиотека " BEAR_PRINT_CURRENT " не сущесвтует или повреждена"), fullname);
 		Libs.insert(name_project, obj);
 		Item = Libs.find(BearStringConteniar(name_project, false));
 	}
@@ -106,7 +108,7 @@ void * BearCore::BearProjectTool::GetFunctionInProjectImpl(const bchar * name, c
 	if (ItemProc == Item->second.Procs.end())
 	{
 		void* proc = dlsym(Item->second.Module, *BearEncoding::ToANSI(function));
-		BEAR_FATALERROR(proc, TEXT("Функция %s не существует в библиотеке %s"), function, name);
+		BEAR_FATALERROR(proc, TEXT("Функция " BEAR_PRINT_CURRENT " не существует в библиотеке " BEAR_PRINT_CURRENT ""), function, name);
 		Item->second.Procs.insert(function, proc);
 		return proc;
 	}

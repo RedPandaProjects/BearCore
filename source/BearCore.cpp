@@ -26,13 +26,28 @@ extern void CALLBACK GErrorHandler(INT_PTR);
 z_stream GzlibStream;
 void BearCore::Initialize(const bchar * app_name,  const bchar * email)
 {
+#ifdef LINUX 
+#ifdef UNICODE
+	fwide (stdout,1);
+	fputws(L"",stdout);
+	BEAR_RASSERT(fwide(stdout,0)>0);
+#else
+	fwide (stdout,0);
+	fputs(L"",stdout);
+	BEAR_RASSERT(fwide(stdout,0)==0);
+#endif
+
+	
+#endif
 	BEAR_ASSERT(!bInitialize);
 	bear_fill(GzlibStream);
+
+
 
 	BearMemory::DebugOff();
 	LogData = new BearVector<BearStringConteniar>;
 	LogData->reserve(1024);
-	BearLog::Printf(TEXT("BearCore build %s"), *BearLog::GetBuild(2015, 07, 27));
+	BearLog::Printf(TEXT("BearCore build " BEAR_PRINT_CURRENT), *BearLog::GetBuild(2015, 07, 27));
 
 #ifdef WINDOWS
 	BT_InstallSehFilter();

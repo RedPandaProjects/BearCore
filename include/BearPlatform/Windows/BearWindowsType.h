@@ -33,4 +33,14 @@ typedef int32 bint;
 typedef int64 bint;
 #endif
 
+#ifdef UNICODE
+#define BEAR_PRINT_ANSI "%S"
+#define BEAR_PRINT_UNICODE "%s"
+#define BEAR_PRINT_CURRENT "%s"
+#else
+#define BEAR_PRINT_ANSI "%s"
+#define BEAR_PRINT_UNICODE "%S"
+#define BEAR_PRINT_CURRENT "%s"
+#endif
+
 #include <Windows.h>

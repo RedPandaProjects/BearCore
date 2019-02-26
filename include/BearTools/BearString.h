@@ -41,13 +41,7 @@ namespace BearCore
 	typedef bchar8 BearStringAnsi8192[8192];
 	typedef bchar8 BearStringAnsiPath[MAX_PATH + 1];
 
-#ifdef UNICODE
-#define BEAR_PRINT_ANSI "%S"
-#define BEAR_PRINT_UNICODE "%s"
-#else
-#define BEAR_PRINT_ANSI "%s"
-#define BEAR_PRINT_UNICODE "%S"
-#endif
+
 	class BearString :public std::basic_string<bchar, std::char_traits<bchar>, BearMemoryAllocator<bchar>>
 	{
 		typedef std::basic_string<bchar, std::char_traits<bchar>, BearMemoryAllocator<bchar>> basic_string;

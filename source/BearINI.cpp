@@ -109,9 +109,9 @@ void BearCore::BearINI::decoder(const BearBufferedReader & base, BearEncoding::E
 		{
 			str.seek(str.tell() + 9);
 			str.sub_space_in_begin();
-			BEAR_FATALERROR(**str==TEXT("\"")[0], TEXT("Неожиданный конец [%s]"), **str);
+			BEAR_FATALERROR(**str==TEXT("\"")[0], TEXT("Неожиданный конец [" BEAR_PRINT_CURRENT "]"), **str);
 			str.sub_space_in_end();
-			BEAR_FATALERROR((*str)[str.size()-1] == TEXT("\"")[0], TEXT("Неожиданный конец [%s]"), **str);
+			BEAR_FATALERROR((*str)[str.size()-1] == TEXT("\"")[0], TEXT("Неожиданный конец [" BEAR_PRINT_CURRENT "]"), **str);
 			(*str)[str.size() - 1] = 0;
 		
 			decoder(**includer->OpenAsBuffer(*str), typetext, includer);
@@ -125,7 +125,7 @@ void BearCore::BearINI::decoder(const BearBufferedReader & base, BearEncoding::E
 
 			str++;
 			bchar*data = *str;
-			BEAR_FATALERROR(str.to_char(TEXT("]")[0]), TEXT("Нет конца в название секции [%s]"), data);
+			BEAR_FATALERROR(str.to_char(TEXT("]")[0]), TEXT("Нет конца в название секции [" BEAR_PRINT_CURRENT "]"), data);
 			str.sub_space_in_begin();
 			bchar *sec_name_end = *str; str.to_char(TEXT(":")[0]);
 			str.sub_space_in_begin();
@@ -139,7 +139,7 @@ void BearCore::BearINI::decoder(const BearBufferedReader & base, BearEncoding::E
 				parent_name++;
 				section sec;
 				sec.parent = parent_name;
-				//BEAR_FATALERROR(parent != sections.end(), TEXT("�� ������ �������� [%s]"), parent_name);
+				//BEAR_FATALERROR(parent != sections.end(), TEXT("�� ������ �������� [" BEAR_PRINT_CURRENT "]"), parent_name);
 				sections.insert(BearStringConteniar( data), sec);
 			}
 			else
@@ -190,9 +190,9 @@ void BearCore::BearINI::coder(BearOutputStream & base, BearEncoding::Encoding ty
 	while (begins != ends)
 	{
 		str.clear_no_free();
-		str.append_printf(TEXT("[%s]"), *begins->first);
+		str.append_printf(TEXT("[" BEAR_PRINT_CURRENT "]"), *begins->first);
 		if(begins->second.parent.size())
-			str.append_printf(TEXT(":%s"), *begins->second.parent);
+			str.append_printf(TEXT(":" BEAR_PRINT_CURRENT ""), *begins->second.parent);
 
 		base.WriteStringAndNewLine(str, typetext);
 		auto begink = begins->second.keys.begin();
@@ -206,12 +206,12 @@ void BearCore::BearINI::coder(BearOutputStream & base, BearEncoding::Encoding ty
 				str.clear_no_free();
 				if (begind->size())
 				{
-					str.append_printf(TEXT("%s=%s"), *begink->first, **begind);
+					str.append_printf(TEXT("" BEAR_PRINT_CURRENT "=" BEAR_PRINT_CURRENT ""), *begink->first, **begind);
 					base.WriteStringAndNewLine(str, typetext);
 				}
 				else
 				{
-					str.append_printf(TEXT("%s"), *begink->first);
+					str.append_printf(TEXT("" BEAR_PRINT_CURRENT ""), *begink->first);
 					base.WriteStringAndNewLine(str, typetext);
 				}
 				begind++;
@@ -286,18 +286,18 @@ BearCore::BearVector<BearCore::BearString>& BearCore::BearINI::Key(const bchar *
 const BearCore::BearVector<BearCore::BearString>& BearCore::BearINI::Key(const bchar * section, const bchar * key) const
 {
 	auto sec = sections.find(BearStringConteniar(section, false));
-	BEAR_FATALERROR(sec != sections.end(), TEXT("Секция [%s] не существует "), section);
+	BEAR_FATALERROR(sec != sections.end(), TEXT("Секция [" BEAR_PRINT_CURRENT "] не существует "), section);
 	auto k = sec->second.keys.find(BearStringConteniar(key, false));
-	BEAR_FATALERROR(k != sec->second.keys.end(), TEXT("Ключь в секции [%s] не сущесвтует [%s]"), key, section);
+	BEAR_FATALERROR(k != sec->second.keys.end(), TEXT("Ключь в секции [" BEAR_PRINT_CURRENT "] не сущесвтует [" BEAR_PRINT_CURRENT "]"), key, section);
 	return 	k->second;
 }
 
 BearCore::BearVector< BearCore::BearString>& BearCore::BearINI::Key(const bchar * section, const bchar * key)
 {
 	auto sec = sections.find(BearStringConteniar(section, false));
-	BEAR_FATALERROR(sec != sections.end(), TEXT("Секция [%s] не существует"), section);
+	BEAR_FATALERROR(sec != sections.end(), TEXT("Секция [" BEAR_PRINT_CURRENT "] не существует"), section);
 	auto k = sec->second.keys.find(BearStringConteniar(key, false));
-	BEAR_FATALERROR(k != sec->second.keys.end(), TEXT("Ключь в секции [%s] не сущесвтует [%s]"), key, section);
+	BEAR_FATALERROR(k != sec->second.keys.end(), TEXT("Ключь в секции [" BEAR_PRINT_CURRENT "] не сущесвтует [" BEAR_PRINT_CURRENT "]"), key, section);
 	return 	k->second;
 }
 

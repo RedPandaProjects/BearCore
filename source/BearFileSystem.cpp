@@ -29,7 +29,7 @@ void BearCore::BearFileSystem::decoder(BearINI & ini)
 			if (begin == filesystem) { begin++; continue; }
 			auto begink = begin->second.keys.begin();
 			auto endk = begin->second.keys.end();
-			BEAR_FATALERROR(m_source_paths.find(begin->first) == m_source_paths.end(), TEXT("Путь [%s]  уже существует"), *begin->first);
+			BEAR_FATALERROR(m_source_paths.find(begin->first) == m_source_paths.end(), TEXT("Путь ["  BEAR_PRINT_CURRENT "]  уже существует"), *begin->first);
 			m_source_paths.insert(begin->first, BearVector<SourcePath>());
 			auto item=m_source_paths.find(begin->first);
 			while (begink != endk)
@@ -73,7 +73,7 @@ void BearCore::BearFileSystem::update(const bchar * name)
 		{
 			BearVector<BearString> paths;
 			auto item = m_source_paths.find(BearStringConteniar(name, false));
-			BEAR_FATALERROR(item != m_source_paths.end(), TEXT("Путь [%s] не сушествует"), name);
+			BEAR_FATALERROR(item != m_source_paths.end(), TEXT("Путь [" BEAR_PRINT_CURRENT "] не сушествует"), name);
 			auto begin = item->second.begin();
 			auto end = item->second.end();
 			while (begin != end)
@@ -432,7 +432,7 @@ BearCore::BearFileSystem::~BearFileSystem()
 void BearCore::BearFileSystem::UpdatePath(const bchar * floder, bsize id,BearStringPath&path) 
 {
 	update(floder);
-	BEAR_FATALERROR(m_paths[floder].size() > id, TEXT("Индекс [%llu] массива вышел за границу. Путь [%s] "),uint64(id), floder);
+	BEAR_FATALERROR(m_paths[floder].size() > id, TEXT("Индекс [%llu] массива вышел за границу. Путь [" BEAR_PRINT_CURRENT "] "),uint64(id), floder);
 	BearString::Copy(path, *m_paths[floder][id]);
 }
 
@@ -480,7 +480,7 @@ void BearCore::BearFileSystem::SubPath(const bchar * name)
 void BearCore::BearFileSystem::Update(const bchar * floder, const bchar * file, BearStringPath&path)
 {
 	
-	BEAR_FATALERROR(ExistFileAndUpdate(floder,file,path), TEXT("Не найден файл [%s]. Путь [%s]"), file, floder);
+	BEAR_FATALERROR(ExistFileAndUpdate(floder,file,path), TEXT("Не найден файл [" BEAR_PRINT_CURRENT "]. Путь [" BEAR_PRINT_CURRENT "]"), file, floder);
 }
 
 void BearCore::BearFileSystem::Update(const bchar * floder, const bchar * file, const bchar * e, BearStringPath & path)
@@ -548,7 +548,7 @@ bool BearCore::BearFileSystem::ExistDirectory(const bchar * floder, bsize id)
 	auto item = m_paths.find(BearStringConteniar(floder));
 	BEAR_RASSERT(m_paths.end() != item);
 
-	BEAR_FATALERROR(m_paths[floder].size() > id, TEXT("Индекс [%llu] массива вышел за границу. Путь [%s] "),uint64(id), floder);
+	BEAR_FATALERROR(m_paths[floder].size() > id, TEXT("Индекс [%llu] массива вышел за границу. Путь [" BEAR_PRINT_CURRENT "] "),uint64(id), floder);
 	return BearFileManager::DirectoryExists(*item->second[id]);
 }
 
@@ -560,7 +560,7 @@ bool BearCore::BearFileSystem::ExistDirectoryAndUpdate(const bchar * floder, bsi
 	auto item = m_paths.find(BearStringConteniar(floder));
 	BEAR_RASSERT(m_paths.end() != item);
 
-	BEAR_FATALERROR(m_paths[floder].size() > id, TEXT("Индекс [%llu] массива вышел за границу. Путь [%s] "),uint64(id), floder);
+	BEAR_FATALERROR(m_paths[floder].size() > id, TEXT("Индекс [%llu] массива вышел за границу. Путь [" BEAR_PRINT_CURRENT "] "),uint64(id), floder);
 	BearString::Copy(full, *item->second[id]);
 	return BearFileManager::DirectoryExists(*item->second[id]);
 }

@@ -30,13 +30,13 @@ void BearCore::BearDebug::DebugBreak()
 
 
 
-void BearCore::BearDebug::FatalError(const bchar * chenk, const bchar * name, const bchar * function_name, uint32 line, const bchar * text, ...)
+void BearCore::BearDebug::FatalError(const bchar * chenk, const bchar * name, const char * function_name, uint32 line, const bchar * text, ...)
 {
 	BearString str;
 
 	str.append(TEXT("\r\n������ � �����:")).append(name);
 	str.append(TEXT("\r\n����� ��������:")).append(chenk);
-	str.append(TEXT("\r\n�������:")).append(function_name);
+	str.append(TEXT("\r\n�������:")).append(*BearEncoding::ToCurrent( function_name));
 	str.append(TEXT("\r\n������:"));
 	str.append_printf(TEXT("%u"),line);
 	str.append(TEXT("\r\n����������:"));
@@ -44,7 +44,7 @@ void BearCore::BearDebug::FatalError(const bchar * chenk, const bchar * name, co
 	va_start(va, text);
 	str.append_printf_va(text, va);
 	va_end(va);
-	BearLog::Printf(TEXT("%s"),*str);
+	BearLog::Printf(TEXT(BEAR_PRINT_CURRENT),*str);
 #ifdef DEBUG
 	ShowMessage(TEXT("FATAL ERROR!!!"), *str);
 #endif

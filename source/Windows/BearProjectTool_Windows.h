@@ -95,7 +95,7 @@ void * BearCore::BearProjectTool::GetFunctionInProjectImpl(const bchar * name, c
 		BearString::Contact(fullname, TEXT(".dll"));
 		lib obj;
 		obj.Module = LoadLibrary(fullname);
-		BEAR_FATALERROR(obj.Module, TEXT("Бибилиотека %s не существует или повреждена. Ошибка:0x%x"), fullname, GetLastError());
+		BEAR_FATALERROR(obj.Module, TEXT("Бибилиотека " BEAR_PRINT_CURRENT " не существует или повреждена. Ошибка:0x%x"), fullname, GetLastError());
 		Libs.insert(name_project, obj);
 		Item = Libs.find(BearStringConteniar(name_project, false));
 	}
@@ -103,7 +103,7 @@ void * BearCore::BearProjectTool::GetFunctionInProjectImpl(const bchar * name, c
 	if (ItemProc == Item->second.Procs.end())
 	{
 		FARPROC proc = GetProcAddress(Item->second.Module, *BearEncoding::ToANSI(function));
-		BEAR_FATALERROR(proc, TEXT("Функция %s не существует в библиотеке %s"), function, name);
+		BEAR_FATALERROR(proc, TEXT("Функция " BEAR_PRINT_CURRENT " не существует в библиотеке " BEAR_PRINT_CURRENT ""), function, name);
 		Item->second.Procs.insert(function, proc);
 		return proc;
 	}

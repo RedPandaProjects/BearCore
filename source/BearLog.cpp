@@ -1,4 +1,5 @@
 #include "BearCore.hpp"
+#include <iostream>
 #ifdef WINDOWS
 #include "BugTrap.h"
 #endif
@@ -27,8 +28,13 @@ void BearCore::BearLog::DebugPrintf(const bchar * text, ...)
 	printf(text866);
 	printf("\r\n");
 #elif LINUX
+#ifdef UNICODE
 	wprintf(var1);
 	wprintf(TEXT("\n"));
+#else
+	printf(var1);
+	printf(TEXT("\n"));
+#endif
 #endif
 	Push(var1);
 }
@@ -52,8 +58,13 @@ void BearCore::BearLog::Printf(const bchar * text, ...)
 	printf(text866);
 	printf("\r\n");
 #elif LINUX
+#ifdef UNICODE
 	wprintf(var1);
 	wprintf(TEXT("\n"));
+#else
+	printf(var1);
+	printf(TEXT("\n"));
+#endif
 #endif
 	Push(var1);
 }
@@ -156,7 +167,7 @@ int32 BearCore::BearLog::GetBuildImpl(const char * date, int32 start_year, int32
 	data.append_printf(TEXT(BEAR_PRINT_ANSI), date);
 	BearString16 month;
 	uint32 days = 0, year = 0;
-	data.scanf(TEXT("%s %d %d"), month, &days, &year);
+	data.scanf(TEXT("" BEAR_PRINT_CURRENT " %d %d"), month, &days, &year);
 	int32 months = 0;
 	for (int i = 0; i < 12; i++)
 	{
