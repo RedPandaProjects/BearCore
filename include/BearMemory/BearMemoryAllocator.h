@@ -1,6 +1,6 @@
 #pragma once
-#ifdef WINDOWS
-#include "../BearPlatform/Windows/BearMemoryAllocator.h"
-#elif LINUX
-#include "../BearPlatform/Linux/BearMemoryAllocator.h"
+#ifdef _MSVC_VER
+#include "../BearPlatform/MSVC/BearMemoryAllocator.h"
+#else
+#include "../BearPlatform/GCC/BearMemoryAllocator.h"
 #endif

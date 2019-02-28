@@ -1,5 +1,5 @@
 #pragma once
-#ifdef LINUX
+#ifdef UNIX
 #include <stdarg.h>
 #endif
 namespace BearCore
@@ -1052,7 +1052,7 @@ namespace BearCore
 		inline void clear_no_free()
 		{
 			m_tell = 0;
-#ifdef WINDOWS
+#ifdef _MSC_VER
 			if (basic_string::size())
 				at(0) = 0;
 			this->_Get_data()._Mysize = 0;
@@ -1098,8 +1098,8 @@ namespace BearCore
 	};
 
 };
-#ifdef WINDOWS
-#include "..\BearPlatform\Windows\BearString.h"
-#elif LINUX
-#include "../BearPlatform/Linux/BearString.h"
+#ifdef _MSC_VER
+#include "..\BearPlatform\MSVC\BearString.h"
+#else
+#include "../BearPlatform/GCC/BearString.h"
 #endif

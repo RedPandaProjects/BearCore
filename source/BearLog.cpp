@@ -27,7 +27,7 @@ void BearCore::BearLog::DebugPrintf(const bchar * text, ...)
 	CharToOem(var1, text866);
 	printf(text866);
 	printf("\r\n");
-#elif LINUX
+#elif UNIX
 #ifdef UNICODE
 	wprintf(var1);
 	wprintf(TEXT("\n"));
@@ -57,7 +57,7 @@ void BearCore::BearLog::Printf(const bchar * text, ...)
 	CharToOem(var1, text866);
 	printf(text866);
 	printf("\r\n");
-#elif LINUX
+#elif UNIX
 #ifdef UNICODE 
 	wprintf(var1);
 	wprintf(TEXT("\n"));

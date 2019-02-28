@@ -6,7 +6,7 @@ namespace BearCore
 	public:
 		BEAR_CLASS_NO_COPY(BearThread);
 		// ����������� ������ (������� � �� ���������);
-#ifdef WINDOWS
+#ifdef UNIX
 		template<class F,class ...A>
 		BearThread(F function,A&&...args):m_id(0),m_thread(0)
 		{
@@ -20,7 +20,7 @@ namespace BearCore
 			m_fun = bear_create_function_ref(function);
 
 		}
-#elif LINUX
+#else
 		template<class F,class ...A>
 		BearThread(F function,A&&...args):m_active(false),m_thread(0)
 		{

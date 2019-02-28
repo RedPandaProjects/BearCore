@@ -1,12 +1,10 @@
 #pragma once
 #ifdef WINDOWS
-#include "BearPlatform/Windows/BearWindowsType.h"
-#include "BearPlatform/Windows/BearProjectsDefines.h"
-#elif LINUX
-#include "BearPlatform/Linux/BearLinuxType.h"
-#include "BearPlatform/Linux/BearProjectsDefines.h"
+#include "BearPlatform/BearWindowsType.h"
+#elif UNIX
+#include "BearPlatform/BearUnixType.h"
 #else
-#error BearCore �� ������ ��������� �� ��������������
+#error BearCore Не поддерживает данную платформу
 #endif
 
 #ifdef BEAR_CORE_EXPORTS

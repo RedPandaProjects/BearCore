@@ -27,7 +27,7 @@ z_stream GzlibStream;
 void BearCore::Initialize(const bchar * app_name,  const bchar * email)
 {
 
-/*#ifdef LINUX 
+/*#ifdef UNIX 
 #ifdef UNICODE
 	fwide (stdout,1);
 	fputws(L"",stdout);

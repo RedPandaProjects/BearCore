@@ -3,7 +3,7 @@
 #include "Windows/BearFileManager_Windows.h"
 #include <sys/stat.h>
 #include <io.h>
-#elif LINUX
+#elif UNIX
 #include "Linux/BearFileManager_Linux.h"
 #endif
 

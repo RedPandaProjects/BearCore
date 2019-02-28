@@ -13,7 +13,7 @@ void CALLBACK GErrorHandler(INT_PTR)
 	BT_SaveSnapshot(0);
 }
 
-#elif LINUX
+#elif UNIX
 #include <signal.h>
 #endif
 
@@ -81,7 +81,7 @@ void BearCore::BearDebug::ShowMessage(const bchar * title, const bchar * text)
 {
 #ifdef WINDOWS
 	MessageBox(NULL, text, title, MB_ICONERROR);
-#elif LINUX
+#elif UNIX
 	//printf(text);
 #endif
 }

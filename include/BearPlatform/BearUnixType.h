@@ -49,3 +49,7 @@ typedef int64 bint;
 #define BEAR_PRINT_UNICODE "%S"
 #define BEAR_PRINT_CURRENT "%s"
 #endif
+
+#define BEARPROJECT_EXPORT
+#define BEARPROJECT_IMPORT
+

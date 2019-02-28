@@ -8,7 +8,7 @@ typedef signed   int int32;
 typedef unsigned int uint32;
 typedef char bchar8;
 typedef wchar_t bchar16;
-typedef int8 bcharu8;
+typedef int8 bchar_utf8;
 #ifdef UNICODE
 typedef  bchar16 bchar;
 #elif UTF_8
@@ -46,3 +46,6 @@ typedef int64 bint;
 #endif
 
 #include <Windows.h>
+
+#define BEARPROJECT_EXPORT __declspec(dllexport)
+#define BEARPROJECT_IMPORT __declspec(dllimport)

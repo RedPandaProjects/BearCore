@@ -22,7 +22,7 @@ struct codecvt_byname : public std::codecvt_byname<I, E, S>
 std::wstring_convert<::codecvt_byname<bchar16, bchar8, std::mbstate_t>, bchar16> *ConverterUTF16;
 std::wstring_convert<std::codecvt_utf8_utf16<bchar16>, bchar16> *ConverterUTF8;
 
-#if defined(WINDOWS) || defined(LINUX)
+#if defined(WINDOWS) || defined(UNIX)
 static uint32 LAnsiCode = 1251; /*RUS*/
 ;
 #endif
@@ -61,7 +61,7 @@ inline bchar8 ToANSI(bchar16 c)
 
 	if ((bchar16)(bchar8)c != c)
 	{  
-#ifdef LINUX
+#ifdef UNIX
 		if (LAnsiCode == 1251)
 		{ 
 			if (c >= L'А' && c <= L'Я'+32)
@@ -89,7 +89,7 @@ inline bchar16 ToUTF16(bchar8 c_)
 	{
 #ifdef WINDOWS
 		bchar16 res[2]; 
-		MultiByteToWideChar(LAnsiCode, 0, &c, 2, res, 2);
+		MultiByteToWideChar(LAnsiCode, 0, &c_, 2, res, 2);
 		return res[0];
 #else
 		if (LAnsiCode == 1251)
@@ -217,7 +217,7 @@ bchar16 BearCore::BearEncoding::ToUTF16(bchar8 c)
 
 void BearCore::BearEncoding::SetLang(Lang lang)
 {
-#if defined(WINDOWS) || defined(LINUX)
+#if defined(WINDOWS) || defined(UNIX)
 	switch (lang)
 	{
 	case BearCore::BearEncoding::E_RUS:

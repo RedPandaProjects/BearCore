@@ -1,6 +1,6 @@
 #include "BearCore.hpp"
 #ifdef WINDOWS
 #include "Windows/BearMutex_Windows.h"
-#elif LINUX
+#elif UNIX
 #include "Linux/BearMutex_Linux.h"
 #endif
