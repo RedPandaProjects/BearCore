@@ -1,4 +1,7 @@
 #pragma once
+#ifdef LINUX
+#include <stdarg.h>
+#endif
 namespace BearCore
 {
 	typedef bchar BearString8[8];
@@ -42,22 +45,52 @@ namespace BearCore
 	typedef bchar8 BearStringAnsiPath[MAX_PATH + 1];
 
 
+	typedef bchar_utf8 BearStringUTF88[8];
+	typedef bchar_utf8 BearStringUTF816[16];
+	typedef bchar_utf8 BearStringUTF832[32];
+	typedef bchar_utf8 BearStringUTF864[64];
+	typedef bchar_utf8 BearStringUTF8128[128];
+	typedef bchar_utf8 BearStringUTF8256[256];
+	typedef bchar_utf8 BearStringUTF8512[512];
+	typedef bchar_utf8 BearStringUTF81024[1024];
+	typedef bchar_utf8 BearStringUTF82048[2048];
+	typedef bchar_utf8 BearStringUTF84096[4096];
+	typedef bchar_utf8 BearStringUTF88192[8192];
+	typedef bchar_utf8 BearStringUTF8Path[MAX_PATH + 1];
+
 	class BearString :public std::basic_string<bchar, std::char_traits<bchar>, BearMemoryAllocator<bchar>>
 	{
 		typedef std::basic_string<bchar, std::char_traits<bchar>, BearMemoryAllocator<bchar>> basic_string;
 	public:
 		static inline bsize GetSize(const bchar8*text);
 		static inline bsize GetSize(const bchar16*text);
+		static inline bsize GetSize(const bchar_utf8*text)
+		{
+			return GetSize(reinterpret_cast<const bchar8*>(text));
+		}
 		template<bsize sizeBuffer>
 		static	inline void Contact(bchar8(&dst)[sizeBuffer], const  bchar8 *src);
 		template<bsize sizeBuffer>
 		static	inline void Contact(bchar16(&dst)[sizeBuffer], const  bchar16 *src);
+		template<bsize sizeBuffer>
+		static	inline void Contact(bchar_utf8(&dst)[sizeBuffer], const  bchar_utf8 *src);
+
 		template<bsize sizeBuffer>
 		static inline void Copy(bchar16(&dst)[sizeBuffer], const  bchar16 *src);
 		static inline void Copy(bchar16*dst, bsize sizeBuffer, const  bchar16 *src);
 		template<bsize sizeBuffer>
 		static inline void Copy(bchar8(&dst)[sizeBuffer], const  bchar8 *src);
 		static inline void Copy(bchar8*dst, bsize sizeBuffer, const  bchar8 *src);
+		template<bsize sizeBuffer>
+		static	inline void Copy(bchar_utf8(&dst)[sizeBuffer], const  bchar_utf8 *src)
+		{
+			Copy(reinterpret_cast<bchar8*>(dst),sizeBuffer,reinterpret_cast<const bchar8*>(src));
+		}
+		static	inline void Copy(bchar_utf8*dst, bsize sizeBuffer, const  bchar_utf8 *src)
+		{
+			Copy(reinterpret_cast<bchar8*>(dst),sizeBuffer,reinterpret_cast<const bchar8*>(src));
+		}
+
 		template<typename C>
 		static inline C*Duplicate(const C* src)
 		{
@@ -66,21 +99,46 @@ namespace BearCore
 			Copy(dst, size+1, src);
 			return dst;
 		}
+
 		static inline const bchar8* ToChar(const bchar8* str, bchar8 ch);
 		static inline  bchar8* ToChar(bchar8* str, bchar8 ch);
+		static inline  bchar16* ToChar(bchar16* str, bchar16 ch);
+		static inline const bchar16* ToChar(const bchar16* str, bchar16 ch);
+
 		static inline const bchar8* ToCharWithEnd(const bchar8* str, bchar8 ch);
 		static inline  bchar8* ToCharWithEnd(bchar8* str, bchar8 ch);
-
-		static inline const bchar16* ToChar(const bchar16* str, bchar16 ch);
-		static inline  bchar16* ToChar(bchar16* str, bchar16 ch);
 		static inline const bchar16* ToCharWithEnd(const bchar16* str, bchar16 ch);
 		static inline  bchar16* ToCharWithEnd(bchar16* str, bchar16 ch);
 
+		static inline const bchar_utf8* ToChar(const bchar_utf8* str, bchar_utf8 ch)
+		{
+			return reinterpret_cast<const bchar_utf8*>(ToChar(reinterpret_cast<const bchar8*>(str),*reinterpret_cast<bchar8*>(&ch)));
+		}
+		static inline  bchar_utf8* ToChar(bchar_utf8* str, bchar_utf8 ch)
+		{
+			return reinterpret_cast<bchar_utf8*>(ToChar(reinterpret_cast<bchar8*>(str),*reinterpret_cast<bchar8*>(&ch)));
+		}
+		static inline const bchar_utf8* ToCharWithEnd(const bchar_utf8* str, bchar_utf8 ch)
+		{
+			return reinterpret_cast<const bchar_utf8*>(ToCharWithEnd(reinterpret_cast<const bchar8*>(str),*reinterpret_cast<bchar8*>(&ch)));
+		}
+		static inline  bchar_utf8* ToCharWithEnd(bchar_utf8* str, bchar_utf8 ch)
+		{
+			return reinterpret_cast<bchar_utf8*>(ToCharWithEnd(reinterpret_cast<bchar8*>(str),*reinterpret_cast<bchar8*>(&ch)));
+		}
 
 		static inline const bchar8* Find(const bchar8* str, const  bchar8 *subStr);
 		static inline bchar8* Find(bchar8* str, const bchar8 *subStr);
 		static inline const bchar16* Find(const bchar16* str, const  bchar16 *subStr);
 		static inline bchar16* Find(bchar16* str, const bchar16 *subStr);
+		static inline const bchar_utf8* Find(const bchar_utf8* str, const  bchar_utf8 *subStr)
+		{
+			return reinterpret_cast<const bchar_utf8*>(Find(reinterpret_cast<const bchar8*>(str),reinterpret_cast<const bchar8*>(subStr)));
+		}
+		static inline bchar_utf8* Find(bchar_utf8* str, const bchar_utf8 *subStr)
+		{
+			return reinterpret_cast<bchar_utf8*>(Find(reinterpret_cast< bchar8*>(str),reinterpret_cast<const bchar8*>(subStr)));
+		}
 
 		static inline bchar8* FindWithEnd(bchar8* str, const bchar8 *subStr)
 		{
@@ -128,6 +186,14 @@ namespace BearCore
 			}
 			return find;
 		}
+		static inline const bchar_utf8* FindWithEnd(const bchar_utf8* str, const  bchar_utf8 *subStr)
+		{
+			return reinterpret_cast<const bchar_utf8*>(FindWithEnd(reinterpret_cast<const bchar8*>(str),reinterpret_cast<const bchar8*>(subStr)));
+		}
+		static inline bchar_utf8* FindWithEnd(bchar_utf8* str, const bchar_utf8 *subStr)
+		{
+			return reinterpret_cast<bchar_utf8*>(FindWithEnd(reinterpret_cast< bchar8*>(str),reinterpret_cast<const bchar8*>(subStr)));
+		}
 
 		template<bsize sizeBuffer>
 		static inline void Printf(bchar8(&dst)[sizeBuffer], const bchar8*str,...);
@@ -139,8 +205,19 @@ namespace BearCore
 		template<bsize sizeBuffer>
 		static inline void PrintfVa(bchar16(&dst)[sizeBuffer], const bchar16*str, va_list va);
 
+		template<bsize sizeBuffer>
+		static inline void Printf(bchar_utf8(&dst)[sizeBuffer], const bchar_utf8*str, ...);
+		template<bsize sizeBuffer>
+		static inline void PrintfVa(bchar_utf8(&dst)[sizeBuffer], const bchar_utf8*str, va_list va);
+
 		static inline int32 Scanf(const bchar8*text, const bchar8*str, ...);
 		static inline int32 Scanf(const bchar16*text, const bchar16*str, ...);
+
+		template<class...A>
+		static inline void Scanf(const bchar_utf8*text, const bchar_utf8*str, A...a)
+		{
+			Scanf(reinterpret_cast<const bchar8*>(text),reinterpret_cast<const bchar8*>(str),a...);
+		}
 
 		static inline const bchar8* SubSpaceInBegin(const bchar8*text)
 		{
@@ -184,6 +261,14 @@ namespace BearCore
 			}
 			return text;
 		}
+		static inline const bchar_utf8* SubSpaceInBegin(const bchar_utf8*text)
+		{
+			return  reinterpret_cast<const bchar_utf8*>( SubSpaceInBegin(reinterpret_cast<const bchar8*>(text)));
+		}
+		static inline  bchar_utf8* SubSpaceInBegin( bchar_utf8*text)
+		{
+			return  reinterpret_cast<bchar_utf8*>( SubSpaceInBegin(reinterpret_cast<bchar8*>(text)));
+		}
 		static inline bchar8* SubSpaceInEnd(bchar8*text)
 		{
 			bchar8*end = text + GetSize(text);
@@ -222,6 +307,11 @@ namespace BearCore
 			}
 			return text;
 		}
+		static inline  bchar_utf8* SubSpaceInEnd( bchar_utf8*text)
+		{
+			return  reinterpret_cast<bchar_utf8*>( SubSpaceInEnd(reinterpret_cast<bchar8*>(text)));
+		}
+
 		template<bsize sizeBuffer>
 		static inline const bchar8* ReadTo(const bchar8*text, bchar8 ch, bchar8(&out)[sizeBuffer])
 		{
@@ -290,6 +380,49 @@ namespace BearCore
 		static inline bchar16* ReadTo(bchar16*text, bchar16 ch, bchar16(&out)[sizeBuffer])
 		{
 			bchar16*end = ToChar(text, ch);
+			if (end)
+			{
+				bsize size = end - text;
+				if (size > sizeBuffer - 1)
+				{
+					size = sizeBuffer - 1;
+				}
+				bear_copy(out, text, size);
+				out[size] = 0;
+				return text + size + 1;
+			}
+			else
+			{
+				Copy(out, text);
+				return text + GetSize(text);
+			}
+		}
+
+		template<bsize sizeBuffer>
+		static inline const bchar_utf8* ReadTo(const bchar_utf8*text, bchar_utf8 ch, bchar_utf8(&out)[sizeBuffer])
+		{
+			const bchar_utf8*end = ToChar(text, ch);
+			if (end)
+			{
+				bsize size = end - text;
+				if (size > sizeBuffer - 1)
+				{
+					size = sizeBuffer - 1;
+				}
+				bear_copy(out, text, size);
+				out[size] = 0;
+				return text + size + 1;
+			}
+			else
+			{
+				Copy(out, text);
+				return text + GetSize(text);
+			}
+		}
+		template<bsize sizeBuffer>
+		static inline bchar_utf8* ReadTo(bchar_utf8*text, bchar_utf8 ch, bchar_utf8(&out)[sizeBuffer])
+		{
+			bchar_utf8*end = ToChar(text, ch);
 			if (end)
 			{
 				bsize size = end - text;
@@ -397,6 +530,50 @@ namespace BearCore
 				return text + GetSize(text);
 			}
 		}
+			template<bsize sizeBuffer>
+		static inline const bchar_utf8* ReadTo(const bchar_utf8*text, const bchar_utf8* substr, bchar_utf8(&out)[sizeBuffer])
+		{
+			const bchar_utf8*end = Find(text, substr);
+			if (end)
+			{
+				bsize size = end - text;
+				if (size > sizeBuffer - 1)
+				{
+					size = sizeBuffer - 1;
+				}
+				bear_copy(out, text, size);
+				out[size] = 0;
+				return text + size + GetSize(substr);
+			}
+			else
+			{
+				Copy(out, text);
+				return text + GetSize(text);
+			}
+		}
+
+		template<bsize sizeBuffer>
+		static inline bchar_utf8* ReadTo(bchar_utf8*text, const bchar_utf8* substr, bchar_utf8(&out)[sizeBuffer])
+		{
+			bchar_utf8*end = Find(text, substr);
+			if (end)
+			{
+				bsize size = end - text;
+				if (size > sizeBuffer - 1)
+				{
+					size = sizeBuffer - 1;
+				}
+				bear_copy(out, text, size);
+				out[size] = 0;
+				return text + size + GetSize(substr);
+			}
+			else
+			{
+				Copy(out, text);
+				return text + GetSize(text);
+			}
+		}
+
 
 		static inline bsize CountElement(const bchar8*text, const bchar8* substr)
 		{
@@ -454,6 +631,14 @@ namespace BearCore
 			}
 			return count;
 		}
+		static inline bsize CountElement(const bchar_utf8*text, const bchar_utf8* substr)
+		{
+			return CountElement(reinterpret_cast<const bchar8*>(text), reinterpret_cast<const bchar8*>(substr));
+		}
+		static inline bsize CountElement(const bchar_utf8*text, bchar_utf8 ch)
+		{
+			return CountElement(reinterpret_cast<const bchar8*>(text), *reinterpret_cast< bchar8*>(&ch));
+		}
 
 		static inline bool Exist(const bchar8*text, const bchar8* substr)
 		{
@@ -463,12 +648,20 @@ namespace BearCore
 		{
 			return Find(text, substr);
 		}
+		static inline bool Exist(const bchar_utf8*text, const bchar_utf8* substr)
+		{
+			return Find(reinterpret_cast<const bchar8*>( text), reinterpret_cast<const bchar8*>(substr));
+		}
 
 		static inline bool ExistPossition(const bchar8*text, bsize pos, const bchar8*substr)
 		{
 			return bear_compare(text + pos, substr, GetSize(substr)) == 0;
 		}
 		static inline bool ExistPossition(const bchar16*text, bsize pos, const bchar16*substr)
+		{
+			return bear_compare(text + pos, substr, GetSize(substr)) == 0;
+		}
+		static inline bool ExistPossition(const bchar_utf8*text, bsize pos, const bchar_utf8*substr)
 		{
 			return bear_compare(text + pos, substr, GetSize(substr)) == 0;
 		}
@@ -528,13 +721,55 @@ namespace BearCore
 			}
 			ReadTo(text, element, out);
 		}
+		
+		template<bsize sizeBuffer>
+		static inline void GetElement(const bchar_utf8*text, bchar_utf8 element, bsize id, bchar_utf8(&out)[sizeBuffer])
+		{
+			if (id)
+			{
+				while (id)
+				{
+					text = ToChar(text, element) + 1;
+					id--;
+				}
+			}
+			ReadTo(text, element, out);
+		}
+		template<bsize sizeBuffer>
+		static inline void GetElement(const bchar_utf8*text, const bchar_utf8 *element, bsize id, bchar_utf8(&out)[sizeBuffer])
+		{
+			bsize selement = GetSize(element);
+			if (id)
+			{
+				while (id)
+				{
+					text = Find(text, element) + selement;
+					id--;
+				}
+			}
+			ReadTo(text, element, out);
+		}
+
 
 		static inline void  ToLower(bchar8* str);
 		static inline void  ToUpper(bchar8* str);
 		static inline void  ToLower(bchar16* str);
 		static inline void  ToUpper(bchar16* str);
+		static inline void  ToLower(bchar_utf8* str)
+		{
+			ToLower(reinterpret_cast<bchar8*>(str));
+		}
+		static inline void  ToUpper(bchar_utf8* str)
+		{
+			ToUpper(reinterpret_cast<bchar8*>(str));
+		}
+
 		static inline int32   Compare(const bchar8*str1,const bchar8*str2);
 		static inline int32   Compare(const bchar16*str1, const bchar16*str2);
+		static inline int32   Compare(const bchar_utf8*str1, const bchar_utf8*str2)
+		{
+			return Compare(reinterpret_cast<const bchar8*>(str1),reinterpret_cast<const bchar8*>(str2));
+		}
 	public:
 
 		BearString() :basic_string(), m_tell(0) {}

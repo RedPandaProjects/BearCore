@@ -22,6 +22,12 @@ namespace BearCore
 		wcsncat(dst,  src,sizeBuffer);
 	}
 	template<bsize sizeBuffer>
+	inline void BearString::Contact(bchar_utf8(&dst)[sizeBuffer], const  bchar_utf8 *src)
+	{
+		strncat((char*)dst,  (const char*)src,sizeBuffer);
+	}
+
+	template<bsize sizeBuffer>
 	inline void BearString::Copy(bchar16(&dst)[sizeBuffer], const  bchar16 *src)
 	{
 		wcsncpy(dst,  src,sizeBuffer);
@@ -124,13 +130,13 @@ namespace BearCore
 	{
 		va_list va;
 		va_start(va, str);
-		vsprintf_s(dst, sizeBuffer, str, va);
+		vsprintf(dst, sizeBuffer, str, va);
 		va_end(va);
 	}
 	template<bsize sizeBuffer>
 	inline void BearString::PrintfVa(bchar8(&dst)[sizeBuffer], const bchar8*str, va_list va)
 	{
-		vsprintf_s(dst, sizeBuffer, str, va);
+		vsprintf(dst, sizeBuffer, str, va);
 	}
 
 	template<bsize sizeBuffer>
@@ -146,6 +152,22 @@ namespace BearCore
 	{
 		vswprintf(dst, sizeBuffer, str, va);
 	}
+
+	template<bsize sizeBuffer>
+	inline void BearString::Printf(bchar_utf8(&dst)[sizeBuffer], const bchar_utf8*str, ...)
+	{
+		va_list va;
+		va_start(va, str);
+		vsnprintf((char*)dst, sizeBuffer, (const char*)str, va);
+		va_end(va);
+	}
+	template<bsize sizeBuffer>
+	inline void BearString::PrintfVa(bchar_utf8(&dst)[sizeBuffer],const bchar_utf8 *str, va_list va)
+	{
+		vsnprintf((char*)dst, sizeBuffer, (const char*)str, va);
+	}
+
+
 	inline int32 BearString::Scanf(const bchar8*text, const bchar8*str, ...)
 	{
 		va_list va;

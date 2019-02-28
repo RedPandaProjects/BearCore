@@ -7,15 +7,17 @@ typedef signed   int int32;
 typedef unsigned int uint32;
 typedef char bchar8;
 typedef wchar_t bchar16;
-typedef int8 bcharu8;
+typedef int8 bchar_utf8;
 #ifdef UNICODE
 #define TEXT_I(a) L ## a
 #define TEXT(a) TEXT_I(a)
 typedef  bchar16 bchar;
-#else
-#define TEXT(a)  a
-typedef  bchar8 bchar;
-#endif
+#elif UTF_8
+#define TEXT(a)  ((bchar_utf8*)a)
+typedef  bchar_utf8 bchar;
+#else 
+#error "UNIX Не поддерживает ANSI"
+#endif 
 typedef signed   long long int64;
 typedef unsigned  long long uint64;
 
@@ -39,11 +41,11 @@ typedef int64 bint;
 #define MAX_PATH 512
 
 #ifdef UNICODE
-#define BEAR_PRINT_ANSI "%s"
+#define BEAR_PRINT_UTF8 "%s"
 #define BEAR_PRINT_UNICODE "%S"
 #define BEAR_PRINT_CURRENT "%S"
 #else
-#define BEAR_PRINT_ANSI "%s"
+#define BEAR_PRINT_UTF8 "%s"
 #define BEAR_PRINT_UNICODE "%S"
 #define BEAR_PRINT_CURRENT "%s"
 #endif

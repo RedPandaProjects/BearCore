@@ -6,7 +6,7 @@
 BearCore::BearVector<BearCore::BearStringConteniar> *LogData=0;
 static BearCore::BearMutex LogMutex;
 static BearCore::BearLogCallBack LogCallBack=0;
-BearCore::BearStringPath LogFileOut=TEXT("");
+BearCore::BearStringPath LogFileOut;
 
 #ifdef DEBUG
 void BearCore::BearLog::DebugPrintf(const bchar * text, ...)
@@ -32,8 +32,8 @@ void BearCore::BearLog::DebugPrintf(const bchar * text, ...)
 	wprintf(var1);
 	wprintf(TEXT("\n"));
 #else
-	printf(var1);
-	printf(TEXT("\n"));
+	puts((const char*)var1);
+	puts((const char*)TEXT("\n"));
 #endif
 #endif
 	Push(var1);
@@ -58,12 +58,12 @@ void BearCore::BearLog::Printf(const bchar * text, ...)
 	printf(text866);
 	printf("\r\n");
 #elif LINUX
-#ifdef UNICODE
+#ifdef UNICODE 
 	wprintf(var1);
 	wprintf(TEXT("\n"));
 #else
-	printf(var1);
-	printf(TEXT("\n"));
+	puts((const char*)var1);
+	puts((const char*)TEXT("\n"));
 #endif
 #endif
 	Push(var1);
@@ -164,10 +164,14 @@ int32 BearCore::BearLog::GetBuildImpl(const char * date, int32 start_year, int32
 		31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31
 	};
 	BearString data;
-	data.append_printf(TEXT(BEAR_PRINT_ANSI), date);
+	data.append(*BearEncoding::ToCurrent(date));
 	BearString16 month;
 	uint32 days = 0, year = 0;
-	data.scanf(TEXT("" BEAR_PRINT_CURRENT " %d %d"), month, &days, &year);
+#ifdef WINDOWS
+	data.scanf(TEXT("" BEAR_PRINT_ANSI " %d %d"), month, &days, &year);
+#else 
+	data.scanf(TEXT("" BEAR_PRINT_UTF8 " %d %d"), month, &days, &year);
+#endif
 	int32 months = 0;
 	for (int i = 0; i < 12; i++)
 	{

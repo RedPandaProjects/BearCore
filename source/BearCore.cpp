@@ -26,7 +26,8 @@ extern void CALLBACK GErrorHandler(INT_PTR);
 z_stream GzlibStream;
 void BearCore::Initialize(const bchar * app_name,  const bchar * email)
 {
-#ifdef LINUX 
+
+/*#ifdef LINUX 
 #ifdef UNICODE
 	fwide (stdout,1);
 	fputws(L"",stdout);
@@ -36,12 +37,11 @@ void BearCore::Initialize(const bchar * app_name,  const bchar * email)
 	fputs(L"",stdout);
 	BEAR_RASSERT(fwide(stdout,0)==0);
 #endif
+#endif*/
 
-	
-#endif
 	BEAR_ASSERT(!bInitialize);
 	bear_fill(GzlibStream);
-
+	LogFileOut[0]=0;
 	BearMemory::DebugOff();
 	LogData = new BearVector<BearStringConteniar>;
 	LogData->reserve(1024);

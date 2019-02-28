@@ -18,8 +18,7 @@
 			"X64",
 			"DEBUG",
 			"_DEBUG",
-			"_UNICODE",
-			"UNICODE"
+			"UTF_8"
 			],
 			"compilerPath": "/usr/bin/gcc",
 			"cStandard": "c11",

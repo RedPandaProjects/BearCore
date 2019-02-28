@@ -11,6 +11,8 @@ typedef wchar_t bchar16;
 typedef int8 bcharu8;
 #ifdef UNICODE
 typedef  bchar16 bchar;
+#elif UTF_8
+#error "Windoss Не поддерживает UTF8"
 #else
 typedef  bchar8 bchar;
 #endif

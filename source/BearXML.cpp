@@ -26,6 +26,9 @@ bool BearCore::BearXML::LoadFromFile(const bchar * file, BearString&value_error,
 #ifdef UNICODE
 		value_error.assign(*BearEncoding::ToUTF16(m_doc->Value()));
 		out_error.assign(*BearEncoding::ToUTF16(m_doc->ErrorDesc()));
+#elif UTF_8
+			value_error.assign(*BearEncoding::ToUTF8(m_doc->Value()));
+			out_error.assign(*BearEncoding::ToUTF8(m_doc->ErrorDesc()));
 #else
 		value_error.assign(m_doc->Value());
 		out_error.assign(m_doc->ErrorDesc());
@@ -56,6 +59,9 @@ bool BearCore::BearXML::LoadFromBuffrer(const BearBufferedReader & buffer, BearE
 #ifdef UNICODE
 			value_error.assign(*BearEncoding::ToUTF16(m_doc->Value()));
 			out_error.assign(*BearEncoding::ToUTF16(m_doc->ErrorDesc()));
+#elif UTF_8
+			value_error.assign(*BearEncoding::ToUTF8(m_doc->Value()));
+			out_error.assign(*BearEncoding::ToUTF8(m_doc->ErrorDesc()));
 #else
 			value_error.assign(m_doc->Value());
 			out_error.assign(m_doc->ErrorDesc());
@@ -73,6 +79,9 @@ bool BearCore::BearXML::LoadFromBuffrer(const BearBufferedReader & buffer, BearE
 #ifdef UNICODE
 			value_error.assign(*BearEncoding::ToUTF16(m_doc->Value()));
 			out_error.assign(*BearEncoding::ToUTF16(m_doc->ErrorDesc()));
+#elif UTF_8
+			value_error.assign(*BearEncoding::ToUTF8(m_doc->Value()));
+			out_error.assign(*BearEncoding::ToUTF8(m_doc->ErrorDesc()));
 #else
 			value_error.assign(m_doc->Value());
 			out_error.assign(m_doc->ErrorDesc());
@@ -83,13 +92,16 @@ bool BearCore::BearXML::LoadFromBuffrer(const BearBufferedReader & buffer, BearE
 	}
 	else 
 	{
-		auto ptr = BearEncoding::ToUTF8((const bcharu8*)buffer.Begin(), (const bcharu8*)buffer.End());
+		auto ptr = BearEncoding::ToUTF8((const bchar_utf8*)buffer.Begin(), (const bchar_utf8*)buffer.End());
 		m_doc->Parse((char*)*ptr, 0, TIXML_ENCODING_UTF8);
 		if (m_doc->Error())
 		{
 #ifdef UNICODE
 			value_error.assign(*BearEncoding::ToUTF16(m_doc->Value()));
 			out_error.assign(*BearEncoding::ToUTF16(m_doc->ErrorDesc()));
+#elif UTF_8
+			value_error.assign(*BearEncoding::ToUTF8(m_doc->Value()));
+			out_error.assign(*BearEncoding::ToUTF8(m_doc->ErrorDesc()));
 #else
 			value_error.assign(m_doc->Value());
 			out_error.assign(m_doc->ErrorDesc());
@@ -120,6 +132,8 @@ BearString BearXML::Get(BearXmlNode node, const  bchar* default_str_val)
 	if(((TiXmlElement*)node)->GetText()[0])
 #ifdef UNICODE
 		return *BearEncoding::ToUTF16(((TiXmlElement*)node)->GetText());
+#elif UTF_8
+			return *BearEncoding::ToUTF8(((TiXmlElement*)node)->GetText());
 #else
 	return ((TiXmlElement*)node)->GetText();
 #endif
@@ -135,6 +149,8 @@ BearString BearCore::BearXML::GetAtribute(BearXmlNode node, const  char* Atribut
 		if (((TiXmlElement*)node)->Attribute(Atribute)[0])
 #ifdef UNICODE
 			return *BearEncoding::ToUTF16(((TiXmlElement*)node)->Attribute(Atribute));
+#elif UTF_8
+			return *BearEncoding::ToUTF8(((TiXmlElement*)node)->Attribute(Atribute));
 #else
 			return ((TiXmlElement*)node)->Attribute(Atribute);
 #endif

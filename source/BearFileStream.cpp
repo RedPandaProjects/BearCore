@@ -32,7 +32,7 @@ bool BearCore::BearFileStream::Open(const bchar *name, BearFlags<uint8> flags)
 	fopen_s(reinterpret_cast<FILE **>(&m_file), name, mode);
 #endif
 #else
-	m_file = fopen(*BearEncoding::ToANSI(name),*BearEncoding::ToANSI(mode));
+	m_file = fopen((const char*)*BearEncoding::ToUTF8(name),(const char*)*BearEncoding::ToUTF8(mode));
 #endif
 	if (m_file)
 	{

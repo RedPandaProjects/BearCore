@@ -101,7 +101,12 @@ void BearCore::BearMemory::DebugCheak()
 		auto end = LMemoryBlocks.end();
 		while (begin != end)
 		{
-			BearLog::Printf(BEAR_PRINT_ANSI TEXT(":0x%p\n"), begin->name, begin->ptr);
+#ifdef WINDOWS
+	BearLog::Printf( TEXT( BEAR_PRINT_ANSI ":0x%p\n"), begin->name, begin->ptr);
+#else
+	BearLog::Printf( TEXT(BEAR_PRINT_UTF8 ":0x%p\n"), begin->name, begin->ptr);
+#endif
+			
 			begin++;
 		}
 		BearLog::Printf(TEXT("------------------------------------------------------------------\n"));

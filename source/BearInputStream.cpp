@@ -101,9 +101,11 @@ void BearCore::BearInputStream::ReadString(BearString & str, bsize size, BearEnc
 	if (type == BearEncoding::UTF8)
 	{
 #ifdef UNICODE
-		auto te = BearEncoding::ToUTF16(reinterpret_cast<const bcharu8*>(*text), reinterpret_cast<const bcharu8*>(*text)+ size);
+		auto te = BearEncoding::ToUTF16(reinterpret_cast<const bchar_utf8*>(*text), reinterpret_cast<const bchar_utf8*>(*text)+ size);
+#elif UTF_8
+		auto te = BearEncoding::ToUTF8(reinterpret_cast<const bchar_utf8*>(*text), reinterpret_cast<const bchar_utf8*>(*text)+ size);
 #else
-		auto te = BearEncoding::ToANSI(reinterpret_cast<const bcharu8*>(*text), reinterpret_cast<const bcharu8*>(*text+ size) );
+		auto te = BearEncoding::ToANSI(reinterpret_cast<const bchar_utf8*>(*text), reinterpret_cast<const bchar_utf8*>(*text+ size) );
 #endif
 		str.append(*te);
 	}
@@ -111,6 +113,9 @@ void BearCore::BearInputStream::ReadString(BearString & str, bsize size, BearEnc
 	{
 #ifdef UNICODE
 		auto te = BearEncoding::ToUTF16(reinterpret_cast<const bchar8*>(*text), reinterpret_cast<const bchar8*>(*text+size));
+		str.append(*te);
+#elif UTF_8
+		auto te = BearEncoding::ToUTF8(reinterpret_cast<const bchar8*>(*text), reinterpret_cast<const bchar8*>(*text+size));
 		str.append(*te);
 #else 
 		str.append((bchar8*)*text,size);
@@ -121,7 +126,9 @@ void BearCore::BearInputStream::ReadString(BearString & str, bsize size, BearEnc
 	{
 #ifdef UNICODE
 		str.append((bchar16*)*text, size/2);
-#else 
+#elif UTF_8
+		auto te = BearEncoding::ToUTF8(reinterpret_cast<const bchar16*>(*text), reinterpret_cast<const bchar16*>(*text+ size));
+#else
 		auto te = BearEncoding::ToANSI(reinterpret_cast<const bchar16*>(*text), reinterpret_cast<const bchar16*>(*text + size));
 		str.append(*te);
 #endif

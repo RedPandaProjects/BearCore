@@ -22,12 +22,12 @@ bool BearCore::BearFileManager::FileCopy(const bchar *in, const bchar *out)
 #include <sys/stat.h>
 bool BearCore::BearFileManager::DirectoryCreate(const bchar *path)
 {
-	return mkdir(*BearEncoding::ToANSI(path), S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH) == 0;
+	return mkdir((const char*)*BearEncoding::ToUTF8(path), S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH) == 0;
 }
 bool BearCore::BearFileManager::DirectoryExists(const bchar *name)
 {
 	struct stat buffer;
-	int exist = stat(*BearEncoding::ToANSI(name), &buffer);
+	int exist = stat((const char*)*BearEncoding::ToUTF8(name), &buffer);
 	if (exist == 0)
 		return S_ISDIR(buffer.st_mode);
 	else // -1
@@ -36,11 +36,11 @@ bool BearCore::BearFileManager::DirectoryExists(const bchar *name)
 void BearCore::BearFileManager::GetWorkPath(BearStringPath &path)
 {
 #ifdef UNICODE
-	BearStringAnsiPath path_ansi;
-	getcwd(path_ansi, MAX_PATH);
+	BearStringUTF8Path path_ansi;
+	getcwd((char*)path_ansi, MAX_PATH);
 	BearString::Copy(path, *BearEncoding::ToUTF16(path_ansi));
 #else
-	getcwd(path, MAX_PATH);
+	getcwd((char*)path, MAX_PATH);
 #endif
 	PathOptimization(path);
 }
@@ -56,7 +56,7 @@ void BearCore::BearFileManager::GetApplicationPath(BearStringPath &path)
 	path_ansi[length] = 0;
 	BearString::Copy(path, *BearEncoding::ToUTF16(path_ansi));
 #else
-	auto length = readlink("/proc/self/exe", path, sizeof(path));
+	auto length = readlink("/proc/self/exe", (char*)path, sizeof(path));
 	if (length < 0)
 		length = 0;
 	path[length] = 0;
@@ -67,7 +67,7 @@ void BearCore::BearFileManager::GetApplicationPath(BearStringPath &path)
 bool BearCore::BearFileManager::FileExists(const bchar *name)
 {
 	struct stat buffer;
-	int exist = stat(*BearEncoding::ToANSI(name), &buffer);
+	int exist = stat((const char*)*BearEncoding::ToUTF8(name), &buffer);
 	if (exist == 0)
 		return !S_ISDIR(buffer.st_mode);
 	else // -1
@@ -75,11 +75,11 @@ bool BearCore::BearFileManager::FileExists(const bchar *name)
 }
 bool BearCore::BearFileManager::FileDelete(const bchar *name)
 {
-	return remove(*BearEncoding::ToANSI(name)) != -1;
+	return remove((const char*)*BearEncoding::ToUTF8(name)) != -1;
 }
 bsize BearCore::BearFileManager::GetFileSize(const bchar *name)
 {
-	FILE *file = fopen(*BearEncoding::ToANSI(name), "rb");
+	FILE *file = fopen((const char*)*BearEncoding::ToUTF8(name), "rb");
 	if (!file)
 		return 0;
 	fseek(file, 0, SEEK_END);
@@ -92,7 +92,7 @@ BearCore::BearFileManager::FileTime BearCore::BearFileManager::GetFileCreateTime
 {
 	BearCore::BearFileManager::FileTime ft;
 	struct stat buffer;
-	int exist = stat(*BearEncoding::ToANSI(file), &buffer);
+	int exist = stat((const char*)*BearEncoding::ToUTF8(file), &buffer);
 	if (exist == 0)
 	{
 		struct tm *tm = localtime(&(buffer.st_ctime));
@@ -110,7 +110,7 @@ BearCore::BearFileManager::FileTime BearCore::BearFileManager::GetFileLastWriteT
 {
 	BearCore::BearFileManager::FileTime ft;
 	struct stat buffer;
-	int exist = stat(*BearEncoding::ToANSI(file), &buffer);
+	int exist = stat((const char*)*BearEncoding::ToUTF8(file), &buffer);
 	if (exist == 0)
 	{
 		struct tm *tm = localtime(&(buffer.st_mtime));
@@ -125,7 +125,7 @@ BearCore::BearFileManager::FileTime BearCore::BearFileManager::GetFileLastWriteT
 }
 bool BearCore::BearFileManager::FileMove(const bchar *name, const bchar *newname)
 {
-	return rename(*BearEncoding::ToANSI(name), *BearEncoding::ToANSI(newname)) != -1;
+	return rename((const char*)*BearEncoding::ToUTF8(name), (const char*)*BearEncoding::ToUTF8(newname)) != -1;
 }
 
 static void Find(BearCore::BearVector<BearCore::BearString> &list, const bchar *path, const char *ext, bool full_path, bool findFile = true)
@@ -136,7 +136,7 @@ static void Find(BearCore::BearVector<BearCore::BearString> &list, const bchar *
 	ext = BearCore::BearString::ReadTo(ext, '*', ext1);
 	bsize es = BearCore::BearString::GetSize(ext);
 
-	if ((dir = opendir(*BearCore::BearEncoding::ToANSI(path))) != NULL)
+	if ((dir = opendir((const char*)*BearCore::BearEncoding::ToUTF8(path))) != NULL)
 	{
 		while ((ent = readdir(dir)) != NULL)
 		{
@@ -189,5 +189,5 @@ static void Find(BearCore::BearVector<BearCore::BearString> &list, const bchar *
 }
 static void Find(BearCore::BearVector<BearCore::BearString> &list, const bchar *path, const bchar *ext, bool full_path, bool findFile = true)
 {
-	Find(list,path,*BearCore::BearEncoding::ToANSI(path),full_path,findFile);
+	Find(list,path,(const char*)*BearCore::BearEncoding::ToUTF8(path),full_path,findFile);
 }
