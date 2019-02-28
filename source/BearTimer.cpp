@@ -2,6 +2,6 @@
 #ifdef WINDOWS
 #include "Windows/BearTimer_Windows.h"
 #elif UNIX
-#include "Linux/BearTimer_Linux.h"
+#include "Unix/BearTimer_Unix.h"
 #endif 
 

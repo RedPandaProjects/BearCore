@@ -4,7 +4,7 @@
 #include <sys/stat.h>
 #include <io.h>
 #elif UNIX
-#include "Linux/BearFileManager_Linux.h"
+#include "Unix/BearFileManager_Unix.h"
 #endif
 
 

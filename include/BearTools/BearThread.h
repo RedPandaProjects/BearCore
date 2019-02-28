@@ -6,7 +6,7 @@ namespace BearCore
 	public:
 		BEAR_CLASS_NO_COPY(BearThread);
 		// ����������� ������ (������� � �� ���������);
-#ifdef UNIX
+#ifdef WINDOWS
 		template<class F,class ...A>
 		BearThread(F function,A&&...args):m_id(0),m_thread(0)
 		{
@@ -51,7 +51,7 @@ namespace BearCore
 #ifdef WINDOWS
 		mutable void* m_id;
 		mutable	uint32 m_thread;
-#elif LINUX
+#elif UNIX
 		bool m_active;
  		pthread_t m_thread; 
 #endif

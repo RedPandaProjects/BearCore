@@ -2,6 +2,6 @@
 #ifdef WINDOWS
 #include "Windows/BearProjectTool_Windows.h"
 #elif UNIX
-#include "Linux/BearProjectTool_Linux.h"
+#include "Unix/BearProjectTool_Unix.h"
 #endif 
 
