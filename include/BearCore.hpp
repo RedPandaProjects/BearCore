@@ -92,3 +92,5 @@
 #include "BearTools/BearMutex.h"
 
 #include "BearTools/BearCompressor.h"
+
+#include "BearTools/BearCamera.h"

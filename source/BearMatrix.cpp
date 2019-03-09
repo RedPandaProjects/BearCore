@@ -86,7 +86,17 @@ BearCore::BearMatrix & BearCore::BearMatrix::BuildIdentity()
 	m_matrix[15] = 1.0f;
 	return *this;
 }
-
+BearCore::BearMatrix & BearCore::BearMatrix::BuildPerspectiveFovLH(float fieldOfView, float screenAspect, float screenNear, float screenDepth)
+{
+	BearCore::bear_fill(m_matrix, 16, 0);
+	m_matrix[0] = 1.0f / (screenAspect * static_cast<float>(tan(fieldOfView * 0.5f)));
+	m_matrix[5] = 1.0f / static_cast<float>(tan(fieldOfView * 0.5f));
+	m_matrix[10] = screenDepth / (screenDepth - screenNear);
+	m_matrix[11] = 1.0f;
+	m_matrix[14] = (-screenNear * screenDepth) / (screenDepth - screenNear);
+	m_matrix[15] = 0.0f;
+	return  *this;
+}
 BearCore::BearMatrix & BearCore::BearMatrix::BuildOrtho(float width, float height, float screenNear, float screenDepth)
 {
 	BearCore::bear_fill(m_matrix, 16, 0);
@@ -108,6 +118,51 @@ BearCore::BearMatrix & BearCore::BearMatrix::BuildOrthoOffCenter(float width, fl
 	m_matrix[13] = 1;
 	m_matrix[14] = screenNear / (screenNear - screenDepth);
 	m_matrix[15] = 1;
+	return *this;
+}
+void normalize(BearCore::BearVector3<float>&n)
+{
+	float mag = static_cast<float>(sqrt((float)1 / (n.x*n.x + n.y*n.y + n.z*n.z)));
+	n.x *= mag;
+	n.y *= mag;
+	n.z *= mag;
+}
+BearCore::BearMatrix & BearCore::BearMatrix::BuildView(BearCore::BearVector3<float> position, BearCore::BearVector3<float> lookAt, BearCore::BearVector3<float> up)
+{
+	BearVector3<float> vView = lookAt;
+	vView -= position;
+	normalize(vView);
+	float t = up.x*vView.x + up.y*vView.y + up.z*vView.z;
+	BearVector3<float> vUp;
+	vUp.x = (vView.x*-t) + up.x;
+	vUp.y = (vView.y*-t) + up.y;
+	vUp.z = (vView.z*-t) + up.z;
+	normalize(vUp);
+	BearVector3<float> vRight;
+	vRight.x = (vUp.y  * vView.z) - vUp.z  * vView.y;
+	vRight.y = (vUp.z  * vView.x) - vUp.x  * vView.z;
+	vRight.z = (vUp.x  * vView.y) - vUp.y  * vView.x;
+
+	// Set the computed values in the view matrix.
+	m_matrix[0] = vRight.x; //11
+	m_matrix[1] = vUp.x;//12
+	m_matrix[2] = vView.x;//13
+	m_matrix[3] = 0.0f;//14
+
+	m_matrix[4] = vRight.y;//21
+	m_matrix[5] = vUp.y;//22
+	m_matrix[6] = vView.y;//23
+	m_matrix[7] = 0.0f;   //24
+
+	m_matrix[8] = vRight.z;//31
+	m_matrix[9] = vUp.z;//32
+	m_matrix[10] = vView.z;//33
+	m_matrix[11] = 0.0f;   //34
+
+	m_matrix[12] = -(position.x*vRight.x + position.y*vRight.y + position.z*vRight.z);//41
+	m_matrix[13] = -(position.x*vUp.x + position.y*vUp.y + position.z*vUp.z);;//42
+	m_matrix[14] = -(position.x*vView.x + position.y*vView.y + position.z*vView.z);;//43
+	m_matrix[15] = 1.0f;   //44}
 	return *this;
 }
 
