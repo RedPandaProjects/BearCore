@@ -52,18 +52,18 @@ void BearCore::Initialize(const bchar * app_name,  const bchar * email)
 	BT_SetActivityType(BTA_SHOWUI);
 	BT_SetDialogMessage(
 		BTDM_INTRO2,
-		TEXT("���������� ������!!!")
+		TEXT("Неизыестная ошибка движка!")
 	);
 	BT_SetDialogMessage(
 		BTDM_INTRO1,
-		TEXT("��������� �� �����!!!")
+		TEXT("Критическая ошибка!")
 	);
 	BT_SetReportFormat(BTRF_TEXT);
 	BT_SetFlags(/**/BTF_DETAILEDMODE | /**BTF_EDIETMAIL |*/BTF_ATTACHREPORT /**| BTF_LISTPROCESSES *| BTF_SHOWADVANCEDUI *| BTF_SCREENCAPTURE*/);
 
 	if(email)
 	BT_SetSupportEMail(email);
-	BT_SetDumpType(MiniDumpWithDataSegs | MiniDumpWithIndirectlyReferencedMemory);
+//	BT_SetDumpType(MiniDumpWithDataSegs | MiniDumpWithIndirectlyReferencedMemory);
 	BT_SetAppName(app_name);
 	BT_SetPreErrHandler(GErrorHandler, 0);
 #endif

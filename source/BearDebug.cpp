@@ -1,4 +1,4 @@
-#include "BearCore.hpp"
+﻿#include "BearCore.hpp"
 static void(*LCallBack)(void) = 0;
 extern BearCore::BearStringPath LogFileOut;
 #ifdef WINDOWS
@@ -34,12 +34,12 @@ void BearCore::BearDebug::FatalError(const bchar * chenk, const bchar * name, co
 {
 	BearString str;
 
-	str.append(TEXT("\r\n������ � �����:")).append(name);
-	str.append(TEXT("\r\n����� ��������:")).append(chenk);
-	str.append(TEXT("\r\n�������:")).append(*BearEncoding::ToCurrent( function_name));
-	str.append(TEXT("\r\n������:"));
+	str.append(TEXT("\r\nОшибка в файле:")).append(name);
+	str.append(TEXT("\r\nМесто:")).append(chenk);
+	str.append(TEXT("\r\nФункция:")).append(*BearEncoding::ToCurrent( function_name));
+	str.append(TEXT("\r\nСтока:"));
 	str.append_printf(TEXT("%u"),line);
-	str.append(TEXT("\r\n����������:"));
+	str.append(TEXT("\r\nКомментарий"));
 	va_list va;
 	va_start(va, text);
 	str.append_printf_va(text, va);
