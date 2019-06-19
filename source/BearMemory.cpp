@@ -44,7 +44,7 @@ void * BearCore::BearMemory::Malloc(bsize size
 #endif
 )
 {
-
+//	size += (16 - size % 16);
 #ifdef DEBUG 
 	void*ptr = malloc(size);
 	AddBlock(BearDebugMemoryBlock(name, ptr));

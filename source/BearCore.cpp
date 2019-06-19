@@ -68,7 +68,6 @@ void BearCore::Initialize(const bchar * app_name,  const bchar * email)
 	BT_SetPreErrHandler(GErrorHandler, 0);
 #endif
 	bInitialize = true;
-
 	BEAR_FATALERROR(lzo_init() == LZO_E_OK, TEXT("LZO Не поддерживается"));
 
 	BEAR_FATALERROR(inflateInit(&GzlibStream) == Z_OK, TEXT("ZLIB Не поддерживается"));	inflateEnd(&GzlibStream);

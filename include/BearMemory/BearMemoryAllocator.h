@@ -1,5 +1,5 @@
 #pragma once
-#ifdef _MSVC_VER
+#ifdef _MSC_VER
 #include "../BearPlatform/MSVC/BearMemoryAllocator.h"
 #else
 #include "../BearPlatform/GCC/BearMemoryAllocator.h"
