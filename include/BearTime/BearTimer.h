@@ -1,4 +1,7 @@
 #pragma once
+#ifdef WINDOWS
+#undef GetCurrentTime
+#endif
 namespace BearCore
 {
 	class BEARTOOL_API  BearTimer
@@ -39,8 +42,9 @@ namespace BearCore
 		inline bool paused()const { return m_pause; }
 		inline void set_time_factor(double factor) { m_factor = factor; }
 		inline double get_time_factor()const { return m_factor; }
+		static BearTime GetCurrentTime();
 	private:
-		BearTime GetCurrentTime() const ;
+
 		BearTime m_timer;
 		bool m_pause;
 		BearTime m_pause_time;

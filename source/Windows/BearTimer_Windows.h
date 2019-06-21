@@ -7,7 +7,7 @@ LARGE_INTEGER getFrequency()
 	QueryPerformanceFrequency(&frequency);
 	return frequency;
 }
-BearCore::BearTime BearCore::BearTimer::GetCurrentTime() const
+BearCore::BearTime BearCore::BearTimer::GetCurrentTime() 
 {
 
 	HANDLE currentThread = GetCurrentThread();
