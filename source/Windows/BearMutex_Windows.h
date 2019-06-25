@@ -23,3 +23,7 @@ void BearCore::BearMutex::Swap(BearMutex & r)
 {
 	bear_swap(r.m_mutex, m_mutex);
 }
+bool BearCore::BearMutex::TryLock()
+{
+	return TryEnterCriticalSection(&m_mutex);
+}

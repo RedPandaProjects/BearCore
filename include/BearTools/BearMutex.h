@@ -9,6 +9,7 @@ namespace BearCore
 		~BearMutex();
 		void Lock();
 		void Unlock();
+		bool TryLock();
 		void Swap(BearMutex&right);
 	private:
 #ifdef WINDOWS

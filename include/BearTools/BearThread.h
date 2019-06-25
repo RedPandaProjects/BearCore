@@ -43,7 +43,7 @@ namespace BearCore
 		void Terminate();
 
 		void Swap(BearThread&Thread);
-
+		void SetAffinity(uint64 mask);
 		~BearThread();
 	private:
 		void RunThread(const char*name, void * fun, void * arg);

@@ -3,8 +3,9 @@
 #include <lzo/lzo1x.h>
 #include <zlib/zlib.h>
 lzo_voidp GLZOWrkmem =0;
+lzo_voidp GLZOWrkmem999 = 0;
 
-bsize BearCore::BearLZO::Compressor(const void * in_, void * out_, bsize size_block)
+bsize BearCore::BearLZO::Compressor(const void*in_, bsize in_size_block, void*out_, bsize out_size_block)
 {
 	if(GLZOWrkmem ==0)
 		GLZOWrkmem = (lzo_voidp)bear_alloc<uint8>(LZO1X_1_MEM_COMPRESS);
@@ -12,20 +13,45 @@ bsize BearCore::BearLZO::Compressor(const void * in_, void * out_, bsize size_bl
 	int r;
 	lzo_bytep in= static_cast<lzo_bytep>( const_cast<void*>(in_));
 	lzo_bytep out= static_cast<lzo_bytep>(out_);
-	lzo_uint in_len= size_block;
-	lzo_uint out_len;
+	lzo_uint in_len= in_size_block;
+	lzo_uint out_len= out_size_block;
 	r = lzo1x_1_compress(in, in_len, out, &out_len, GLZOWrkmem);
 	BEAR_FATALERROR(r == LZO_E_OK, TEXT("LZO:Не удалось инициализировать "));
 	return static_cast<bsize>(out_len);
 }
 
-bsize BearCore::BearLZO::Decompressor(const void * in_, void * out_, bsize size_block)
+bsize BearCore::BearLZO::Decompressor(const void*in_, bsize in_size_block, void*out_, bsize out_size_block)
 {
 	int r;
 	lzo_bytep in = static_cast<lzo_bytep>(const_cast<void*>(in_));
 	lzo_bytep out = static_cast<lzo_bytep>(out_);
-	lzo_uint in_len = size_block; lzo_uint out_len;
+	lzo_uint in_len = in_size_block; lzo_uint out_len= out_size_block;
 	r = lzo1x_decompress(in, in_len, out, &out_len, NULL);
+	BEAR_FATALERROR(r == LZO_E_OK, TEXT("LZO:Не удалось инициализировать "));
+	return static_cast<bsize>(out_len);
+}
+
+bsize BearCore::BearLZO::Compressor9(const void*in_, bsize in_size_block, void*out_, bsize out_size_block)
+{
+	if (GLZOWrkmem999 == 0)
+		GLZOWrkmem999 = (lzo_voidp)bear_alloc<uint8>(LZO1X_999_MEM_COMPRESS);
+	int r;
+	lzo_bytep in = static_cast<lzo_bytep>(const_cast<void*>(in_));
+	lzo_bytep out = static_cast<lzo_bytep>(out_);
+	lzo_uint in_len = in_size_block;
+	lzo_uint out_len= out_size_block;
+	r = lzo1x_999_compress(in, in_len, out, &out_len, GLZOWrkmem999);
+	BEAR_FATALERROR(r == LZO_E_OK, TEXT("LZO:Не удалось инициализировать "));
+	return static_cast<bsize>(out_len);
+}
+
+bsize BearCore::BearLZO::Decompressor9(const void*in_, bsize in_size_block, void*out_, bsize out_size_block)
+{
+	int r;
+	lzo_bytep in = static_cast<lzo_bytep>(const_cast<void*>(in_));
+	lzo_bytep out = static_cast<lzo_bytep>(out_);
+	lzo_uint in_len = in_size_block; lzo_uint out_len= out_size_block;
+	r = lzo1x_999_compress(in, in_len, out, &out_len, NULL);
 	BEAR_FATALERROR(r == LZO_E_OK, TEXT("LZO:Не удалось инициализировать "));
 	return static_cast<bsize>(out_len);
 }

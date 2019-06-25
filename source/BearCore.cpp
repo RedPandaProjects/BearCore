@@ -18,7 +18,7 @@ extern BearCore::BearVector<BearCore::BearStringConteniar> *LogData ;
 static bool bInitialize=false;
 extern BearCore::BearStringPath LogFileOut;
 extern lzo_voidp GLZOWrkmem;
-
+extern lzo_voidp  GLZOWrkmem999;
 #ifdef WINDOWS
 extern void CALLBACK GErrorHandler(INT_PTR);
 #endif
@@ -83,6 +83,7 @@ BEARTOOL_API void BearCore::Destroy()
 
 	BEAR_ASSERT(bInitialize);
 	if (GLZOWrkmem)bear_free(GLZOWrkmem);
+	if (GLZOWrkmem999)bear_free(GLZOWrkmem999);
 	BearProjectTool::Destory();
 	BearLog::Flush();
 	BearMemory::DebugOff();

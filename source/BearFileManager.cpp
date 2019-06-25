@@ -50,6 +50,8 @@ BearCore::BearString BearCore::BearFileManager::GetPathFile(const bchar * FullPa
 	BearString temp(FullPathAndFile);
 	if (temp.to_char_with_end(BEAR_PATH[0]))
 		**temp = 0;
+	else
+		return "";
 	temp.seek(0);
 	return temp;
 }

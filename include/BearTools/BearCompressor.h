@@ -5,9 +5,10 @@ namespace BearCore
 	{
 		BEAR_CLASS_STATIC(BearLZO);
 	public:
-		static bsize Compressor(const void*in, void*out,bsize size_block);
-		static bsize Decompressor(const void*in, void*out, bsize size_block);
-
+		static bsize Compressor(const void*in, bsize in_size_block, void*out,bsize out_size_block);
+		static bsize Decompressor(const void*in, bsize in_size_block, void*out, bsize out_size_block);
+		static bsize Compressor9(const void*in, bsize in_size_block, void*out, bsize out_size_block);
+		static bsize Decompressor9(const void*in, bsize in_size_block, void*out, bsize out_size_block);
 	};
 
 	class BEARTOOL_API BearZLIB

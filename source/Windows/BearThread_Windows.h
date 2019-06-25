@@ -9,7 +9,13 @@ static int32 FunctionTread(void *arg_)
 	_endthreadex(0);
 	return 0;
 }
-
+void BearCore::BearThread::SetAffinity(uint64 mask)
+{
+	if (!m_id)
+	{
+		SetThreadAffinityMask((HANDLE)m_id,static_cast<DWORD_PTR>( mask));
+	}
+}
 void BearCore::BearThread::Join(const char *name)
 {
 	if (!m_id)
