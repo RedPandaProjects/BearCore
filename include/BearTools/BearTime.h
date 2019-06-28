@@ -1,4 +1,7 @@
 #pragma once
+#ifdef WINDOWS
+#undef GetCurrentTime
+#endif
 namespace BearCore
 {
 	class  BearTime

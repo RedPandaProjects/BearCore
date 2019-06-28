@@ -1,24 +1,26 @@
 #include <time.h>
 #include <ctime>
-
-LARGE_INTEGER getFrequency()
+#include <assert.h>
+static double CyclesPerMicrosecond;
+struct Initializer
 {
-	LARGE_INTEGER frequency;
-	QueryPerformanceFrequency(&frequency);
-	return frequency;
-}
+	
+	inline void Initialize()
+	{
+		static bool ok = false;
+		if (ok)return;
+		ok = true;
+		LARGE_INTEGER Frequency;
+		assert(QueryPerformanceFrequency(&Frequency));
+		CyclesPerMicrosecond = (1.0 / Frequency.QuadPart)*(1000.0)*(1000.0);
+	}
+
+};
+static Initializer init;
 BearCore::BearTime BearCore::BearTimer::GetCurrentTime() 
 {
-
-	HANDLE currentThread = GetCurrentThread();
-	DWORD_PTR previousMask = SetThreadAffinityMask(currentThread, 1);
-
-	static LARGE_INTEGER frequency = getFrequency();
-
-	LARGE_INTEGER time;
-	QueryPerformanceCounter(&time);
-
-	SetThreadAffinityMask(currentThread, previousMask);
-	
-	return /*BearCore::BearTime(int32(std::clock()));*/BearTime(1000000 * time.QuadPart / frequency.QuadPart);
+	init.Initialize();
+	LARGE_INTEGER Cycles;
+	QueryPerformanceCounter(&Cycles);
+	return BearTime(static_cast<int64>((Cycles.QuadPart * CyclesPerMicrosecond)));
 }

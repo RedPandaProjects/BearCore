@@ -70,10 +70,20 @@ namespace BearCore
 		}
 		template<bsize sizeBuffer>
 		static	inline void Contact(bchar8(&dst)[sizeBuffer], const  bchar8 *src);
+		static	inline void Contact(bchar8*dst, bsize sizeBuffer, const  bchar8 *src);
 		template<bsize sizeBuffer>
 		static	inline void Contact(bchar16(&dst)[sizeBuffer], const  bchar16 *src);
+		static	inline void Contact(bchar16*dst, bsize sizeBuffer, const  bchar16 *src);
 		template<bsize sizeBuffer>
-		static	inline void Contact(bchar_utf8(&dst)[sizeBuffer], const  bchar_utf8 *src);
+		static	inline void Contact(bchar_utf8(&dst)[sizeBuffer], const  bchar_utf8 *src)
+		{
+			Contact(reinterpret_cast<bchar8*>(dst), sizeBuffer, reinterpret_cast<const bchar8*>(src));
+		}
+		static	inline void Contact(bchar_utf8*dst, bsize sizeBuffer, const  bchar_utf8 *src)
+		{
+			Contact(reinterpret_cast<bchar8*>(dst), sizeBuffer, reinterpret_cast<const bchar8*>(src));
+		}
+
 
 		template<bsize sizeBuffer>
 		static inline void Copy(bchar16(&dst)[sizeBuffer], const  bchar16 *src);
@@ -196,19 +206,28 @@ namespace BearCore
 		}
 
 		template<bsize sizeBuffer>
-		static inline void Printf(bchar8(&dst)[sizeBuffer], const bchar8*str,...);
+		static inline bsize Printf(bchar8(&dst)[sizeBuffer], const bchar8*str, ...);
 		template<bsize sizeBuffer>
-		static inline void PrintfVa(bchar8(&dst)[sizeBuffer], const bchar8*str, va_list va);
+		static inline bsize PrintfVa(bchar8(&dst)[sizeBuffer], const bchar8*str, va_list va);
+
+		static inline bsize Printf(bchar8*dst, bsize sizeBuffer, const bchar8*str, ...);
+		static inline bsize PrintfVa(bchar8*dst, bsize sizeBuffer, const bchar8*str, va_list va);
 
 		template<bsize sizeBuffer>
-		static inline void Printf(bchar16(&dst)[sizeBuffer], const bchar16*str, ...);
+		static inline bsize Printf(bchar16(&dst)[sizeBuffer], const bchar16*str, ...);
 		template<bsize sizeBuffer>
-		static inline void PrintfVa(bchar16(&dst)[sizeBuffer], const bchar16*str, va_list va);
+		static inline bsize PrintfVa(bchar16(&dst)[sizeBuffer], const bchar16*str, va_list va);
+
+		static inline bsize Printf(bchar16*dst, bsize sizeBuffer, const bchar16*str, ...);
+		static inline bsize PrintfVa(bchar16*dst, bsize sizeBuffer, const bchar16*str, va_list va);
 
 		template<bsize sizeBuffer>
-		static inline void Printf(bchar_utf8(&dst)[sizeBuffer], const bchar_utf8*str, ...);
+		static inline bsize Printf(bchar_utf8(&dst)[sizeBuffer], const bchar_utf8*str, ...);
 		template<bsize sizeBuffer>
-		static inline void PrintfVa(bchar_utf8(&dst)[sizeBuffer], const bchar_utf8*str, va_list va);
+		static inline bsize PrintfVa(bchar_utf8(&dst)[sizeBuffer], const bchar_utf8*str, va_list va);
+
+		static inline bsize Printf(bchar_utf8*dst, bsize sizeBuffer, const bchar_utf8*str, ...);
+		static inline bsize PrintfVa(bchar_utf8*dst, bsize sizeBuffer, const bchar_utf8*str, va_list va);
 
 		static inline int32 Scanf(const bchar8*text, const bchar8*str, ...);
 		static inline int32 Scanf(const bchar16*text, const bchar16*str, ...);
@@ -762,6 +781,12 @@ namespace BearCore
 		static inline void  ToUpper(bchar_utf8* str)
 		{
 			ToUpper(reinterpret_cast<bchar8*>(str));
+		}
+		static inline int32   CompareWithoutCase(const bchar8*str1, const bchar8*str2);
+		static inline int32   CompareWithoutCase(const bchar16*str1, const bchar16*str2);
+		static inline int32   CompareWithoutCase(const bchar_utf8*str1, const bchar_utf8*str2)
+		{
+			return CompareWithoutCase(reinterpret_cast<const bchar8*>(str1), reinterpret_cast<const bchar8*>(str2));
 		}
 
 		static inline int32   Compare(const bchar8*str1,const bchar8*str2);

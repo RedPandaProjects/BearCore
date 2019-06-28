@@ -64,6 +64,8 @@
 #include "BearIO/BearMemoryStream.h"
 #include "BearIO/BearMemoryTranslationStream.h"
 
+#include "BearTime/BearGlobalTime.h"
+
 #include "BearIO/BearFileManager.h"
 
 #include "BearProjects/BearProjectTool.h"

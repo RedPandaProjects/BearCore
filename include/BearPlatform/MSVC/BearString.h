@@ -14,15 +14,20 @@ namespace BearCore
 	{
 		strcat_s(dst, sizeBuffer, src);
 	}
+	inline void BearString::Contact(bchar8*dst, bsize sizeBuffer, const  bchar8 *src)
+	{
+		strcat_s(dst, sizeBuffer, src);
+
+	}
 	template<bsize sizeBuffer>
 	inline void BearString::Contact(bchar16(&dst)[sizeBuffer], const  bchar16 *src)
 	{
 		wcscat_s(dst, sizeBuffer, src);
 	}
-	template<bsize sizeBuffer>
-	inline void BearString::Contact(bchar_utf8(&dst)[sizeBuffer], const  bchar_utf8 *src)
+	inline void BearString::Contact(bchar16*dst, bsize sizeBuffer, const  bchar16 *src)
 	{
-		strcat_s((char*)dst,  (char*)src,sizeBuffer);
+		wcscat_s(dst, sizeBuffer, src);
+
 	}
 
 	template<bsize sizeBuffer>
@@ -124,46 +129,95 @@ namespace BearCore
 	}
 
 	template<bsize sizeBuffer>
-	inline void BearString::Printf(bchar8(&dst)[sizeBuffer], const bchar8*str, ...)
+	inline bsize BearString::Printf(bchar8(&dst)[sizeBuffer], const bchar8*str, ...)
 	{
 		va_list va;
 		va_start(va, str);
-		vsprintf_s(dst, sizeBuffer, str, va);
+		int result = vsprintf_s(dst, sizeBuffer, str, va);
 		va_end(va);
+		return static_cast<bsize>(result);
 	}
 	template<bsize sizeBuffer>
-	inline void BearString::PrintfVa(bchar8(&dst)[sizeBuffer], const bchar8*str, va_list va)
+	inline bsize BearString::PrintfVa(bchar8(&dst)[sizeBuffer], const bchar8*str, va_list va)
 	{
-		vsprintf_s(dst, sizeBuffer, str, va);
+		int result =  vsprintf_s(dst, sizeBuffer, str, va);
+		return static_cast<bsize>(result);
+	}
+
+	inline bsize  BearString::Printf(bchar8*dst, bsize sizeBuffer, const bchar8*str, ...)
+	{
+
+		va_list va;
+		va_start(va, str);
+		int result = vsprintf_s(dst, sizeBuffer, str, va);
+		va_end(va);
+		return static_cast<bsize>(result);
+	}
+	inline bsize  BearString::PrintfVa(bchar8*dst, bsize sizeBuffer, const bchar8*str, va_list va)
+	{
+		int result =  vsprintf_s(dst, sizeBuffer, str, va);
+		return static_cast<bsize>(result);
 	}
 
 	template<bsize sizeBuffer>
-	inline void BearString::Printf(bchar16(&dst)[sizeBuffer], const bchar16*str, ...)
+	inline bsize BearString::Printf(bchar16(&dst)[sizeBuffer], const bchar16*str, ...)
 	{
 		va_list va;
 		va_start(va, str);
-		vswprintf_s(dst, sizeBuffer, str, va);
+		int result =  vswprintf_s(dst, sizeBuffer, str, va);
 		va_end(va);
+		return static_cast<bsize>(result);
 	}
 	template<bsize sizeBuffer>
-	inline void BearString::PrintfVa(bchar16(&dst)[sizeBuffer], const bchar16*str, va_list va)
+	inline bsize BearString::PrintfVa(bchar16(&dst)[sizeBuffer], const bchar16*str, va_list va)
 	{
-		vswprintf_s(dst, sizeBuffer, str, va);
+		int result =  vswprintf_s(dst, sizeBuffer, str, va);
+		return static_cast<bsize>(result);
+	}
+	inline bsize  BearString::Printf(bchar16*dst, bsize sizeBuffer, const bchar16*str, ...)
+	{
+
+		va_list va;
+		va_start(va, str);
+		int result =  vswprintf_s(dst, sizeBuffer, str, va);
+		va_end(va);
+		return static_cast<bsize>(result);
+	}
+	inline bsize  BearString::PrintfVa(bchar16*dst, bsize sizeBuffer, const bchar16*str, va_list va)
+	{
+		int result = vswprintf_s(dst, sizeBuffer, str, va);
+		return static_cast<bsize>(result);
+	}
+	template<bsize sizeBuffer>
+	inline bsize BearString::Printf(bchar_utf8(&dst)[sizeBuffer], const bchar_utf8*str, ...)
+	{
+		va_list va;
+		va_start(va, str);
+		int result =  vsprintf_s((char*)dst, sizeBuffer,(const char*)str, va);
+		va_end(va);
+		return static_cast<bsize>(result);
+	}
+	template<bsize sizeBuffer>
+	inline bsize BearString::PrintfVa(bchar_utf8(&dst)[sizeBuffer], const bchar_utf8*str, va_list va)
+	{
+		int result =  vsprintf_s((char*)dst, sizeBuffer, (const char*)str, va);
+		return static_cast<bsize>(result);
+	}
+	inline bsize  BearString::Printf(bchar_utf8*dst, bsize sizeBuffer, const bchar_utf8*str, ...)
+	{
+
+		va_list va;
+		va_start(va, str);
+		int result =  vsprintf_s((char*)dst, sizeBuffer, (const char*)str, va);
+		va_end(va);
+		return static_cast<bsize>(result);
+	}
+	inline bsize  BearString::PrintfVa(bchar_utf8*dst, bsize sizeBuffer, const bchar_utf8*str, va_list va)
+	{
+		int result =  vsprintf_s((char*)dst, sizeBuffer, (const char*)str, va);
+		return static_cast<bsize>(result);
 	}
 
-	template<bsize sizeBuffer>
-	inline void BearString::Printf(bchar_utf8(&dst)[sizeBuffer], const bchar_utf8*str, ...)
-	{
-		va_list va;
-		va_start(va, str);
-		vsprintf_s((char*)dst, sizeBuffer,(const char*)str, va);
-		va_end(va);
-	}
-	template<bsize sizeBuffer>
-	inline void BearString::PrintfVa(bchar_utf8(&dst)[sizeBuffer], const bchar_utf8*str, va_list va)
-	{
-		vsprintf_s((char*)dst, sizeBuffer, (const char*)str, va);
-	}
 
 	inline int32 BearString::Scanf(const bchar8*text, const bchar8*str, ...)
 	{
@@ -205,5 +259,14 @@ namespace BearCore
 	 {
 		 return wcscmp(str1, str2);
 	 }
+	 inline int32  BearString::CompareWithoutCase(const bchar8*str1, const bchar8*str2)
+	 {
+		 return _stricmp(str1, str2);
+	 }
+	 inline int32   BearString::CompareWithoutCase(const bchar16*str1, const bchar16*str2)
+	 {
+		 return _wcsicmp(str1, str2);
+	 }
+
 };
 #define BEAR_PATH TEXT("\\")
