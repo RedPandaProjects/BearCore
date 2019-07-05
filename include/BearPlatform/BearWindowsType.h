@@ -1,5 +1,5 @@
 #ifdef _MSC_VER
-#pragma warning (disable:4127 4239 4100 4251 4201 4756)
+#pragma warning (disable:4127 4239 4100 4251 4201 4756 4275)
 #endif
 
 typedef signed   char int8;

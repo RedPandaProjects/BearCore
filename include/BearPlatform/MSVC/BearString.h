@@ -268,5 +268,28 @@ namespace BearCore
 		 return _wcsicmp(str1, str2);
 	 }
 
+	 
+
+
+
+	 template<bsize sizeBuffer>
+	 inline void BearString::CopyWithSizeLimit(bchar16(&dst)[sizeBuffer], const  bchar16 *src,bsize size)
+	 {
+		 wcsncpy_s(dst, sizeBuffer, src, size);
+	 }
+	 inline void BearString::CopyWithSizeLimit(bchar16*dst, bsize sizeBuffer, const  bchar16 *src, bsize size)
+	 {
+		 wcsncpy_s(dst, sizeBuffer, src,size);
+
+	 }
+	 template<bsize sizeBuffer>
+	 inline void BearString::CopyWithSizeLimit(bchar8(&dst)[sizeBuffer], const  bchar8 *src, bsize size)
+	 {
+		 strncpy_s(dst, sizeBuffer, src, size);
+	 }
+	 inline void BearString::CopyWithSizeLimit(bchar8*dst, bsize sizeBuffer, const  bchar8 *src, bsize size)
+	 {
+		 strncpy_s(dst, sizeBuffer, src, size);
+	 }
 };
 #define BEAR_PATH TEXT("\\")

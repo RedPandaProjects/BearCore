@@ -101,6 +101,22 @@ namespace BearCore
 			Copy(reinterpret_cast<bchar8*>(dst),sizeBuffer,reinterpret_cast<const bchar8*>(src));
 		}
 
+		template<bsize sizeBuffer>
+		static inline void CopyWithSizeLimit(bchar16(&dst)[sizeBuffer], const  bchar16 *src, bsize size);
+		static inline void CopyWithSizeLimit(bchar16*dst, bsize sizeBuffer, const  bchar16 *src, bsize size);
+		template<bsize sizeBuffer>
+		static inline void CopyWithSizeLimit(bchar8(&dst)[sizeBuffer], const  bchar8 *src, bsize size);
+		static inline void CopyWithSizeLimit(bchar8*dst, bsize sizeBuffer, const  bchar8 *src, bsize size);
+		template<bsize sizeBuffer>
+		static	inline void CopyWithSizeLimit(bchar_utf8(&dst)[sizeBuffer], const  bchar_utf8 *src,bsize size)
+		{
+			CopyWithSizeLimit(reinterpret_cast<bchar8*>(dst), sizeBuffer, reinterpret_cast<const bchar8*>(src), size);
+		}
+		static	inline void CopyWithSizeLimit(bchar_utf8*dst, bsize sizeBuffer, const  bchar_utf8 *src, bsize size)
+		{
+			CopyWithSizeLimit(reinterpret_cast<bchar8*>(dst), sizeBuffer, reinterpret_cast<const bchar8*>(src),size);
+		}
+
 		template<typename C>
 		static inline C*Duplicate(const C* src)
 		{

@@ -29,7 +29,9 @@ BearCore::BearString BearCore::BearFileManager::GetFileNameAndExtension(const bc
 	temp.seek(0);
 	if (temp.to_char_with_end(BEAR_PATH[0]))
 		temp++;
-	return temp;
+	else
+		temp.seek(0);
+	return BearString(*temp);
 }
 
 BearCore::BearString BearCore::BearFileManager::GetFileName(const bchar * FullPathAndFile)
@@ -42,7 +44,7 @@ BearCore::BearString BearCore::BearFileManager::GetFileName(const bchar * FullPa
 		temp++;
 	else
 		temp.seek(0);
-	return temp;
+	return 	BearString(*temp);
 }
 
 BearCore::BearString BearCore::BearFileManager::GetPathFile(const bchar * FullPathAndFile)
@@ -53,7 +55,7 @@ BearCore::BearString BearCore::BearFileManager::GetPathFile(const bchar * FullPa
 	else
 		return "";
 	temp.seek(0);
-	return temp;
+	return BearString(*temp);
 }
 
 
