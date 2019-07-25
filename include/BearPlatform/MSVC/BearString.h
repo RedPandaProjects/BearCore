@@ -1,3 +1,4 @@
+
 #pragma once
 namespace BearCore
 {
@@ -14,6 +15,7 @@ namespace BearCore
 	{
 		strcat_s(dst, sizeBuffer, src);
 	}
+
 	inline void BearString::Contact(bchar8*dst, bsize sizeBuffer, const  bchar8 *src)
 	{
 		strcat_s(dst, sizeBuffer, src);
@@ -291,5 +293,6 @@ namespace BearCore
 	 {
 		 strncpy_s(dst, sizeBuffer, src, size);
 	 }
+	 
 };
 #define BEAR_PATH TEXT("\\")

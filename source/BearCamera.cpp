@@ -69,7 +69,7 @@ const BearCore::BearVector3<float>& BearCore::BearCamera::GetRotation() const
 	return m_rotation;
 }
 
-const  BearCore::BearMatrix & BearCore::BearCamera::GetMatrix()
+const  BearCore::BearMatrix & BearCore::BearCamera::GetMatrix() const
 {
 	return matrix;
 }

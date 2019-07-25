@@ -97,6 +97,17 @@ namespace BearCore
 #endif
 		}
 		template<typename C>
+		static inline  BearMemoryRef<bchar> ToCurrent(C*text)
+		{
+#ifdef UNICODE
+			return ToUTF16(text);
+#elif UTF_8
+			return ToUTF8(text);
+#else
+			return ToANSI(text);
+#endif
+		}
+		template<typename C>
 		static inline  bchar ToCurrent( C text)
 		{
 #ifdef UNICODE

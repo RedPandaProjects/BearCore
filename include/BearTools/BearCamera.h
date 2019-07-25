@@ -16,7 +16,7 @@ namespace BearCore
 		BearCore::BearVector3<float>&GetRotation();
 		const BearCore::BearVector3<float>&GetRotation()const;
 
-		const BearMatrix&GetMatrix();
+		const BearMatrix&GetMatrix()const;
 		void Render();
 
 		void Copy(const BearCamera&right);

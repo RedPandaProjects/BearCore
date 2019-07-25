@@ -62,6 +62,13 @@ namespace BearCore
 	{
 		typedef std::basic_string<bchar, std::char_traits<bchar>, BearMemoryAllocator<bchar>> basic_string;
 	public:
+		BEARTOOL_API static void ToClipboard(const bchar8*text);
+		BEARTOOL_API static void ToClipboard(const bchar16*text);
+		BEARTOOL_API static void ToClipboard(const bchar_utf8*text);
+		BEARTOOL_API static void ToClipboard(const bchar8*text,bsize size);
+		BEARTOOL_API static void ToClipboard(const bchar16*text, bsize size);
+		BEARTOOL_API static void ToClipboard(const bchar_utf8*text, bsize size);
+		BEARTOOL_API static BearString GetClipboard();
 		static inline bsize GetSize(const bchar8*text);
 		static inline bsize GetSize(const bchar16*text);
 		static inline bsize GetSize(const bchar_utf8*text)

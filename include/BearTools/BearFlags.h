@@ -14,7 +14,7 @@ namespace BearCore
 		inline void copy(const BearFlags&right) { m_flags = right.m_flags; }
 		inline BearFlags&assign(U p) { m_flags = p; return*this;}
 		inline BearFlags&set(bool bit, U mask) {if (bit) m_flags |= mask; else m_flags = m_flags & ~mask; return*this;}
-		inline bool is(U p)const { return p==m_flags & p; }
+		inline bool is(U p)const { return p==(m_flags & p); }
 		inline bool test(U p)const { return m_flags & p; }
 		inline BearFlags&AND(U p) { m_flags &=p; return*this; }
 		inline BearFlags&OR(U p) { m_flags |= p; return*this; }
