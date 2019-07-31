@@ -75,13 +75,21 @@ namespace BearCore
 		{
 			return BearVector2<cl>((x-x1)/2,(y-y1)/2);
 		}
-		inline bool inZone(BearVector2<cl>&position)const
+		inline bool inZone(const BearVector2<cl>&position)const
 		{
 			if (x <= position.x&&y <= position.y&&x1+x >= position.x&&y1 + y >= position.y)
 			{
 				return true;
 			}
 			return false;
+		}
+		inline bool inZone(const BearVector4<cl>&rect)const
+		{
+			return x < rect.x + rect.x1 &&
+				x + x1 > rect.x &&
+				y < rect.y + rect.y1 &&
+				y1 + y > rect.y;
+
 		}
 		inline cl getW() const
 		{

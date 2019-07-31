@@ -94,24 +94,27 @@ void BearCore::BearMemory::Swap(void * a, void * b, bsize size)
 #ifdef DEBUG
 void BearCore::BearMemory::DebugCheak()
 {
+	if (DebugMemory)DebugMemory = false;
+	bool dbg = DebugMemory;
 	if (!LMemoryBlocks.empty())
 	{
-		printf(TEXT("------------------------------MEMORY------------------------------\n"));
+		
+		BearLog::Printf(TEXT("------------------------------MEMORY------------------------------\n"));
 		auto begin = LMemoryBlocks.begin();
 		auto end = LMemoryBlocks.end();
 		while (begin != end)
 		{
 #ifdef WINDOWS
-	printf( TEXT( BEAR_PRINT_ANSI ":0x%p\n"), begin->name, begin->ptr);
+			BearLog::Printf( TEXT( BEAR_PRINT_ANSI ":0x%p\n"), begin->name, begin->ptr);
 #else
-	printf( TEXT(BEAR_PRINT_UTF8 ":0x%p\n"), begin->name, begin->ptr);
+			BearLog::Printf( TEXT(BEAR_PRINT_UTF8 ":0x%p\n"), begin->name, begin->ptr);
 #endif
 			
 			begin++;
 		}
-		printf(TEXT("------------------------------------------------------------------\n"));
+		BearLog::Printf(TEXT("------------------------------------------------------------------\n"));
 	}
-
+	 DebugMemory= dbg;
 }
 void BearCore::BearMemory::DebugOn()
 {
