@@ -96,3 +96,5 @@
 #include "BearTools/BearCompressor.h"
 
 #include "BearTools/BearCamera.h"
+
+#include "BearTools/BearMath.h"
