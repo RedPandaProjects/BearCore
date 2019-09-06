@@ -98,3 +98,5 @@
 #include "BearTools/BearCamera.h"
 
 #include "BearTools/BearMath.h"
+
+#include "BearIO/BearInput.h"
