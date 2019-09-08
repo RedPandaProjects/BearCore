@@ -13,7 +13,8 @@
 #include <lzo/lzoconf.h>
 #include <lzo/lzo1x.h>
 #include <zlib/zlib.h>
-
+extern void GKeyWindowsInitialize();
+extern void GKeyWindowsDestroy();
 extern BearCore::BearVector<BearCore::BearStringConteniar> *LogData ;
 static bool bInitialize=false;
 extern BearCore::BearStringPath LogFileOut;
@@ -71,6 +72,7 @@ void BearCore::Initialize(const bchar * app_name,  const bchar * email)
 	BEAR_FATALERROR(lzo_init() == LZO_E_OK, TEXT("LZO Не поддерживается"));
 
 	BEAR_FATALERROR(inflateInit(&GzlibStream) == Z_OK, TEXT("ZLIB Не поддерживается"));	inflateEnd(&GzlibStream);
+	GKeyWindowsInitialize();
 }
 
 
@@ -82,6 +84,7 @@ BEARTOOL_API void BearCore::Destroy()
 {
 
 	BEAR_ASSERT(bInitialize);
+	GKeyWindowsDestroy();
 	if (GLZOWrkmem)bear_free(GLZOWrkmem);
 	if (GLZOWrkmem999)bear_free(GLZOWrkmem999);
 	BearProjectTool::Destory();

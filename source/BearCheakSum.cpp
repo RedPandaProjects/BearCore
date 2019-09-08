@@ -198,3 +198,20 @@ uint32 BearCore::BearCheckSum::CRC32(const void * data, bsize size)
 
 	return ulCRC ^ 0xffffffff;
 }
+
+uint32 BearCore::BearCheckSum::CRC32(uint32 send, const void * data, bsize size)
+{
+	if (!crc32_ready)
+	{
+		crc32_init();
+		crc32_ready = true;
+	}
+
+	uint32 ulCRC = send^0xffffffff;
+	uint8* buffer = (uint8*)data;
+
+	while (size--)
+		ulCRC = (ulCRC >> 8) ^ crc32_table[(ulCRC & 0xFF) ^ *buffer++];
+
+	return ulCRC ^ 0xffffffff;
+}
