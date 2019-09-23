@@ -11,7 +11,7 @@ struct Initializer
 		if (ok)return;
 		ok = true;
 		LARGE_INTEGER Frequency;
-		assert(QueryPerformanceFrequency(&Frequency));
+		QueryPerformanceFrequency(&Frequency);
 		CyclesPerMicrosecond = (1.0 / Frequency.QuadPart)*(1000.0)*(1000.0);
 	}
 

@@ -35,11 +35,18 @@ public:
 	template<typename T>
 	inline static T abs(T a)
 	{
-		return a<0>-a:a;
+		return a<0?-a:a;
 	}
 	template<>
 	inline static float abs<float>(float a)
 	{
-		return floorf(a);
+		return fabsf(a);
 	}
+	template <class T>
+	inline static T clamp(const T val, const T _low, const T _high) {
+		if (val < _low) return _low;
+		else if (val > _high)
+			return _high;
+		return val;
+	};
 };
