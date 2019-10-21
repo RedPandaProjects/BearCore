@@ -45,6 +45,7 @@ namespace BearCore
 		{
 			return m_size;
 		}
+		inline uint32 GetCRC32()const { return m_crc32; }
 		inline void set(const C*str,bool copy=true)
 		{
 			clear();
