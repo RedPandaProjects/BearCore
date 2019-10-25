@@ -17,6 +17,5 @@ public class bear_core :Project
         }
         Projects.Private.Add("zlib");
         Projects.Private.Add("lzo");
-        Defines.Public.Add("_ITERATOR_DEBUG_LEVEL=0");
     }
 } 
