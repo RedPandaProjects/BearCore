@@ -93,8 +93,17 @@ BearCore::BearMatrix & BearCore::BearMatrix::BuildPerspectiveFovLH(float fieldOf
 	m_matrix[5] = 1.0f / static_cast<float>(tan(fieldOfView * 0.5f));
 	m_matrix[10] = screenDepth / (screenDepth - screenNear);
 	m_matrix[11] = 1.0f;
-	m_matrix[14] = (-screenNear * screenDepth) / (screenDepth - screenNear);
-	m_matrix[15] = 0.0f;
+	m_matrix[14] = -(screenNear * screenDepth) / (screenDepth - screenNear);
+	return  *this;
+}
+BearCore::BearMatrix & BearCore::BearMatrix::BuildPerspectiveFovRH(float fieldOfView, float screenAspect, float screenNear, float screenDepth)
+{
+	BearCore::bear_fill(m_matrix, 16, 0);
+	m_matrix[0] = 1.0f / (screenAspect * static_cast<float>(tan(fieldOfView * 0.5f)));
+	m_matrix[5] = 1.0f / static_cast<float>(tan(fieldOfView * 0.5f));
+	m_matrix[10] = screenDepth / (screenDepth - screenNear);
+	m_matrix[11] = -1.0f;
+	m_matrix[14] = (screenNear * screenDepth) / (screenDepth - screenNear);
 	return  *this;
 }
 BearCore::BearMatrix & BearCore::BearMatrix::BuildOrtho(float width, float height, float screenNear, float screenDepth)

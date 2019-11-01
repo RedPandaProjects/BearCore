@@ -17,6 +17,7 @@ namespace BearCore
 		
 		BearMatrix& BuildIdentity();
 		BearMatrix& BuildPerspectiveFovLH(float fieldOfView, float screenAspect, float screenNear, float screenDepth);
+		BearMatrix& BuildPerspectiveFovRH(float fieldOfView, float screenAspect, float screenNear, float screenDepth);
 		BearMatrix& BuildOrtho(float width, float height, float screenNear, float screenDepth);
 		BearMatrix& BuildOrthoOffCenter(float width, float height, float screenNear, float screenDepth);
 		BearMatrix& BuildView(BearCore::BearVector3<float> position, BearCore::BearVector3<float> lookAt, BearCore::BearVector3<float> up);

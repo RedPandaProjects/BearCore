@@ -1147,7 +1147,7 @@ namespace BearCore
 
 };
 #ifdef _MSC_VER
-#include "..\BearPlatform\MSVC\BearString.h"
+#include "..\BearPlatform\MSVC\BearString_MSVC.h"
 #else
-#include "../BearPlatform/GCC/BearString.h"
+#include "../BearPlatform/GCC/BearString_GCC.h"
 #endif
