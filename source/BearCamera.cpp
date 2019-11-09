@@ -159,7 +159,7 @@ void BearCore::BearCamera::Render()
 	lookAt.z = position.z + lookAt.z;
 
 	// Finally create the view matrix from the three updated vectors.
-	matrix.BuildView(position, lookAt, up);
+	matrix.BuildLookAt(position, lookAt, up);
 }
 
 void BearCore::BearCamera::Copy(const BearCamera & right)

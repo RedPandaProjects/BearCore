@@ -73,6 +73,7 @@
 
 #include "BearTools/BearFraction.h"
 
+#include "BearTools/BearMath.h"
 #include "BearTools/BearMatrix.h"
 #include "BearTools/BearColor.h"
 
@@ -97,6 +98,5 @@
 
 #include "BearTools/BearCamera.h"
 
-#include "BearTools/BearMath.h"
 
 #include "BearIO/BearInput.h"

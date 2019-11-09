@@ -13,7 +13,10 @@ public:
 	{
 		return sinf(a);
 	}
-
+	inline static float tan(float a)
+	{
+		return tanf(a);
+	}
 	inline static float sqrt(float a)
 	{
 		return sqrtf(a);
