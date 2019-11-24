@@ -1,4 +1,4 @@
-#ifdef _MSC_VER
+#ifdef MSVC
 #pragma warning (disable:4127 4239 4100 4251 4201 4756 4275)
 #endif
 
@@ -18,8 +18,14 @@ typedef  bchar16 bchar;
 #else
 typedef  bchar8 bchar;
 #endif
+
+#ifdef MSVC
 typedef signed   __int64 int64;
 typedef unsigned __int64 uint64;
+#else
+typedef signed   long long int64;
+typedef unsigned  long long uint64;
+#endif
 
 #ifdef X32
 typedef uint32 bptr;

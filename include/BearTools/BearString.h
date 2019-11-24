@@ -1100,7 +1100,7 @@ namespace BearCore
 		inline void clear_no_free()
 		{
 			m_tell = 0;
-#ifdef _MSC_VER
+#ifdef MSVC
 			if (basic_string::size())
 				at(0) = 0;
 			this->_Get_data()._Mysize = 0;
@@ -1146,7 +1146,8 @@ namespace BearCore
 	};
 
 };
-#ifdef _MSC_VER
+
+#ifdef MSVC
 #include "..\BearPlatform\MSVC\BearString_MSVC.h"
 #else
 #include "../BearPlatform/GCC/BearString_GCC.h"
