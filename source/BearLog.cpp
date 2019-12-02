@@ -1,6 +1,6 @@
 #include "BearCore.hpp"
 #include <iostream>
-#ifdef WINDOWS
+#ifndef GCC
 #include "BugTrap.h"
 #endif
 BearCore::BearVector<BearCore::BearStringConteniar> *LogData=0;

@@ -18,7 +18,7 @@ namespace BearCore
 		void WriteFloat(float data);
 		void WriteDouble(double data);
 		
-		bsize Write(void*data, bsize size);
+		bsize Write(const void*data, bsize size);
 		
 		void BeginChunk(int32 id);
 		void EndChunk(); 
@@ -27,7 +27,7 @@ namespace BearCore
 		void WriteStringWithZero(const BearString&base, BearEncoding::Encoding encoding);
 		void WriteStringAndNewLine(const BearString &str, BearEncoding::Encoding encoding);
 		
-		virtual  bool write_impl(void*data, bsize &size) = 0;
+		virtual  bool write_impl(const void*data, bsize &size) = 0;
 		virtual bool Eof() const=0;
 		virtual bsize Seek(bsize tell) const = 0;
 		virtual bsize Tell()const = 0;

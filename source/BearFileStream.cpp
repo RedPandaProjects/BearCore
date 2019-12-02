@@ -131,7 +131,7 @@ void BearCore::BearFileStream::read_impl(void *data, bsize size) const
 		fread(data, size, 1, (FILE *)m_file);
 }
 
-bool BearCore::BearFileStream::write_impl(void *data, bsize &size)
+bool BearCore::BearFileStream::write_impl(const void *data, bsize &size)
 {
 	if (m_file && m_mode.test(M_Write))
 	{

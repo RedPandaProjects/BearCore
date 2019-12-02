@@ -1,7 +1,7 @@
 ﻿#include "BearCore.hpp"
 static void(*LCallBack)(void) = 0;
 extern BearCore::BearStringPath LogFileOut;
-#ifdef WINDOWS
+#ifndef GCC
 #include "BugTrap.h"
 #pragma warning(disable:4091)
 #include <dbghelp.h> // MiniDump flags
@@ -48,7 +48,7 @@ void BearCore::BearDebug::FatalError(const bchar * chenk, const bchar * name, co
 #ifdef DEBUG
 	ShowMessage(TEXT("FATAL ERROR!!!"), *str);
 #endif
-#ifdef WINDOWS
+#ifndef GCC
 
 	BT_SetDialogMessage(
 		BTDM_INTRO2,

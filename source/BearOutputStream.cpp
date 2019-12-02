@@ -53,7 +53,7 @@ void BearCore::BearOutputStream::WriteDouble(double data)
 	WRITENUMBER
 }
 
-bsize BearCore::BearOutputStream::Write(void * data, bsize size)
+bsize BearCore::BearOutputStream::Write(const void * data, bsize size)
 {
 	if (write_impl(data, size))
 		return size;
@@ -171,7 +171,7 @@ void BearCore::BearOutputStream::WriteStringAndNewLine(const BearString & str, B
 	}
 }
 
-bool BearCore::BearOutputStream::write_impl(void * data, bsize & size)
+bool BearCore::BearOutputStream::write_impl(const void * data, bsize & size)
 {
 	return false;
 }

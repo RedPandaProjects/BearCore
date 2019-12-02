@@ -1,81 +1,88 @@
 {
-	"configurations": [
-		{
-			"name": "Linux-Debug",
-			"includePath": [
-			"/home/bear/Рабочий стол/BearSDK/projects/bear/bearcore/source",
-			"/home/bear/Рабочий стол/BearSDK/projects/components/tinyxml/include",
-			"/home/bear/Рабочий стол/BearSDK/projects/components/BugTrap/source/Client",
-			"/home/bear/Рабочий стол/BearSDK/projects/components/zlib/include",
-			"/home/bear/Рабочий стол/BearSDK/projects/components/lzo/include",
-			"/home/bear/Рабочий стол/BearSDK/projects/bear/bearcore/include"
-			],
-			"defines": [
-			"BEAR_CORE_EXPORTS",
-			"_ITERATOR_DEBUG_LEVEL=0",
-			"LINUX",
-			"_LINUX64",
-			"X64",
-			"DEBUG",
-			"_DEBUG",
-			"UTF_8"
-			],
-			"compilerPath": "/usr/bin/gcc",
-			"cStandard": "c11",
-			"cppStandard": "c++14",
-			"intelliSenseMode": "gcc-x64"
-		},
-		{
-			"name": "Linux-Mixed",
-			"includePath": [
-			"/home/bear/Рабочий стол/BearSDK/projects/bear/bearcore/source",
-			"/home/bear/Рабочий стол/BearSDK/projects/components/tinyxml/include",
-			"/home/bear/Рабочий стол/BearSDK/projects/components/BugTrap/source/Client",
-			"/home/bear/Рабочий стол/BearSDK/projects/components/zlib/include",
-			"/home/bear/Рабочий стол/BearSDK/projects/components/lzo/include",
-			"/home/bear/Рабочий стол/BearSDK/projects/bear/bearcore/include"
-			],
-			"defines": [
-			"BEAR_CORE_EXPORTS",
-			"_ITERATOR_DEBUG_LEVEL=0",
-			"LINUX",
-			"_LINUX64",
-			"X64",
-			"DEBUG",
-			"MIXED",
-			"_UNICODE",
-			"UNICODE"
-			],
-			"compilerPath": "/usr/bin/gcc",
-			"cStandard": "c11",
-			"cppStandard": "c++14",
-			"intelliSenseMode": "gcc-x64"
-		},
-		{
-			"name": "Linux-Release",
-			"includePath": [
-			"/home/bear/Рабочий стол/BearSDK/projects/bear/bearcore/source",
-			"/home/bear/Рабочий стол/BearSDK/projects/components/tinyxml/include",
-			"/home/bear/Рабочий стол/BearSDK/projects/components/BugTrap/source/Client",
-			"/home/bear/Рабочий стол/BearSDK/projects/components/zlib/include",
-			"/home/bear/Рабочий стол/BearSDK/projects/components/lzo/include",
-			"/home/bear/Рабочий стол/BearSDK/projects/bear/bearcore/include"
-			],
-			"defines": [
-			"BEAR_CORE_EXPORTS",
-			"_ITERATOR_DEBUG_LEVEL=0",
-			"LINUX",
-			"_LINUX64",
-			"X64",
-			"NDEBUG",
-			"_UNICODE",
-			"UNICODE"
-			],
-			"compilerPath": "/usr/bin/gcc",
-			"cStandard": "c11",
-			"cppStandard": "c++14",
-			"intelliSenseMode": "gcc-x64"
-		}
-	],
-	"version": 4
+  "configurations": [
+    {
+      "name": "MinGW",
+      "includePath": [
+        "C:/GameDev/BearSDK/projects/bear/bearcore/source",
+        "C:/GameDev/BearSDK/projects/components/tinyxml/include",
+        "C:/GameDev/BearSDK/projects/components/BugTrap/source/Client",
+        "C:/GameDev/BearSDK/projects/components/zlib/include",
+        "C:/GameDev/BearSDK/projects/components/lzo/include",
+        "C:/GameDev/BearSDK/projects/bear/bearcore/include"
+      ],
+      "defines": [
+        "BEAR_CORE_EXPORTS",
+        "WINDOWS",
+        "LIB",
+        "_LIB",
+        "_UNICODE;",
+        "UNICODE",
+        "WIN64",
+        "X64",
+        "DEBUG",
+        "_DEBUG",
+        "GCC"
+      ],
+      "compilerPath": "C:/MinGW/bin/g++.exe",
+      "cStandard": "c11",
+      "cppStandard": "c++17",
+      "intelliSenseMode": "gcc-x64"
+    },
+    {
+      "name": "MinGW",
+      "includePath": [
+        "C:/GameDev/BearSDK/projects/bear/bearcore/source",
+        "C:/GameDev/BearSDK/projects/components/tinyxml/include",
+        "C:/GameDev/BearSDK/projects/components/BugTrap/source/Client",
+        "C:/GameDev/BearSDK/projects/components/zlib/include",
+        "C:/GameDev/BearSDK/projects/components/lzo/include",
+        "C:/GameDev/BearSDK/projects/bear/bearcore/include"
+      ],
+      "defines": [
+        "BEAR_CORE_EXPORTS",
+        "WINDOWS",
+        "LIB",
+        "_LIB",
+        "_UNICODE;",
+        "UNICODE",
+        "WIN64",
+        "X64",
+        "MIXED",
+        "DEBUG",
+        "GCC"
+      ],
+      "compilerPath": "C:/MinGW/bin/g++.exe",
+      "cStandard": "c11",
+      "cppStandard": "c++17",
+      "intelliSenseMode": "gcc-x64"
+    },
+    {
+      "name": "MinGW",
+      "includePath": [
+        "C:/GameDev/BearSDK/projects/bear/bearcore/source",
+        "C:/GameDev/BearSDK/projects/components/tinyxml/include",
+        "C:/GameDev/BearSDK/projects/components/BugTrap/source/Client",
+        "C:/GameDev/BearSDK/projects/components/zlib/include",
+        "C:/GameDev/BearSDK/projects/components/lzo/include",
+        "C:/GameDev/BearSDK/projects/bear/bearcore/include"
+      ],
+      "defines": [
+        "BEAR_CORE_EXPORTS",
+        "WINDOWS",
+        "LIB",
+        "_LIB",
+        "_UNICODE;",
+        "UNICODE",
+        "WIN64",
+        "X64",
+        "NDEBUG",
+        "GCC"
+      ],
+      "compilerPath": "C:/MinGW/bin/g++.exe",
+      "cStandard": "c11",
+      "cppStandard": "c++17",
+      "intelliSenseMode": "gcc-x64"
+    }
+  ],
+  "version": 4
 }

@@ -2,10 +2,10 @@
 namespace BearCore
 {
 	template<class Key,class T,class C=BearLess>
-	class BearMap :public std::map<Key,T,C, BearMemoryAllocator<std::pair<Key,T>>>
+	class BearMap :public std::map<Key,T,C, BearMemoryAllocator<std::pair<const Key,T>>>
 	{
 	private:
-		typedef	std::map<Key, T, C, BearMemoryAllocator<std::pair<Key, T>>> map;
+		typedef	std::map<Key, T, C, BearMemoryAllocator<std::pair<const Key, T>>> map;
 	public:
 		BearMap(BearMap&&right) : 	map::map(right) {}
 		BearMap(const BearMap&right) : 	map::map(right) {}

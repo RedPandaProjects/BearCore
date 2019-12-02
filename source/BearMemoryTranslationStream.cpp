@@ -143,7 +143,7 @@ void BearCore::BearMemoryTranslationStream::read_impl(void * data, bsize size) c
 	Seek(size + m_data.get()->m_tell);
 }
 
-bool BearCore::BearMemoryTranslationStream::write_impl(void * data, bsize & size)
+bool BearCore::BearMemoryTranslationStream::write_impl(const void * data, bsize & size)
 {
 	if (Empty())return false;
 	if (size + m_data.get()->m_tell > m_data.get()->m_size)size = m_data.get()->m_size - m_data.get()->m_tell;

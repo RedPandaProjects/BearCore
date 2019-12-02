@@ -105,7 +105,7 @@ void * BearCore::BearProjectTool::GetFunctionInProjectImpl(const bchar * name, c
 		FARPROC proc = GetProcAddress(Item->second.Module, *BearEncoding::ToANSI(function));
 		BEAR_FATALERROR(proc, TEXT("Функция " BEAR_PRINT_CURRENT " не существует в библиотеке " BEAR_PRINT_CURRENT ""), function, name);
 		Item->second.Procs.insert(function, proc);
-		return proc;
+		return reinterpret_cast<void*>( proc);
 	}
-	return ItemProc->second;
+	return reinterpret_cast<void*>( ItemProc->second);
 }

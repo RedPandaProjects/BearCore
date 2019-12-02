@@ -1150,5 +1150,9 @@ namespace BearCore
 #ifdef MSVC
 #include "..\BearPlatform\MSVC\BearString_MSVC.h"
 #else
+#ifdef WINDOWS
+#include "../BearPlatform/GCC/Windows/BearString_MINGW.h"
+#else
 #include "../BearPlatform/GCC/BearString_GCC.h"
+#endif
 #endif

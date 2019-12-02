@@ -29,7 +29,7 @@ namespace  BearCore
 	private:
 		virtual void Destory();
 		virtual void read_impl(void*data, bsize size) const;
-		virtual bool write_impl(void*data, bsize &size);
+		virtual bool write_impl(const void*data, bsize &size);
 	private:
 		mutable bsize m_tell;
 		uint8* m_data;

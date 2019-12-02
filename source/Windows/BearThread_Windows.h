@@ -1,5 +1,9 @@
 #include <process.h>
+#ifdef GCC
+static unsigned __stdcall FunctionTread(void *arg_)
+#else
 static int32 FunctionTread(void *arg_)
+#endif
 {
 	void **args = reinterpret_cast<void **>(arg_);
 	auto *function = reinterpret_cast<BearFunctionRef *>(args[0]);
@@ -77,18 +81,26 @@ static void SetThreadName(DWORD dwThreadID, const char *threadName)
 	info.dwFlags = 0;
 #pragma warning(push)
 #pragma warning(disable : 6320 6322)
+#ifndef GCC	
 	__try
 	{
+#endif
 		RaiseException(MS_VC_EXCEPTION, 0, sizeof(info) / sizeof(ULONG_PTR), (ULONG_PTR *)&info);
+#ifndef GCC	
 	}
 	__except (EXCEPTION_EXECUTE_HANDLER)
 	{
 	}
+#endif
 #pragma warning(pop)
 }
 
 void BearCore::BearThread::RunThread(const char *name, void *fun, void *arg)
 {
+#ifdef GCC
+	m_id = reinterpret_cast<void *>(_beginthreadex(NULL, 0,(unsigned(__stdcall*)(void*)) fun, arg, 0, &m_thread));
+#else
 	m_id = reinterpret_cast<void *>(_beginthreadex(NULL, 0, (_beginthreadex_proc_type)fun, arg, 0, &m_thread));
+#endif
 	SetThreadName(static_cast<DWORD>(m_thread), name);
 }

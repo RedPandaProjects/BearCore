@@ -18,6 +18,8 @@
 #include <vector>
 #include <map>
 #include <typeinfo>
+#include <math.h>
+#include<cmath>
 
 #include "BearTools/BearClass.h"
 #include "BearMemory/BearMemory.h"
@@ -46,6 +48,8 @@
 
 #include "BearTools/BearVector.h"
 
+#include "BearTools/BearMath.h"
+
 #include "BearTools/BearVector2.h"
 #include "BearTools/BearVector3.h"
 #include "BearTools/BearVector4.h"
@@ -73,7 +77,7 @@
 
 #include "BearTools/BearFraction.h"
 
-#include "BearTools/BearMath.h"
+
 #include "BearTools/BearMatrix.h"
 #include "BearTools/BearColor.h"
 

@@ -1,7 +1,7 @@
 #pragma once
 namespace BearCore
 {
-	template <class T>
+	template <typename T>
 	class BearMemoryAllocator
 	{
 	public:

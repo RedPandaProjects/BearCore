@@ -134,7 +134,7 @@ void BearCore::BearMemoryStream::read_impl(void * data, bsize size) const
 	Seek(size + m_tell);
 }
 
-bool BearCore::BearMemoryStream::write_impl(void * data, bsize & size)
+bool BearCore::BearMemoryStream::write_impl(const void * data, bsize & size)
 {
 	if (size + m_tell >m_size)Resize(bear_recommended_size(size + m_tell));
 	bear_copy(m_data + m_tell, data, size);

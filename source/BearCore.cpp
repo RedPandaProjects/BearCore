@@ -1,5 +1,5 @@
 #include "BearCore.hpp"
-#ifdef WINDOWS
+#ifndef GCC
 #include "BugTrap.h"
 #pragma warning(disable:4091)
 #include <dbghelp.h> // MiniDump flags
@@ -20,7 +20,7 @@ static bool bInitialize=false;
 extern BearCore::BearStringPath LogFileOut;
 extern lzo_voidp GLZOWrkmem;
 extern lzo_voidp  GLZOWrkmem999;
-#ifdef WINDOWS
+#ifndef GCC
 extern void CALLBACK GErrorHandler(INT_PTR);
 #endif
 
@@ -48,7 +48,7 @@ void BearCore::Initialize(const bchar * app_name,  const bchar * email)
 	LogData->reserve(1024);
 	BearLog::Printf(TEXT("BearCore build " BEAR_PRINT_CURRENT), *BearLog::GetBuild(2015, 07, 27));
 
-#ifdef WINDOWS
+#ifndef GCC
 	BT_InstallSehFilter();
 	BT_SetActivityType(BTA_SHOWUI);
 	BT_SetDialogMessage(
