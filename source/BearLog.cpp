@@ -168,7 +168,7 @@ int32 BearCore::BearLog::GetBuildImpl(const char * date, int32 start_year, int32
 	BearString16 month;
 	uint32 days = 0, year = 0;
 #ifdef WINDOWS
-	data.scanf(TEXT("" BEAR_PRINT_ANSI " %d %d"), month, &days, &year);
+	data.scanf(TEXT("%s %u %u"), month, &days, &year);
 #else 
 	data.scanf(TEXT("" BEAR_PRINT_UTF8 " %d %d"), month, &days, &year);
 #endif

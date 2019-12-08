@@ -1,4 +1,13 @@
 #pragma once
+#include <wchar.h>
+#include <stdio.h>
+#include <string.h>
+#include <vector>
+#include <map>
+#include <typeinfo>
+#include <math.h>
+#include<cmath>
+
 #ifdef WINDOWS
 #include "BearPlatform/BearWindowsType.h"
 #elif UNIX
@@ -12,14 +21,6 @@
 #else
 #define BEARTOOL_API  BEARPROJECT_IMPORT
 #endif
-
-#include <stdio.h>
-#include <string.h>
-#include <vector>
-#include <map>
-#include <typeinfo>
-#include <math.h>
-#include<cmath>
 
 #include "BearTools/BearClass.h"
 #include "BearMemory/BearMemory.h"

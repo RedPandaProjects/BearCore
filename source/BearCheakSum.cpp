@@ -18,7 +18,7 @@ typedef struct {
 	uchar data[64];
 	uint datalen;
 	uint bitlen[2];
-	uint state[8];
+	uint state[8]; 
 } SHA256_CTX;
 
 uint k[64] = {

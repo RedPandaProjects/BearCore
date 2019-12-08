@@ -11,7 +11,7 @@ public class bear_core :Project
 		AddSourceFiles(Path.Combine(ProjectPath,"source"),true);
 		Include.Public.Add(Path.Combine(ProjectPath,"include"));
 		Projects.Private.Add("tinyxml");
-        if (Global.Platform!= Platform.Linux)
+        if (Global.Platform!= Platform.Linux&&Global.Platform!= Platform.MinGW)
         {
             Projects.Private.Add("BugTrap");
         }

@@ -3,12 +3,12 @@
     {
       "name": "MinGW",
       "includePath": [
-        "C:/GameDev/BearSDK/projects/bear/bearcore/source",
-        "C:/GameDev/BearSDK/projects/components/tinyxml/include",
-        "C:/GameDev/BearSDK/projects/components/BugTrap/source/Client",
-        "C:/GameDev/BearSDK/projects/components/zlib/include",
-        "C:/GameDev/BearSDK/projects/components/lzo/include",
-        "C:/GameDev/BearSDK/projects/bear/bearcore/include"
+        "D:/GameDev/BearSDK/projects/bear/bearcore/source",
+        "D:/GameDev/BearSDK/projects/components/tinyxml/include",
+        "D:/GameDev/BearSDK/projects/components/BugTrap/source/Client",
+        "D:/GameDev/BearSDK/projects/components/zlib/include",
+        "D:/GameDev/BearSDK/projects/components/lzo/include",
+        "D:/GameDev/BearSDK/projects/bear/bearcore/include"
       ],
       "defines": [
         "BEAR_CORE_EXPORTS",
@@ -23,7 +23,7 @@
         "_DEBUG",
         "GCC"
       ],
-      "compilerPath": "C:/MinGW/bin/g++.exe",
+      "compilerPath": "C:/Program Files/mingw-w64/mingw64/bin/g++.exe",
       "cStandard": "c11",
       "cppStandard": "c++17",
       "intelliSenseMode": "gcc-x64"
@@ -31,12 +31,12 @@
     {
       "name": "MinGW",
       "includePath": [
-        "C:/GameDev/BearSDK/projects/bear/bearcore/source",
-        "C:/GameDev/BearSDK/projects/components/tinyxml/include",
-        "C:/GameDev/BearSDK/projects/components/BugTrap/source/Client",
-        "C:/GameDev/BearSDK/projects/components/zlib/include",
-        "C:/GameDev/BearSDK/projects/components/lzo/include",
-        "C:/GameDev/BearSDK/projects/bear/bearcore/include"
+        "D:/GameDev/BearSDK/projects/bear/bearcore/source",
+        "D:/GameDev/BearSDK/projects/components/tinyxml/include",
+        "D:/GameDev/BearSDK/projects/components/BugTrap/source/Client",
+        "D:/GameDev/BearSDK/projects/components/zlib/include",
+        "D:/GameDev/BearSDK/projects/components/lzo/include",
+        "D:/GameDev/BearSDK/projects/bear/bearcore/include"
       ],
       "defines": [
         "BEAR_CORE_EXPORTS",
@@ -51,7 +51,7 @@
         "DEBUG",
         "GCC"
       ],
-      "compilerPath": "C:/MinGW/bin/g++.exe",
+      "compilerPath": "C:/Program Files/mingw-w64/mingw64/bin/g++.exe",
       "cStandard": "c11",
       "cppStandard": "c++17",
       "intelliSenseMode": "gcc-x64"
@@ -59,12 +59,12 @@
     {
       "name": "MinGW",
       "includePath": [
-        "C:/GameDev/BearSDK/projects/bear/bearcore/source",
-        "C:/GameDev/BearSDK/projects/components/tinyxml/include",
-        "C:/GameDev/BearSDK/projects/components/BugTrap/source/Client",
-        "C:/GameDev/BearSDK/projects/components/zlib/include",
-        "C:/GameDev/BearSDK/projects/components/lzo/include",
-        "C:/GameDev/BearSDK/projects/bear/bearcore/include"
+        "D:/GameDev/BearSDK/projects/bear/bearcore/source",
+        "D:/GameDev/BearSDK/projects/components/tinyxml/include",
+        "D:/GameDev/BearSDK/projects/components/BugTrap/source/Client",
+        "D:/GameDev/BearSDK/projects/components/zlib/include",
+        "D:/GameDev/BearSDK/projects/components/lzo/include",
+        "D:/GameDev/BearSDK/projects/bear/bearcore/include"
       ],
       "defines": [
         "BEAR_CORE_EXPORTS",
@@ -78,7 +78,7 @@
         "NDEBUG",
         "GCC"
       ],
-      "compilerPath": "C:/MinGW/bin/g++.exe",
+      "compilerPath": "C:/Program Files/mingw-w64/mingw64/bin/g++.exe",
       "cStandard": "c11",
       "cppStandard": "c++17",
       "intelliSenseMode": "gcc-x64"
