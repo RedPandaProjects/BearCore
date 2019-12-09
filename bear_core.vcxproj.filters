@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="BearDebug">
@@ -358,5 +358,19 @@
     <ClCompile Include="D:\GameDev\BearSDK\projects\bear\bearcore\source\BearXML.cpp">
       <Filter>BearParser</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="D:\GameDev\BearSDK\projects\bear\bearcore\source\BearCore.cpp" />
+    <ClCompile Include="D:\GameDev\BearSDK\projects\bear\bearcore\source\BearCore.PCH.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\include\BearCoreInitializer.h" />
+    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\include\BearCore.hpp" />
+    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\include\BearPlatform\GCC\Windows\BearString_MINGW.h">
+      <Filter>BearPlatform\GCC</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="D:\GameDev\BearSDK\projects\bear\bearcore\bear_core.project.cs" />
   </ItemGroup>
 </Project>

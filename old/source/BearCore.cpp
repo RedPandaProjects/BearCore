@@ -25,7 +25,7 @@ extern void CALLBACK GErrorHandler(INT_PTR);
 #endif
 
 z_stream GzlibStream;
-void BearCore::Initialize(const bchar * app_name,  const bchar * email)
+void  BearCore::CBearCore::Initialize(const bchar * app_name)
 {
 
 /*#ifdef UNIX 
@@ -62,8 +62,8 @@ void BearCore::Initialize(const bchar * app_name,  const bchar * email)
 	BT_SetReportFormat(BTRF_TEXT);
 	BT_SetFlags(/**/BTF_DETAILEDMODE | /**BTF_EDIETMAIL |*/BTF_ATTACHREPORT /**| BTF_LISTPROCESSES *| BTF_SHOWADVANCEDUI *| BTF_SCREENCAPTURE*/);
 
-	if(email)
-	BT_SetSupportEMail(email);
+	/*if(email)
+	BT_SetSupportEMail(email);*/
 	BT_SetDumpType(0);
 	BT_SetAppName(app_name);
 	BT_SetPreErrHandler(GErrorHandler, 0);
@@ -80,7 +80,7 @@ void BearCore::Initialize(const bchar * app_name,  const bchar * email)
 
 
 
-BEARTOOL_API void BearCore::Destroy()
+BEARTOOL_API void BearCore::CBearCore::Destroy()
 {
 
 	BEAR_ASSERT(bInitialize);
@@ -94,3 +94,4 @@ BEARTOOL_API void BearCore::Destroy()
 	delete LogData;
 	bInitialize = false;
 }
+

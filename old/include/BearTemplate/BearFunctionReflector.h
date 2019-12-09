@@ -124,11 +124,7 @@ namespace  BearCore
 	{
 	public:
 		BearArgumentContainerMaker(const C&c):m_c(c){}
-		~BearArgumentContainerMaker() {}
-		virtual void Destroy()
-		{
-			bear_delete(this);
-		}
+		virtual ~BearArgumentContainerMaker() {};
 		virtual void*Get()
 		{
 			return &m_c;
@@ -176,7 +172,7 @@ namespace  BearCore
 	class BearFunctionRef
 	{
 	public:
-		virtual void Destroy() = 0;
+		virtual ~BearFunctionRef(){}
 		template<class R>
 		inline R CallWithArgumentsList(void**stack)
 		{
@@ -210,12 +206,8 @@ namespace  BearCore
 	{
 	public:
 		BearFunctionRefMaker(F f) :m_f(f) {}
-		~BearFunctionRefMaker() {}
+		virtual ~BearFunctionRefMaker() {}
 	private:
-		virtual void Destroy()
-		{
-			bear_delete(this);
-		}
 
 #define CALL_IN_MAKER
 #define NAMEINCLUDE "BearFunctionReflectorMaker.h"
@@ -245,7 +237,7 @@ namespace  BearCore
 	class BearClassFunctionRef
 	{
 	public:
-		virtual void Destroy() = 0;
+		virtual ~BearClassFunctionRef();
 		template<class R>
 		inline R CallWithArgumentsList(void*cl,void**stack)
 		{
@@ -281,13 +273,8 @@ namespace  BearCore
 	{
 	public:
 		BearClassFunctionRefMaker(F f) :m_f(f) {}
-		~BearClassFunctionRefMaker() {}
+		virtual ~BearClassFunctionRefMaker(){}
 	private:
-		virtual void Destroy()
-		{
-			bear_delete(this);
-		}
-
 #define CALL_IN_MAKER_CL
 #define NAMEINCLUDE "BearFunctionReflectorMaker.h"
 #include "BearMultiplicator.h"

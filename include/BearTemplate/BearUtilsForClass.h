@@ -7,7 +7,7 @@
 #define BEAR_FUNCTION_DELETE(TYPE,FUN)\
 	TYPE FUN()=delete;
 	
-#define BEAR_CLASS_NO_COPY(CL)\
+#define BEAR_CLASS_WITHOUT_COPY(CL)\
 	CL(const CL&cl) = delete;\
 	CL(CL&&cl) = delete;\
 	CL&operator=(const CL&cl) = delete;\
