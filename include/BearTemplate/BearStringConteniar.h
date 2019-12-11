@@ -1,123 +1,109 @@
 #pragma once
-namespace BearCore
+namespace Impl
 {
-	template<typename C>
-	class BearStringConteniarUnknown
+	struct BearStringConteniarData
 	{
-	public:
-		BearStringConteniarUnknown() :m_text(0), m_crc32(0), m_size(0)
-		{
-
-		}
-		BearStringConteniarUnknown(const C*text,bool copy=true):m_text(0),m_crc32(0),m_size(0)
-		{
-			set(text, copy);
-		}
-		BearStringConteniarUnknown( BearStringConteniarUnknown<C>&&right)
-		{
-			swap(right);
-		}
-		inline void swap( BearStringConteniarUnknown<C>&right)
-		{
-			bear_swap(m_crc32, right.m_crc32);
-			bear_swap(m_size, right.m_size);
-			bear_swap(m_text, right.m_text);
-		}
-		inline void copy(const BearStringConteniarUnknown<C>&right)
-		{
-			set(*right);
-		}
-		inline BearStringConteniarUnknown(const  BearStringConteniarUnknown<C>&right)
-		{
-			copy(right);
-		}
-		inline BearStringConteniarUnknown& operator=(const  BearStringConteniarUnknown<C>&right)
-		{
-			copy(right);
-			return *this;
-		}
-		inline BearStringConteniarUnknown& operator=( BearStringConteniarUnknown<C>&&right)
-		{
-			swap(right);
-			return *this;
-		}
-		inline bsize size()const
-		{
-			return m_size;
-		}
-		inline uint32 GetCRC32()const { return m_crc32; }
-		inline void set(const C*str,bool copy=true)
-		{
-			clear();
-			m_size = BearString::GetSize(str);
-			if (m_size)
-			{
-				if (copy)
-				{
-					m_text = bear_alloc<C>(m_size + 1);
-					BearString::Copy(const_cast<C*>(*m_text), m_size + 1, str);
-				}
-				else
-				{
-					m_text = BearMemoryRef<C>(const_cast<C*>(str), false);
-				}
-				m_crc32 = BearCheckSum::CRC32(*m_text, m_size);
-			}
-		}
-		inline const C* operator*() const
-		{
-			if (*m_text)return *m_text;
-			return (C*)L"";
-		}
-		inline void clear()
-		{
-			m_text.clear();
-			m_size = 0;
-			m_text = 0;
-			m_crc32 = 0;
-		}
-		inline bool operator<(const  BearStringConteniarUnknown<C>& strc)const
-		{
-			if (m_size == strc.m_size)
-			{
-				if (m_crc32 == strc.m_crc32)
-				{
-					return BearString::Compare(**this, *strc) < 0;
-				}
-				else
-				{
-					return m_crc32 < strc.m_crc32;
-				}
-			}
-			return m_size < strc.m_size;
-		}
-		inline bool operator==(const  BearStringConteniarUnknown<C>& strc)const
-		{
-			return *this==*strc;
-		}
-		inline bool operator<(const C* str)const
-		{
-			if (BearString::Compare(**this, str) < 0)
-				return true;
-			return false;
-		}
-		inline bool operator==(const C* str)const
-		{
-			if (BearString::Compare(**this, str) == 0)
-				return true;
-			return false;
-		}
-		~BearStringConteniarUnknown()
-		{
-			clear();
-		}
-	private:
-		BearMemoryRef<C> m_text;
-		uint32  m_crc32;
-		bsize m_size;
+		uint32 CRC;
+		bsize Depth;
+		bsize Size;
+		BearStringConteniarData* Next;
+		bchar8 String[];
 	};
+	class BEARTOOL_API BearStringConteniarManager
+	{
+		BEAR_CLASS_STATIC(BearStringConteniarManager);
+	public:
+		static void Initialize();
+		static const BearStringConteniarData*Get(const bchar8*str);
+		static const BearStringConteniarData*Get(const bchar16*str);
+		static void Destroy();
+	private:
+		static bool Equal(BearStringConteniarData*, const bchar8* str, bsize len);
+		static bool Equal(BearStringConteniarData*, const bchar16* str, bsize len);
+	};
+}
+template<typename C>
+class BearStringConteniarUnknown
+{
+public:
+	BearStringConteniarUnknown() :m_data(0)
+	{
+
+	}
+	BearStringConteniarUnknown(const C*text):m_data(0)
+	{
+		set(text);
+	}
+	BearStringConteniarUnknown( BearStringConteniarUnknown<C>&&right) :m_data(0)
+	{
+		swap(right);
+	}
+	inline void swap( BearStringConteniarUnknown<C>&right)
+	{
+		bear_swap(m_data, right.m_data);
+	}
+	inline void copy(const BearStringConteniarUnknown<C>&right)
+	{
+		m_data = right.m_data;
+	}
+	BearStringConteniarUnknown(const  BearStringConteniarUnknown<C>&right) :m_data(0)
+	{
+		copy(right);
+	}
+	inline BearStringConteniarUnknown& operator=(const  BearStringConteniarUnknown<C>&right)
+	{
+		copy(right);
+		return *this;
+	}
+	inline BearStringConteniarUnknown& operator=( BearStringConteniarUnknown<C>&&right)
+	{
+		swap(right);
+		return *this;
+	}
+	inline bsize size()const
+	{
+		if (m_data)return m_data->Size;
+		return 0;
+	}
+	inline uint32 GetCRC32()const { if (m_data)return m_data->CRC; return 0; }
+	inline void set(const C*str)
+	{
+		m_data = Impl::BearStringConteniarManager::Get(str);
+	}
+	inline const C* operator*() const
+	{
+		if (m_data)return (const C*)m_data->String;
+		return (const C*)L"";
+	}
+	inline bool operator<(const  BearStringConteniarUnknown& strc)const
+	{
+		if (strc.m_data == 0 || m_data == 0)return strc.m_data < m_data;
+		if (m_data->CRC != strc.GetCRC32())
+			return m_data->CRC < strc.GetCRC32();
+		return m_data->Depth < strc.m_data->Depth;
+	}
+	inline bool operator==(const  BearStringConteniarUnknown& strc)const
+	{
+		return m_data == strc.m_data;
+	}
+	inline bool operator<(const C* str)const
+	{
+		if (BearString::Compare(**this, str) < 0)
+			return true;
+		return false;
+	}
+	inline bool operator==(const C* str)const
+	{
+		if (BearString::Compare(**this, str) == 0)
+			return true;
+		return false;
+	}
+	~BearStringConteniarUnknown()
+	{
+	}
+private:
+	const Impl::BearStringConteniarData*m_data;
+};
 typedef BearStringConteniarUnknown<bchar16> BearStringConteniarUnicode;
 typedef BearStringConteniarUnknown<bchar8> BearStringConteniarAnsi;
-typedef BearStringConteniarUnknown<bchar_utf8> BearStringConteniarUtf8;
 typedef BearStringConteniarUnknown<bchar> BearStringConteniar;
-}

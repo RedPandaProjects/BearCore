@@ -99,7 +99,7 @@ struct BearClassSwap
 template <typename C, typename M>
 struct BearComparator
 {
-	BearMemoryRef<M> m;
+	BearRef<M> m;
 	C c;
 	BearComparator(BearComparator&compor)  { copy(compor); }
 	BearComparator()  {}

@@ -1,7 +1,7 @@
 #pragma once
 
 template<class P>
-struct BearMemoryMultiRef
+struct BearMultiRef
 {
 private:
 	struct data
@@ -11,18 +11,18 @@ private:
 	};
 	data*m_data;
 public:
-	BearMemoryMultiRef():m_data(0)
+	BearMultiRef():m_data(0)
 	{
 	}
-	~BearMemoryMultiRef()
+	~BearMultiRef()
 	{
 		clear();
 	}
-	BearMemoryMultiRef(const BearMemoryMultiRef&ptr) :m_data(0)
+	BearMultiRef(const BearMultiRef&ptr) :m_data(0)
 	{
 		copy(ptr);
 	}
-	BearMemoryMultiRef( BearMemoryMultiRef&&ptr) :m_data(0)
+	BearMultiRef( BearMultiRef&&ptr) :m_data(0)
 	{
 		swap(ptr);
 	}
@@ -62,13 +62,13 @@ public:
 	const P*operator->()const { return get(); }
 	P*operator->() { return get(); }
 	bool is_one()const { if (m_data)return m_data->m_count == 1; return false; }
-	BearMemoryMultiRef&operator=(const BearMemoryMultiRef&ptr) { copy(ptr); return*this; };
-	BearMemoryMultiRef&operator=( BearMemoryMultiRef&&ptr) { swap(ptr); return*this; };
-	void swap(BearMemoryMultiRef&ptr)
+	BearMultiRef&operator=(const BearMultiRef&ptr) { copy(ptr); return*this; };
+	BearMultiRef&operator=( BearMultiRef&&ptr) { swap(ptr); return*this; };
+	void swap(BearMultiRef&ptr)
 	{
 		bear_swap(ptr.m_data, m_data);
 	}
-	void copy(const BearMemoryMultiRef&ptr)
+	void copy(const BearMultiRef&ptr)
 	{
 		if (ptr.m_data != m_data)
 		{

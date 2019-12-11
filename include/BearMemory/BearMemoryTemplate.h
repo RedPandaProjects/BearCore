@@ -45,25 +45,25 @@ inline void bear_fill(C&c)
 template<typename C>
 inline void bear_swap(C&a, C&b)
 {
-	if (sizeof(C) == sizeof(uint64))
+	if constexpr  (sizeof(C) == sizeof(uint64))
 	{
 		uint64 c = *reinterpret_cast<uint64*>(&a);
 		*reinterpret_cast<uint64*>(&a) = *reinterpret_cast<uint64*>(&b);
 		*reinterpret_cast<uint64*>(&b) = c;
 	}
-	else if (sizeof(C) == sizeof(uint32))
+	else if constexpr  (sizeof(C) == sizeof(uint32))
 	{
 		uint32 c = *reinterpret_cast<uint32*>(&a);
 		*reinterpret_cast<uint32*>(&a) = *reinterpret_cast<uint32*>(&b);
 		*reinterpret_cast<uint32*>(&b) = c;
 	}
-	else if (sizeof(C) == sizeof(uint16))
+	else if constexpr (sizeof(C) == sizeof(uint16))
 	{
 		uint16 c = *reinterpret_cast<uint16*>(&a);
 		*reinterpret_cast<uint16*>(&a) = *reinterpret_cast<uint16*>(&b);
 		*reinterpret_cast<uint16*>(&b) = c;
 	}
-	else if (sizeof(C) == sizeof(uint8))
+	else if constexpr (sizeof(C) == sizeof(uint8))
 	{
 		uint8 c = *reinterpret_cast<uint8*>(&a);
 		*reinterpret_cast<uint8*>(&a) = *reinterpret_cast<uint8*>(&b);

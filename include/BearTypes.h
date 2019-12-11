@@ -35,6 +35,10 @@ typedef int64 bint;
 #ifdef WINDOWS
 #include <Windows.h>
 #endif
-
+#ifdef MSVC
+#define BEAR_PACKED
+#else
+#define BEAR_PACKED  __attribute__((__packed__))
+#endif
 #define BEARPROJECT_EXPORT __declspec(dllexport)
 #define BEARPROJECT_IMPORT __declspec(dllimport)

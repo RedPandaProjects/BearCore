@@ -1,376 +1,341 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="BearDebug">
-      <UniqueIdentifier>{53f2b49b-543a-444f-addc-f3d412629ac3}</UniqueIdentifier>
+      <UniqueIdentifier>{e8977b99-0cc0-4732-a454-886e977d561f}</UniqueIdentifier>
     </Filter>
     <Filter Include="BearMemory">
-      <UniqueIdentifier>{7c0aea2b-6239-463c-863c-3d50a420f691}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="BearParser">
-      <UniqueIdentifier>{48957a5c-cece-43a3-818f-2886ac9d5be8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="BearPlatform">
-      <UniqueIdentifier>{1bae009b-e153-4e08-9d49-73d76ac5a50b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="BearProjects">
-      <UniqueIdentifier>{dbdbad40-16f0-4b63-aea1-36fd5438c823}</UniqueIdentifier>
+      <UniqueIdentifier>{1fe38ad7-9381-4aeb-a8df-c52beb669b5e}</UniqueIdentifier>
     </Filter>
     <Filter Include="BearTemplate">
-      <UniqueIdentifier>{32aa46ef-b82a-4976-9317-dcafb8fc3afd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="BearTime">
-      <UniqueIdentifier>{94558d95-da7a-4d83-b7b0-f91ed6e6295d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="BearPlatform\GCC">
-      <UniqueIdentifier>{60866427-1f78-4d38-ba21-ff2ee24eee21}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="BearPlatform\MSVC">
-      <UniqueIdentifier>{8ce6d2c7-efb7-493c-8038-ab0550674702}</UniqueIdentifier>
+      <UniqueIdentifier>{02be663d-6754-4cbe-849d-70d89cf5d7b0}</UniqueIdentifier>
     </Filter>
     <Filter Include="BearIO">
-      <UniqueIdentifier>{a5835bc7-d907-4e02-963b-5cfeac74ade4}</UniqueIdentifier>
+      <UniqueIdentifier>{d55ce707-5afb-44ad-8eb4-b6023d78a05b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="BearTool">
-      <UniqueIdentifier>{c066ff06-5416-4b0d-bd32-5778083d443e}</UniqueIdentifier>
+    <Filter Include="BearUtils">
+      <UniqueIdentifier>{ae90b8f7-5999-4d79-90e8-be5649291d53}</UniqueIdentifier>
     </Filter>
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\include\BearDebug\BearDebug.h">
+    <Filter Include="BearMath">
+      <UniqueIdentifier>{0f51bc58-d7ae-4890-aadd-7e7be5416651}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BearParser">
+      <UniqueIdentifier>{b962ed2a-d580-48e1-8b13-8e5d3401f22d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Platform">
+      <UniqueIdentifier>{651d8085-d8b4-4059-8991-ba614c91d7a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Platform\Windows">
+      <UniqueIdentifier>{81ce4bd9-684f-4845-b5d5-cc6547c64b75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Platform\Unix">
+      <UniqueIdentifier>{f0f4d2ec-775d-4775-a4dd-816d5158a3ed}</UniqueIdentifier>
+    </Filter>
+    <ClInclude Include="C:\GameDev\BearSDK\projects\bear\bearcore\include\BearDebug\BearDebugDefines.h">
       <Filter>BearDebug</Filter>
     </ClInclude>
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\include\BearDebug\BearDebugDefines.h">
+    <ClInclude Include="C:\GameDev\BearSDK\projects\bear\bearcore\include\BearDebug\BearLog.h">
       <Filter>BearDebug</Filter>
     </ClInclude>
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\include\BearDebug\BearLog.h">
+    <ClInclude Include="C:\GameDev\BearSDK\projects\bear\bearcore\include\BearDebug\BearDebug.h">
       <Filter>BearDebug</Filter>
     </ClInclude>
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\include\BearIO\BearBufferedReader.h">
-      <Filter>BearIO</Filter>
-    </ClInclude>
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\include\BearIO\BearFileManager.h">
-      <Filter>BearIO</Filter>
-    </ClInclude>
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\include\BearIO\BearFilePackageStream.h">
-      <Filter>BearIO</Filter>
-    </ClInclude>
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\include\BearIO\BearFileStream.h">
-      <Filter>BearIO</Filter>
-    </ClInclude>
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\include\BearIO\BearFileSystem.h">
-      <Filter>BearIO</Filter>
-    </ClInclude>
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\include\BearIO\BearInput.h">
-      <Filter>BearIO</Filter>
-    </ClInclude>
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\include\BearIO\BearInputStream.h">
-      <Filter>BearIO</Filter>
-    </ClInclude>
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\include\BearIO\BearKeys.h">
-      <Filter>BearIO</Filter>
-    </ClInclude>
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\include\BearIO\BearMemoryStream.h">
-      <Filter>BearIO</Filter>
-    </ClInclude>
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\include\BearIO\BearMemoryTranslationStream.h">
-      <Filter>BearIO</Filter>
-    </ClInclude>
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\include\BearIO\BearOutputStream.h">
-      <Filter>BearIO</Filter>
-    </ClInclude>
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\include\BearIO\BearPackage.h">
-      <Filter>BearIO</Filter>
-    </ClInclude>
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\include\BearIO\BearStreamRef.h">
-      <Filter>BearIO</Filter>
-    </ClInclude>
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\include\BearMemory\BearMemory.h">
+    <ClInclude Include="C:\GameDev\BearSDK\projects\bear\bearcore\include\BearMemory\BearMemoryMultiRef.h">
       <Filter>BearMemory</Filter>
     </ClInclude>
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\include\BearMemory\BearMemoryAllocator.h">
+    <ClInclude Include="C:\GameDev\BearSDK\projects\bear\bearcore\include\BearMemory\BearMemoryRef.h">
       <Filter>BearMemory</Filter>
     </ClInclude>
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\include\BearMemory\BearMemoryMultiRef.h">
+    <ClInclude Include="C:\GameDev\BearSDK\projects\bear\bearcore\include\BearMemory\BearMemoryTemplate.h">
       <Filter>BearMemory</Filter>
     </ClInclude>
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\include\BearMemory\BearMemoryRef.h">
+    <ClInclude Include="C:\GameDev\BearSDK\projects\bear\bearcore\include\BearMemory\BearMemory.h">
       <Filter>BearMemory</Filter>
     </ClInclude>
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\include\BearMemory\BearMemoryTemplate.h">
+    <ClInclude Include="C:\GameDev\BearSDK\projects\bear\bearcore\include\BearMemory\BearMemoryAllocator.h">
       <Filter>BearMemory</Filter>
     </ClInclude>
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\include\BearParser\BearINI.h">
+    <ClInclude Include="C:\GameDev\BearSDK\projects\bear\bearcore\include\BearTemplate\BearMap.h">
+      <Filter>BearTemplate</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\GameDev\BearSDK\projects\bear\bearcore\include\BearTemplate\BearUtilsForClass.h">
+      <Filter>BearTemplate</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\GameDev\BearSDK\projects\bear\bearcore\include\BearTemplate\BearVector.h">
+      <Filter>BearTemplate</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\GameDev\BearSDK\projects\bear\bearcore\include\BearTemplate\BearAlgorithm.h">
+      <Filter>BearTemplate</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\GameDev\BearSDK\projects\bear\bearcore\include\BearTemplate\BearDefines.h">
+      <Filter>BearTemplate</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\GameDev\BearSDK\projects\bear\bearcore\include\BearTemplate\BearFunctional.h">
+      <Filter>BearTemplate</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\GameDev\BearSDK\projects\bear\bearcore\include\BearIO\BearFileSystem.h">
+      <Filter>BearIO</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\GameDev\BearSDK\projects\bear\bearcore\include\BearIO\BearInput.h">
+      <Filter>BearIO</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\GameDev\BearSDK\projects\bear\bearcore\include\BearIO\BearInputStream.h">
+      <Filter>BearIO</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\GameDev\BearSDK\projects\bear\bearcore\include\BearIO\BearKeys.h">
+      <Filter>BearIO</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\GameDev\BearSDK\projects\bear\bearcore\include\BearIO\BearMemoryStream.h">
+      <Filter>BearIO</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\GameDev\BearSDK\projects\bear\bearcore\include\BearIO\BearOutputStream.h">
+      <Filter>BearIO</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\GameDev\BearSDK\projects\bear\bearcore\include\BearIO\BearPackage.h">
+      <Filter>BearIO</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\GameDev\BearSDK\projects\bear\bearcore\include\BearIO\BearBufferedReader.h">
+      <Filter>BearIO</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\GameDev\BearSDK\projects\bear\bearcore\include\BearIO\BearFileManager.h">
+      <Filter>BearIO</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\GameDev\BearSDK\projects\bear\bearcore\include\BearIO\BearFilePackageStream.h">
+      <Filter>BearIO</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\GameDev\BearSDK\projects\bear\bearcore\include\BearIO\BearFileStream.h">
+      <Filter>BearIO</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\GameDev\BearSDK\projects\bear\bearcore\include\BearTemplate\BearString_inline.h">
+      <Filter>BearTemplate</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\GameDev\BearSDK\projects\bear\bearcore\include\BearTemplate\BearString.h">
+      <Filter>BearTemplate</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\GameDev\BearSDK\projects\bear\bearcore\include\BearUtils\BearEncoding.h">
+      <Filter>BearUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\GameDev\BearSDK\projects\bear\bearcore\include\BearTemplate\BearStringConteniar.h">
+      <Filter>BearTemplate</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\GameDev\BearSDK\projects\bear\bearcore\include\BearMath\BearMatrix.h">
+      <Filter>BearMath</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\GameDev\BearSDK\projects\bear\bearcore\include\BearMath\BearTime.h">
+      <Filter>BearMath</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\GameDev\BearSDK\projects\bear\bearcore\include\BearMath\BearTime_inline.h">
+      <Filter>BearMath</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\GameDev\BearSDK\projects\bear\bearcore\include\BearMath\BearVector2.h">
+      <Filter>BearMath</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\GameDev\BearSDK\projects\bear\bearcore\include\BearMath\BearVector3.h">
+      <Filter>BearMath</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\GameDev\BearSDK\projects\bear\bearcore\include\BearMath\BearVector4.h">
+      <Filter>BearMath</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\GameDev\BearSDK\projects\bear\bearcore\include\BearMath\BearCamera.h">
+      <Filter>BearMath</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\GameDev\BearSDK\projects\bear\bearcore\include\BearMath\BearColor.h">
+      <Filter>BearMath</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\GameDev\BearSDK\projects\bear\bearcore\include\BearMath\BearFraction.h">
+      <Filter>BearMath</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\GameDev\BearSDK\projects\bear\bearcore\include\BearMath\BearMath.h">
+      <Filter>BearMath</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\GameDev\BearSDK\projects\bear\bearcore\include\BearTemplate\BearMultiplicatorDefine_GCC.h">
+      <Filter>BearTemplate</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\GameDev\BearSDK\projects\bear\bearcore\include\BearTemplate\BearMultiplicatorDefine_MSVC.h">
+      <Filter>BearTemplate</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\GameDev\BearSDK\projects\bear\bearcore\include\BearTemplate\BearFunctionReflector.h">
+      <Filter>BearTemplate</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\GameDev\BearSDK\projects\bear\bearcore\include\BearTemplate\BearFunctionReflectorMaker.h">
+      <Filter>BearTemplate</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\GameDev\BearSDK\projects\bear\bearcore\include\BearTemplate\BearMultiplicator.h">
+      <Filter>BearTemplate</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\GameDev\BearSDK\projects\bear\bearcore\include\BearTemplate\BearMultiplicatorDefine.h">
+      <Filter>BearTemplate</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\GameDev\BearSDK\projects\bear\bearcore\include\BearUtils\BearCompressor.h">
+      <Filter>BearUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\GameDev\BearSDK\projects\bear\bearcore\include\BearUtils\BearFlags.h">
+      <Filter>BearUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\GameDev\BearSDK\projects\bear\bearcore\include\BearUtils\BearGlobalTime.h">
+      <Filter>BearUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\GameDev\BearSDK\projects\bear\bearcore\include\BearUtils\BearMutex.h">
+      <Filter>BearUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\GameDev\BearSDK\projects\bear\bearcore\include\BearUtils\BearThread.h">
+      <Filter>BearUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\GameDev\BearSDK\projects\bear\bearcore\include\BearUtils\BearTimer.h">
+      <Filter>BearUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\GameDev\BearSDK\projects\bear\bearcore\include\BearUtils\BearCheakSum.h">
+      <Filter>BearUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\GameDev\BearSDK\projects\bear\bearcore\include\BearParser\BearINI.h">
       <Filter>BearParser</Filter>
     </ClInclude>
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\include\BearParser\BearXML.h">
+    <ClInclude Include="C:\GameDev\BearSDK\projects\bear\bearcore\include\BearParser\BearXML.h">
       <Filter>BearParser</Filter>
     </ClInclude>
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\include\BearPlatform\BearUnixType.h">
-      <Filter>BearPlatform</Filter>
+    <ClInclude Include="C:\GameDev\BearSDK\projects\bear\bearcore\include\BearUtils\BearIncluder.h">
+      <Filter>BearUtils</Filter>
     </ClInclude>
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\include\BearPlatform\BearWindowsType.h">
-      <Filter>BearPlatform</Filter>
+    <ClInclude Include="C:\GameDev\BearSDK\projects\bear\bearcore\source\Unix\BearGlobalTIme_Unix.h">
+      <Filter>Platform\Unix</Filter>
     </ClInclude>
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\include\BearProjects\BearProjectTool.h">
-      <Filter>BearProjects</Filter>
+    <ClInclude Include="C:\GameDev\BearSDK\projects\bear\bearcore\source\Unix\BearMutex_Unix.h">
+      <Filter>Platform\Unix</Filter>
     </ClInclude>
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\include\BearTemplate\BearAlgorithm.h">
-      <Filter>BearTemplate</Filter>
+    <ClInclude Include="C:\GameDev\BearSDK\projects\bear\bearcore\source\Unix\BearThread_Unix.h">
+      <Filter>Platform\Unix</Filter>
     </ClInclude>
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\include\BearTemplate\BearFunctional.h">
-      <Filter>BearTemplate</Filter>
+    <ClInclude Include="C:\GameDev\BearSDK\projects\bear\bearcore\source\Unix\BearTimer_Unix.h">
+      <Filter>Platform\Unix</Filter>
     </ClInclude>
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\include\BearTemplate\BearFunctionReflector.h">
-      <Filter>BearTemplate</Filter>
+    <ClInclude Include="C:\GameDev\BearSDK\projects\bear\bearcore\source\Unix\BearFileManager_Unix.h">
+      <Filter>Platform\Unix</Filter>
     </ClInclude>
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\include\BearTemplate\BearFunctionReflectorMaker.h">
-      <Filter>BearTemplate</Filter>
+    <ClInclude Include="C:\GameDev\BearSDK\projects\bear\bearcore\source\Windows\BearMutex_Windows.h">
+      <Filter>Platform\Windows</Filter>
     </ClInclude>
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\include\BearTemplate\BearMultiplicator.h">
-      <Filter>BearTemplate</Filter>
+    <ClInclude Include="C:\GameDev\BearSDK\projects\bear\bearcore\source\Windows\BearThread_Windows.h">
+      <Filter>Platform\Windows</Filter>
     </ClInclude>
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\include\BearTemplate\BearMultiplicatorDefine.h">
-      <Filter>BearTemplate</Filter>
+    <ClInclude Include="C:\GameDev\BearSDK\projects\bear\bearcore\source\Windows\BearTimer_Windows.h">
+      <Filter>Platform\Windows</Filter>
     </ClInclude>
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\include\BearTime\BearGlobalTime.h">
-      <Filter>BearTime</Filter>
+    <ClInclude Include="C:\GameDev\BearSDK\projects\bear\bearcore\source\Windows\BearFileManager_Windows.h">
+      <Filter>Platform\Windows</Filter>
     </ClInclude>
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\include\BearTime\BearTimer.h">
-      <Filter>BearTime</Filter>
+    <ClInclude Include="C:\GameDev\BearSDK\projects\bear\bearcore\source\Windows\BearGlobalTime_Windows.h">
+      <Filter>Platform\Windows</Filter>
     </ClInclude>
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\include\BearTools\BearCamera.h">
-      <Filter>BearTool</Filter>
+    <ClInclude Include="C:\GameDev\BearSDK\projects\bear\bearcore\include\BearUtils\BearManagerProjects.h">
+      <Filter>BearUtils</Filter>
     </ClInclude>
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\include\BearTools\BearCheakSum.h">
-      <Filter>BearTool</Filter>
+    <ClInclude Include="C:\GameDev\BearSDK\projects\bear\bearcore\source\Unix\BearManagerProjects_Unix.h">
+      <Filter>Platform\Unix</Filter>
     </ClInclude>
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\include\BearTools\BearClass.h">
-      <Filter>BearTool</Filter>
+    <ClInclude Include="C:\GameDev\BearSDK\projects\bear\bearcore\source\Windows\BearManagerProjects_Windows.h">
+      <Filter>Platform\Windows</Filter>
     </ClInclude>
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\include\BearTools\BearColor.h">
-      <Filter>BearTool</Filter>
+    <ClInclude Include="C:\GameDev\BearSDK\projects\bear\bearcore\include\BearUtils\BearSystem.h">
+      <Filter>BearUtils</Filter>
     </ClInclude>
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\include\BearTools\BearCompressor.h">
-      <Filter>BearTool</Filter>
+    <ClInclude Include="C:\GameDev\BearSDK\projects\bear\bearcore\source\Unix\BearSystem_Unix.h">
+      <Filter>Platform\Unix</Filter>
     </ClInclude>
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\include\BearTools\BearDefines.h">
-      <Filter>BearTool</Filter>
+    <ClInclude Include="C:\GameDev\BearSDK\projects\bear\bearcore\source\Windows\BearSystem_Windows.h">
+      <Filter>Platform\Windows</Filter>
     </ClInclude>
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\include\BearTools\BearEncoding.h">
-      <Filter>BearTool</Filter>
-    </ClInclude>
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\include\BearTools\BearFlags.h">
-      <Filter>BearTool</Filter>
-    </ClInclude>
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\include\BearTools\BearFraction.h">
-      <Filter>BearTool</Filter>
-    </ClInclude>
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\include\BearTools\BearGlobalTimer.h">
-      <Filter>BearTool</Filter>
-    </ClInclude>
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\include\BearTools\BearIncluder.h">
-      <Filter>BearTool</Filter>
-    </ClInclude>
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\include\BearTools\BearMap.h">
-      <Filter>BearTool</Filter>
-    </ClInclude>
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\include\BearTools\BearMath.h">
-      <Filter>BearTool</Filter>
-    </ClInclude>
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\include\BearTools\BearMatrix.h">
-      <Filter>BearTool</Filter>
-    </ClInclude>
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\include\BearTools\BearMutex.h">
-      <Filter>BearTool</Filter>
-    </ClInclude>
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\include\BearTools\BearString.h">
-      <Filter>BearTool</Filter>
-    </ClInclude>
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\include\BearTools\BearStringConteniar.h">
-      <Filter>BearTool</Filter>
-    </ClInclude>
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\include\BearTools\BearThread.h">
-      <Filter>BearTool</Filter>
-    </ClInclude>
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\include\BearTools\BearTime.h">
-      <Filter>BearTool</Filter>
-    </ClInclude>
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\include\BearTools\BearTime_inline.h">
-      <Filter>BearTool</Filter>
-    </ClInclude>
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\include\BearTools\BearVector.h">
-      <Filter>BearTool</Filter>
-    </ClInclude>
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\include\BearTools\BearVector2.h">
-      <Filter>BearTool</Filter>
-    </ClInclude>
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\include\BearTools\BearVector3.h">
-      <Filter>BearTool</Filter>
-    </ClInclude>
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\include\BearTools\BearVector4.h">
-      <Filter>BearTool</Filter>
-    </ClInclude>
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\source\Windows\BearGlobalTime_Windows.h">
-      <Filter>BearTime</Filter>
-    </ClInclude>
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\source\Windows\BearMutex_Windows.h">
-      <Filter>BearTool</Filter>
-    </ClInclude>
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\source\Windows\BearFileManager_Windows.h">
-      <Filter>BearIO</Filter>
-    </ClInclude>
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\include\BearPlatform\MSVC\BearMemoryAllocator_MSVC.h">
-      <Filter>BearPlatform\MSVC</Filter>
-    </ClInclude>
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\include\BearPlatform\MSVC\BearMultiplicatorDefine_MSVC.h">
-      <Filter>BearPlatform\MSVC</Filter>
-    </ClInclude>
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\include\BearPlatform\GCC\BearMultiplicatorDefine_GCC.h">
-      <Filter>BearPlatform\GCC</Filter>
-    </ClInclude>
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\include\BearPlatform\GCC\BearString_GCC.h">
-      <Filter>BearPlatform\GCC</Filter>
-    </ClInclude>
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\include\BearPlatform\GCC\BearMemoryAllocator_GCC.h">
-      <Filter>BearPlatform\GCC</Filter>
-    </ClInclude>
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\include\BearPlatform\MSVC\BearString_MSVC.h">
-      <Filter>BearPlatform\MSVC</Filter>
-    </ClInclude>
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\source\Windows\BearProjectTool_Windows.h">
-      <Filter>BearProjects</Filter>
-    </ClInclude>
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\source\Windows\BearTimer_Windows.h">
-      <Filter>BearTime</Filter>
-    </ClInclude>
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\source\Windows\BearString_Windows.h">
-      <Filter>BearTool</Filter>
-    </ClInclude>
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\source\Windows\BearThread_Windows.h">
-      <Filter>BearTool</Filter>
-    </ClInclude>
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\source\Unix\BearFileManager_Unix.h">
-      <Filter>BearIO</Filter>
-    </ClInclude>
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\source\Unix\BearTimer_Unix.h">
-      <Filter>BearTime</Filter>
-    </ClInclude>
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\source\Unix\BearGlobalTIme_Unix.h">
-      <Filter>BearTime</Filter>
-    </ClInclude>
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\source\Unix\BearThread_Unix.h">
-      <Filter>BearTool</Filter>
-    </ClInclude>
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\source\Unix\BearMutex_Unix.h">
-      <Filter>BearTool</Filter>
-    </ClInclude>
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\source\Unix\BearString_Unix.h">
-      <Filter>BearTool</Filter>
-    </ClInclude>
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\source\Unix\BearProjectTool_Unix.h">
-      <Filter>BearProjects</Filter>
-    </ClInclude>
-    <ClCompile Include="D:\GameDev\BearSDK\projects\bear\bearcore\source\BearMatrix.cpp">
-      <Filter>BearTool</Filter>
-    </ClCompile>
-    <ClCompile Include="D:\GameDev\BearSDK\projects\bear\bearcore\source\BearCheakSum.cpp">
-      <Filter>BearTool</Filter>
-    </ClCompile>
-    <ClCompile Include="D:\GameDev\BearSDK\projects\bear\bearcore\source\BearInput.cpp">
+    <ClCompile Include="C:\GameDev\BearSDK\projects\bear\bearcore\source\BearBufferedReader.cpp">
       <Filter>BearIO</Filter>
     </ClCompile>
-    <ClCompile Include="D:\GameDev\BearSDK\projects\bear\bearcore\source\BearFileManager.cpp">
+    <ClCompile Include="C:\GameDev\BearSDK\projects\bear\bearcore\source\BearCamera.cpp">
+      <Filter>BearMath</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\GameDev\BearSDK\projects\bear\bearcore\source\BearFilePackageStream.cpp">
       <Filter>BearIO</Filter>
     </ClCompile>
-    <ClCompile Include="D:\GameDev\BearSDK\projects\bear\bearcore\source\BearMemory.cpp">
+    <ClCompile Include="C:\GameDev\BearSDK\projects\bear\bearcore\source\BearFileStream.cpp">
+      <Filter>BearIO</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\GameDev\BearSDK\projects\bear\bearcore\source\BearFileSystem.cpp">
+      <Filter>BearIO</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\GameDev\BearSDK\projects\bear\bearcore\source\BearFileManager.cpp">
+      <Filter>BearIO</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\GameDev\BearSDK\projects\bear\bearcore\source\BearFraction.cpp">
+      <Filter>BearMath</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\GameDev\BearSDK\projects\bear\bearcore\source\BearMemoryStream.cpp">
+      <Filter>BearIO</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\GameDev\BearSDK\projects\bear\bearcore\source\BearOutputStream.cpp">
+      <Filter>BearIO</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\GameDev\BearSDK\projects\bear\bearcore\source\BearPackage.cpp">
+      <Filter>BearIO</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\GameDev\BearSDK\projects\bear\bearcore\source\BearInputStream.cpp">
+      <Filter>BearIO</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\GameDev\BearSDK\projects\bear\bearcore\source\BearInput.cpp">
+      <Filter>BearIO</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\GameDev\BearSDK\projects\bear\bearcore\source\BearCheakSum.cpp">
+      <Filter>BearUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\GameDev\BearSDK\projects\bear\bearcore\source\BearColor.cpp">
+      <Filter>BearMath</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\GameDev\BearSDK\projects\bear\bearcore\source\BearCompressor.cpp">
+      <Filter>BearUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\GameDev\BearSDK\projects\bear\bearcore\source\BearDebug.cpp">
+      <Filter>BearDebug</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\GameDev\BearSDK\projects\bear\bearcore\source\BearEncoding.cpp">
+      <Filter>BearUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\GameDev\BearSDK\projects\bear\bearcore\source\BearGlobalTime.cpp">
+      <Filter>BearUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\GameDev\BearSDK\projects\bear\bearcore\source\BearIncluder.cpp">
+      <Filter>BearUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\GameDev\BearSDK\projects\bear\bearcore\source\BearINI.cpp">
+      <Filter>BearParser</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\GameDev\BearSDK\projects\bear\bearcore\source\BearLog.cpp">
+      <Filter>BearDebug</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\GameDev\BearSDK\projects\bear\bearcore\source\BearMatrix.cpp">
+      <Filter>BearMath</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\GameDev\BearSDK\projects\bear\bearcore\source\BearMemory.cpp">
       <Filter>BearMemory</Filter>
     </ClCompile>
-    <ClCompile Include="D:\GameDev\BearSDK\projects\bear\bearcore\source\BearBufferedReader.cpp">
-      <Filter>BearIO</Filter>
+    <ClCompile Include="C:\GameDev\BearSDK\projects\bear\bearcore\source\BearMutex.cpp">
+      <Filter>BearUtils</Filter>
     </ClCompile>
-    <ClCompile Include="D:\GameDev\BearSDK\projects\bear\bearcore\source\BearCamera.cpp">
-      <Filter>BearTool</Filter>
+    <ClCompile Include="C:\GameDev\BearSDK\projects\bear\bearcore\source\BearThread.cpp">
+      <Filter>BearUtils</Filter>
     </ClCompile>
-    <ClCompile Include="D:\GameDev\BearSDK\projects\bear\bearcore\source\BearColor.cpp">
-      <Filter>BearTool</Filter>
+    <ClCompile Include="C:\GameDev\BearSDK\projects\bear\bearcore\source\BearTimer.cpp">
+      <Filter>BearUtils</Filter>
     </ClCompile>
-    <ClCompile Include="D:\GameDev\BearSDK\projects\bear\bearcore\source\BearCompressor.cpp">
-      <Filter>BearTool</Filter>
-    </ClCompile>
-    <ClCompile Include="D:\GameDev\BearSDK\projects\bear\bearcore\source\BearDebug.cpp">
-      <Filter>BearDebug</Filter>
-    </ClCompile>
-    <ClCompile Include="D:\GameDev\BearSDK\projects\bear\bearcore\source\BearEncoding.cpp">
-      <Filter>BearTool</Filter>
-    </ClCompile>
-    <ClCompile Include="D:\GameDev\BearSDK\projects\bear\bearcore\source\BearFilePackageStream.cpp">
-      <Filter>BearIO</Filter>
-    </ClCompile>
-    <ClCompile Include="D:\GameDev\BearSDK\projects\bear\bearcore\source\BearFileStream.cpp">
-      <Filter>BearIO</Filter>
-    </ClCompile>
-    <ClCompile Include="D:\GameDev\BearSDK\projects\bear\bearcore\source\BearFileSystem.cpp">
-      <Filter>BearIO</Filter>
-    </ClCompile>
-    <ClCompile Include="D:\GameDev\BearSDK\projects\bear\bearcore\source\BearFraction.cpp">
-      <Filter>BearTool</Filter>
-    </ClCompile>
-    <ClCompile Include="D:\GameDev\BearSDK\projects\bear\bearcore\source\BearGlobalTime.cpp">
-      <Filter>BearTime</Filter>
-    </ClCompile>
-    <ClCompile Include="D:\GameDev\BearSDK\projects\bear\bearcore\source\BearIncluder.cpp">
-      <Filter>BearTool</Filter>
-    </ClCompile>
-    <ClCompile Include="D:\GameDev\BearSDK\projects\bear\bearcore\source\BearINI.cpp">
+    <ClCompile Include="C:\GameDev\BearSDK\projects\bear\bearcore\source\BearXML.cpp">
       <Filter>BearParser</Filter>
     </ClCompile>
-    <ClCompile Include="D:\GameDev\BearSDK\projects\bear\bearcore\source\BearInputStream.cpp">
-      <Filter>BearIO</Filter>
+    <ClCompile Include="C:\GameDev\BearSDK\projects\bear\bearcore\source\BearString.cpp">
+      <Filter>BearTemplate</Filter>
     </ClCompile>
-    <ClCompile Include="D:\GameDev\BearSDK\projects\bear\bearcore\source\BearLog.cpp">
-      <Filter>BearDebug</Filter>
+    <ClCompile Include="C:\GameDev\BearSDK\projects\bear\bearcore\source\BearManagerProjects.cpp">
+      <Filter>BearUtils</Filter>
     </ClCompile>
-    <ClCompile Include="D:\GameDev\BearSDK\projects\bear\bearcore\source\BearMemoryStream.cpp">
-      <Filter>BearIO</Filter>
+    <ClCompile Include="C:\GameDev\BearSDK\projects\bear\bearcore\source\BearStringConteniar.cpp">
+      <Filter>BearTemplate</Filter>
     </ClCompile>
-    <ClCompile Include="D:\GameDev\BearSDK\projects\bear\bearcore\source\BearMemoryTranslationStream.cpp">
-      <Filter>BearIO</Filter>
+    <ClCompile Include="C:\GameDev\BearSDK\projects\bear\bearcore\source\BearSystem.cpp">
+      <Filter>BearUtils</Filter>
     </ClCompile>
-    <ClCompile Include="D:\GameDev\BearSDK\projects\bear\bearcore\source\BearMutex.cpp">
-      <Filter>BearTool</Filter>
-    </ClCompile>
-    <ClCompile Include="D:\GameDev\BearSDK\projects\bear\bearcore\source\BearOutputStream.cpp">
-      <Filter>BearIO</Filter>
-    </ClCompile>
-    <ClCompile Include="D:\GameDev\BearSDK\projects\bear\bearcore\source\BearPackage.cpp">
-      <Filter>BearIO</Filter>
-    </ClCompile>
-    <ClCompile Include="D:\GameDev\BearSDK\projects\bear\bearcore\source\BearProjectTool.cpp">
-      <Filter>BearProjects</Filter>
-    </ClCompile>
-    <ClCompile Include="D:\GameDev\BearSDK\projects\bear\bearcore\source\BearString.cpp">
-      <Filter>BearTool</Filter>
-    </ClCompile>
-    <ClCompile Include="D:\GameDev\BearSDK\projects\bear\bearcore\source\BearThread.cpp">
-      <Filter>BearTool</Filter>
-    </ClCompile>
-    <ClCompile Include="D:\GameDev\BearSDK\projects\bear\bearcore\source\BearTimer.cpp">
-      <Filter>BearTime</Filter>
-    </ClCompile>
-    <ClCompile Include="D:\GameDev\BearSDK\projects\bear\bearcore\source\BearXML.cpp">
-      <Filter>BearParser</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="D:\GameDev\BearSDK\projects\bear\bearcore\source\BearCore.cpp" />
-    <ClCompile Include="D:\GameDev\BearSDK\projects\bear\bearcore\source\BearCore.PCH.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\include\BearCoreInitializer.h" />
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\include\BearCore.hpp" />
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\bearcore\include\BearPlatform\GCC\Windows\BearString_MINGW.h">
-      <Filter>BearPlatform\GCC</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="D:\GameDev\BearSDK\projects\bear\bearcore\bear_core.project.cs" />
   </ItemGroup>
 </Project>
