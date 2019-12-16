@@ -12,7 +12,7 @@ public:
 	}
 	explicit BearRef(P*p, bool auto_free = true) :m_real_p(0),m_p(p), m_free(auto_free)
 	{}
-	BearRef() :m_p(0), m_free(false), m_real_p(0){};
+	BearRef() :m_real_p(0),m_p(0), m_free(false){};
 	BearRef(const BearRef& ptr) :m_real_p(ptr.m_real_p), m_p(ptr.m_p), m_free(ptr.m_free){ ptr.m_p = 0; ptr.m_free = false; ptr.m_real_p = 0; };
 	BearRef(BearRef&&ptr) :m_real_p(ptr.m_real_p), m_p(ptr.m_p), m_free(ptr.m_free) { ptr.m_p = 0; ptr.m_free = false; ptr.m_real_p = 0;};
 
