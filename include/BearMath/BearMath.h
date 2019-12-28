@@ -44,6 +44,44 @@ public:
 	{
 		return ::fabsf(a);
 	}
+#ifdef MSVC
+	template<typename T>
+	inline static bool isnan( T a)
+	{
+		return ::isnan(a);
+	}
+	inline static bool isvalid(float x)
+	{
+		const int cls = _fpclass(static_cast<double>(x));
+		if (cls & (_FPCLASS_SNAN + _FPCLASS_QNAN + _FPCLASS_NINF + _FPCLASS_PINF + _FPCLASS_ND + _FPCLASS_PD))
+			return false;
+		return true;
+	}
+#else
+	template<typename T>
+	inline static bool isnan( T a)
+	{
+		return a==std::numeric_limits<T>::quiet_NaN();
+	}
+	template<typename T>
+	inline static bool isvalid(T x)
+	{
+		if(isnan(x))return false;
+		const int cls = std::fpclassify(x);
+		switch (cls)
+		{
+		case FP_INFINITE:
+			[[fallthrough]];
+		case FP_SUBNORMAL:
+			return false;
+		default:
+			break;
+		}
+		return true;
+	}
+	
+#endif
+
 	template <typename T>
 	inline static T clamp(const T val, const T _low, const T _high) {
 		if (val < _low) return _low;

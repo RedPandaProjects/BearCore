@@ -32,6 +32,8 @@ template <>
 struct bear_remove_void<void> {
 	typedef int type;
 };
+
+
 template <typename T> struct bear_is_const {
 	enum { value = false };
 };
@@ -66,6 +68,7 @@ template <typename T> struct bear_is_pointer<T *> {
 	enum { value = true };
 };
 
+
 template<typename A>
 struct bear_is_void_function
 {
@@ -77,6 +80,31 @@ struct bear_is_void_function
 	static yes test(void(*a)(args...)) { return yes(); };
 	enum { ressult = sizeof(yes) == sizeof(test((A)0)) };
 };
+
+namespace Impl {
+ 
+template <class T>
+std::true_type detect_is_polymorphic(
+    decltype(dynamic_cast<const volatile void*>(static_cast<T*>(nullptr)))
+);
+template <class T>
+std::false_type detect_is_polymorphic(...);
+ 
+} 
+ 
+template <class T>
+struct bear_is_polymorphic : decltype(Impl::detect_is_polymorphic<T>(nullptr)) {};
+
+
+namespace Impl {
+	template <class T> char test(int T::*);
+	struct two { char c[2]; };
+	template <class T> two test(...);
+}
+
+template <class T>
+struct bear_is_class : std::integral_constant<bool, sizeof(Impl::test<T>(0)) == 1
+	&& !std::is_union<T>::value> {};
 
 struct BearDefaultSwap
 {
@@ -96,86 +124,6 @@ struct BearClassSwap
 	}
 };
 
-template <typename C, typename M>
-struct BearComparator
-{
-	BearRef<M> m;
-	C c;
-	BearComparator(BearComparator&compor)  { copy(compor); }
-	BearComparator()  {}
-	BearComparator(M&m_, C&c_) :m(&m_,false), c(c_) {}
-	BearComparator(M&&m_, C&c_) :m(bear_new<M>(m_)), c(c_) {}
-	~BearComparator() { clear(); }
-	template<typename T>
-	inline bool operator()(T&m2)
-	{
-		BEAR_ASSERT(*m);
-		return c(m2, **m);
-	}
-	inline	void copy(const BearComparator& compor) { m = compor.m; c = compor.c; }
-	inline void swap(BearComparator& compor) { m.swap(compor.m); bear_swap(c, compor.c); }
-	inline BearComparator&operator=(const BearComparator&compor) { copy(compor); return *this; }
-	inline void clear() { m.clear(); }
-};
-template <typename C, typename M>
-struct BearTwoCompare
-{
-	C c;
-	M m;
-	BearTwoCompare(BearTwoCompare&compor) { copy(compor); }
-	BearTwoCompare() {}
-	BearTwoCompare( const C&c_, const M&m_) :m(m_), c(c_) {}
-	template <typename L>
-	inline bool operator()(L&m1, L&m2)
-	{
-		return c(m1, m2) | m(m1, m2);
-	}
-	inline	void copy(const BearTwoCompare& compor) { m = compor.m; c = compor.c; }
-	inline void swap(BearTwoCompare& compor) { bear_swap(m, compor.m); bear_swap(c, compor.c); }
-	inline BearTwoCompare&operator=(const BearTwoCompare&compor) { copy(compor); return *this; }
-};
-template<typename C, typename M>
-inline BearComparator<C, M> bear_bind_compare(C&compare, M&item)
-{
-	return BearComparator<C, M>(item, compare);
-}
-template<typename C, typename M>
-inline BearComparator<C, M> bear_bind_compare(C&&compare, M&item)
-{
-	return BearComparator<C, M>(item, compare);
-}
-template<typename C, typename M>
-inline BearComparator<C, M> bear_bind_compare(C&compare, M&&item)
-{
-	return BearComparator<C, M>(item, compare);
-}
-template<typename C, typename M>
-inline BearComparator<C, M> bear_bind_compare(C&&compare, M&&item)
-{
-	return BearComparator<C, M>(item, compare);
-}
-
-
-template<typename C, typename M>
-inline BearTwoCompare<C, M> bear_append_compare(C&compare1, M&compare2)
-{
-	return BearTwoCompare<C, M>(compare1, compare2);
-}
-template<typename C, typename M>
-inline BearTwoCompare<C, M> bear_append_compare(C&&compare1, M&compare2)
-{
-	return BearTwoCompare<C, M>(compare1, compare2);
-}
-template<typename C, typename M>
-inline BearTwoCompare<C, M> bear_append_compare(C&compare1, M&&compare2)
-{
-	return BearTwoCompare<C, M>(compare1, compare2);
-}
-template<typename C, typename M>
-inline BearTwoCompare<C, M> bear_append_compare(C&&compare1, M&&compare2)
-{
-	return BearTwoCompare<C, M>(compare1, compare2);
-}
 
 struct BearLess
 {
@@ -202,29 +150,4 @@ struct BearEqual
 		return c1 == c2;
 	}
 };
-
-template<typename C>
-struct BearNot
-{
-	C c;
-	BearNot(C&c_):c(c_) {};
-	BearNot(BearNot&compor) { copy(compor); }
-	BearNot() {}
-	template<typename M>
-	bool operator()(M&c1, M&c2)
-	{
-		return !c(c1,c2);
-	}
-
-	inline	void copy(const BearNot& compor) { c = compor.c; }
-	inline void swap(BearNot& compor) {  bear_swap(c, compor.c); }
-	inline BearNot&operator=(const BearNot&compor) { copy(compor); return *this; }
-
-};
-template<typename C>
-inline BearNot<C> bear_bind_not(C&compare)
-{
-
-	return BearNot<C>( compare);
-}
 

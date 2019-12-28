@@ -8,9 +8,10 @@
 #include <math.h>
 #include <cmath>
 #include <string>
+#include <limits>
 
 #include "BearTypes.h"
-
+ 
 
 #ifdef BEAR_CORE_EXPORTS
 #define BEARTOOL_API  BEARPROJECT_EXPORT
@@ -107,6 +108,8 @@
 
 #include "BearUtils/BearSystem.h"
 
+#include "BearTemplate/BearFunction.h"
+#include "BearTemplate/BearFastDelegate.h"
 class BEARTOOL_API BearCore
 {
 	BEAR_CLASS_STATIC(BearCore);

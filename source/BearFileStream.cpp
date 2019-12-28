@@ -25,14 +25,19 @@ bool BearFileStream::Open(const bchar *name, BearFlags<uint8> flags)
 		mode = TEXT("rb");
 	if (m_file)
 		Close();
-#ifdef WINDOWS
+#ifdef MSVC
 #ifdef UNICODE
 	_wfopen_s(reinterpret_cast<FILE **>(&m_file), name, mode);
 #else
 	fopen_s(reinterpret_cast<FILE **>(&m_file), name, mode);
 #endif
 #else
-	m_file = fopen((const char*)*BearEncoding::ToUTF8(name),(const char*)*BearEncoding::ToUTF8(mode));
+#ifdef UNICODE
+	m_file = fopen((const char*)*BearEncoding::FastToAnsi(name),(const char*)*BearEncoding::FastToAnsi(mode));
+#else
+	m_file = fopen(name,mode);
+#endif
+
 #endif
 	if (m_file)
 	{

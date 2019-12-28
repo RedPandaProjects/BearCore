@@ -42,3 +42,9 @@ typedef int64 bint;
 #endif
 #define BEARPROJECT_EXPORT __declspec(dllexport)
 #define BEARPROJECT_IMPORT __declspec(dllimport)
+
+#ifdef MSVC
+#define BEAR_ALIGNED(x) __declspec(align(x))
+#else
+#define BEAR_ALIGNED(x) __attribute__ ((aligned(x)))
+#endif

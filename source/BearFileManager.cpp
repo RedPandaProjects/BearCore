@@ -1,8 +1,8 @@
 #include "BearCore.hpp"
 #ifdef WINDOWS
-#include "Windows/BearFileManager_Windows.h"
 #include <sys/stat.h>
 #include <io.h>
+#include "Windows/BearFileManager_Windows.h"
 #elif UNIX
 #include "Unix/BearFileManager_Unix.h"
 #endif

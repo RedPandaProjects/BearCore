@@ -89,11 +89,18 @@ static void Find(BearVector<BearString>& list, const bchar* path, const bchar* e
 
 bool BearFileManager::FileExists(const bchar * name)
 {
-	struct _stat buffer;
+
 #ifdef UNICODE
+	struct _stat buffer;
 	int exist = _wstat(name, &buffer);
 #else
+#ifdef MSVC
+	struct _stat buffer;
 	int exist = _stat(name, &buffer);
+#else
+	struct _stat buffer;
+	int exist = _stat((const char*)name, &buffer);
+#endif
 #endif
 	if (exist == 0)
 		return true;
@@ -116,10 +123,18 @@ bsize BearFileManager::GetFileSize(const bchar * name)
 {
 
 	FILE*file = 0;
+#ifdef MSVC
 #ifdef UNICODE
 	_wfopen_s(&file, name, TEXT("rb"));
 #else
 	fopen_s(&file, name, "rb");
+#endif
+#else
+#ifdef UNICODE
+	file = fopen (*BearEncoding::FastToAnsi(name), "rb");
+#else
+	 file = fopen(name, "rb");
+#endif
 #endif
 	if (!file)
 		return 0;

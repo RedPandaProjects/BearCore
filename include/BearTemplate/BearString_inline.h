@@ -128,14 +128,14 @@ static inline bsize Printf(bchar8(&dst)[sizeBuffer], const bchar8 *str, ...)
 {
 	va_list va;
 	va_start(va, str);
-	int result = vsprintf_s(dst, sizeBuffer, str, va);
+	int result = vsnprintf(dst, sizeBuffer, str, va);
 	va_end(va);
 	return static_cast<bsize>(result);
 }
 template <bsize sizeBuffer>
 static inline bsize PrintfVa(bchar8(&dst)[sizeBuffer], const bchar8 *str, va_list va)
 {
-	int result = vsprintf_s(dst, sizeBuffer, str, va);
+	int result = vsnprintf(dst, sizeBuffer, str, va);
 	return static_cast<bsize>(result);
 }
 

@@ -151,18 +151,18 @@ public:
 };
 
 template<typename ...Args >
-void bear_make_arguments(BearArgumentsList&args_list, Args... args)
+void bear_make_arguments(BearArgumentsList&args_list, Args&&... args)
 {
 	bear_make_arguments_impl(args_list, args...);
 }
 template<typename T, typename ...Args>
-void bear_make_arguments_impl(BearArgumentsList&args_list, const T&t, Args... args)
+void bear_make_arguments_impl(BearArgumentsList&args_list,  T&&t, Args&&... args)
 {
 	args_list.push_back(bear_new<BearArgumentContainerMaker<T>>(t));
 	bear_make_arguments_impl(args_list, args...);
 }
 template<typename T>
-void bear_make_arguments_impl(BearArgumentsList&args_list, const T&t)
+void bear_make_arguments_impl(BearArgumentsList&args_list, T&&t)
 {
 	args_list.push_back(bear_new<BearArgumentContainerMaker<T>>( t));
 }

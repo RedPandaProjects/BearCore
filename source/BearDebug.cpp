@@ -20,7 +20,7 @@ void CALLBACK GErrorHandler(INT_PTR)
 
 void BearDebug::DebugBreak()
 {
-#ifdef WINDOWS
+#ifdef MSVC
 	__debugbreak();
 #else
    __builtin_trap();
