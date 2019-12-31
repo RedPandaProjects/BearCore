@@ -104,11 +104,10 @@ public:
 	template<typename F>
 	BearFastDelegate(F f) { m_caller = bear_new<Impl::BearFastDelegateCallerFunction<Return, Args...>>(f); }
 	template<typename F>
-	static inline  BearFastDelegate bind(F f)
+	 inline  void bind(F f)
 	{
-		BearFastDelegate Result;
-		Result.m_caller = bear_new<Impl::BearFastDelegateCallerFunction<Return,Args...>>(f);
-		return Result;
+		 m_caller.clear();
+		 m_caller = bear_new<Impl::BearFastDelegateCallerFunction<Return,Args...>>(f);
 	}
 	template<typename Class, typename F>
 	BearFastDelegate(const Class& ptr, F f)
@@ -123,19 +122,16 @@ public:
 		}
 	}
 	template<typename Class, typename F>
-	static inline  BearFastDelegate bind(const Class&ptr,F f)
+	 inline  void bind(const Class&ptr,F f)
 	{
+		 m_caller.clear();
 		if constexpr (bear_is_pointer<Class>::value)
 		{
-			BearFastDelegate Result;
-			Result.m_caller = bear_new < Impl::BearFastDelegateCallerFunctionFromClass < Return,typename bear_remove_pointer<Class>::type, Args... >>(const_cast<Class>(ptr), f);
-			return Result;
+			m_caller = bear_new < Impl::BearFastDelegateCallerFunctionFromClass < Return,typename bear_remove_pointer<Class>::type, Args... >>(const_cast<Class>(ptr), f);
 		}
 		else
 		{
-			BearFastDelegate Result;
-			Result.m_caller = bear_new < Impl::BearFastDelegateCallerFunctionFromClass < Return, Class, Args... >>(&const_cast<Class>(ptr), f);
-			return Result;
+			m_caller = bear_new < Impl::BearFastDelegateCallerFunctionFromClass < Return, Class, Args... >>(&const_cast<Class>(ptr), f);
 		}
 		
 	}
