@@ -54,7 +54,7 @@ public:
 	static inline A*Duplicate(const A* src)
 	{
 		bsize size = GetSize(src);
-		C*dst = bear_alloc<C>(sizeof(C)*(size + 1));
+		A*dst = bear_alloc<A>(sizeof(A)*(size + 1));
 		Copy(dst, size+1, src);
 		return dst;
 	}

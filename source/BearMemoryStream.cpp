@@ -1,6 +1,6 @@
 #include "BearCore.hpp"
 
-BearMemoryStream::BearMemoryStream(void* data, bool free): m_edit(false), m_free(free),m_tell(0), m_data(0), m_size(0)
+BearMemoryStream::BearMemoryStream(void* data, bsize size, bool free): m_edit(false), m_free(free),m_tell(0), m_data(0), m_size(size)
 {
 	m_data = reinterpret_cast<uint8*>(data);
 }

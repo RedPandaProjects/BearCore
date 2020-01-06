@@ -3,7 +3,7 @@
 class BEARTOOL_API BearMemoryStream :public BearBufferedReader, public BearOutputStream
 {
 public:
-	BearMemoryStream(void*data,bool free=false);
+	BearMemoryStream(void*data,bsize size,bool free=false);
 	BearMemoryStream();
 	virtual ~BearMemoryStream();
 
