@@ -1,4 +1,10 @@
 #pragma once
+#ifdef min
+#undef min
+#endif 
+#ifdef max
+#undef max
+#endif
 class BearMath
 {
 	BEAR_CLASS_STATIC(BearMath);
@@ -43,6 +49,20 @@ public:
 	inline static float abs(float a)
 	{
 		return ::fabsf(a);
+	}
+	template<typename A>
+	inline static A max(A a,A b)
+	{
+		if(a>b)
+			return a;
+		return b; 
+	}
+	template<typename A>
+	inline static A min(A a,A b)
+	{
+		if(a>b)
+			return b;
+		return a; 
 	}
 #ifdef MSVC
 	template<typename T>

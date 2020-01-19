@@ -101,7 +101,7 @@ inline bint bear_compare(const void*a, const void*b, bsize size)
 }
 
 template<typename C>
-C*bear_alloc(bsize count)
+inline C*bear_alloc(bsize count)
 {
 	return reinterpret_cast<C*>(BearMemory::Malloc(sizeof(C)*count
 #ifdef DEBUG
@@ -111,7 +111,7 @@ C*bear_alloc(bsize count)
 }
 
 template<typename C>
-C*bear_new()
+inline C*bear_new()
 {
 	C*c = reinterpret_cast<C*>(BearMemory::Malloc(sizeof(C)
 #ifdef DEBUG
@@ -122,7 +122,7 @@ C*bear_new()
 	return c;
 }
 template<typename C, typename...D>
-C*bear_new(const D&...d)
+inline C*bear_new(const D&...d)
 {
 	C*c = reinterpret_cast<C*>(BearMemory::Malloc(sizeof(C)
 #ifdef DEBUG
@@ -132,8 +132,9 @@ C*bear_new(const D&...d)
 	new(c)C(d...);
 	return c;
 }
+#ifdef MSVC 
 template<typename C, typename...D>
-C*bear_new(D&&...d)
+inline C*bear_new(D&&...d)
 {
 	C*c = reinterpret_cast<C*>(BearMemory::Malloc(sizeof(C)
 #ifdef DEBUG
@@ -143,8 +144,9 @@ C*bear_new(D&&...d)
 	new(c)C(d...);
 	return c;
 }
+#endif
 template<typename C>
-C*bear_realloc(C*old, bsize new_count)
+inline C*bear_realloc(C*old, bsize new_count)
 {
 	return reinterpret_cast<C*>(BearMemory::Realloc(reinterpret_cast<void*>(old), sizeof(C)*new_count
 #ifdef DEBUG
@@ -154,17 +156,45 @@ C*bear_realloc(C*old, bsize new_count)
 }
 
 template<typename C>
-void bear_free(C*old)
+inline void bear_free(C*old)
 {
 	if (old)
-		BearMemory::Free(const_cast<void*>( reinterpret_cast<const void*>(old)));
+	{
+		if constexpr (bear_is_polymorphic<C>::value)
+		{
+			const void* real_ptr = dynamic_cast<const void*>(old);
+			BearMemory::Free(const_cast<void*>(real_ptr));
+		}
+		else
+		{
+			BearMemory::Free(const_cast<void*>(reinterpret_cast<const void*>(old)));
+		}
+	}
+
 }
 template<typename C>
-void bear_delete(C*old)
+inline void bear_delete(C*old)
 {
 	if (old)
-		old->~C();
-	BearMemory::Free(reinterpret_cast<void*>(old));
+	{
+	
+		if constexpr (bear_is_polymorphic<C>::value)
+		{
+			void* real_ptr = dynamic_cast<void*>(old);
+			old->~C();
+			BearMemory::Free(real_ptr);
+		}
+		else
+		{
+			BearMemory::Free(reinterpret_cast<void*>(old));
+		}
+	}
+		
+	
+}
+inline void bear_delete(void*old)
+{
+	BearMemory::Free(old);
 }
 inline bsize bear_recommended_size(bsize size)
 {

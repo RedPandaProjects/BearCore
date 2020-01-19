@@ -9,6 +9,9 @@ namespace Impl
 		BearFunctionImpl():m_function(0)
 		{
 		}	
+		explicit  BearFunctionImpl(const BearFunctionImpl& right) :m_function(right.m_function)
+		{
+		}
 		template <typename F>
 		BearFunctionImpl(F function) :m_function(function)
 		{
@@ -41,6 +44,9 @@ namespace Impl
 	{
 	public:
 		BearFunctionImplOfClass() :m_function(0), m_function_const(0)
+		{
+		}
+		explicit  BearFunctionImplOfClass(const BearFunctionImplOfClass&right) :m_function(right.m_function), m_function_const(right.m_function_const)
 		{
 		}
 		template <typename F>

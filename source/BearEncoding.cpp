@@ -21,7 +21,9 @@ struct codecvt_byname : public std::codecvt_byname<I, E, S>
 #ifdef MSVC
 #pragma warning(disable:4996)
 #endif
+#ifdef MSVC
 std::wstring_convert<::codecvt_byname<bchar16, bchar8, std::mbstate_t>, bchar16> *ConverterUTF16;
+#endif
 std::wstring_convert<std::codecvt_utf8_utf16<bchar16>, bchar16> *ConverterUTF8;
 
 #if defined(WINDOWS) || defined(UNIX)
@@ -34,25 +36,34 @@ struct Initializer
 	Initializer() {}
 	inline void Initialize(const char *lg = "en_US.UTF-8")
 	{
-		if (ConverterUTF16)
+#ifdef MSVC
+		if (ConverterUTF8)
 		{
 			return;
 		}
+#endif
 		ReInitialize(lg);
 	}
 	inline void ReInitialize(const char *lg = "en_US.UTF-8")
 	{
-		if (ConverterUTF16)
+
+		if (ConverterUTF8)
 		{
+			#ifdef MSVC
 			bear_delete(ConverterUTF16);
+			#endif
 			bear_delete(ConverterUTF8);
 		}
+	#ifdef MSVC
 		ConverterUTF16 = new std::wstring_convert<::codecvt_byname<bchar16, bchar8, std::mbstate_t>, bchar16>(new ::codecvt_byname<bchar16, bchar8, std::mbstate_t>(lg));
+		#endif
 		ConverterUTF8 = new std::wstring_convert<std::codecvt_utf8_utf16<bchar16>, bchar16>;
 	}
 	~Initializer()
 	{
+			#ifdef MSVC
 		bear_delete(ConverterUTF16);
+		#endif
 		bear_delete(ConverterUTF8);
 	}
 };
@@ -63,7 +74,7 @@ inline bchar8 ToANSI(bchar16 c)
 
 	if ((bchar16)(bchar8)c != c)
 	{  
-#ifdef UNIX
+#ifndef MSVC
 		if (LAnsiCode == 1251)
 		{ 
 			if (c >= L'А' && c <= L'Я'+32)

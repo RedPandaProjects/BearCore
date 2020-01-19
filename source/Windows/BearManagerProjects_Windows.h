@@ -17,7 +17,12 @@ bool BearManagerProjects::CheckProject(BearStringConteniar  name_)
 		if (BearString::ToChar(main_project, TEXT('_')))
 			BearString::ToChar(main_project, TEXT('_'))[0] = 0;
 
-		BearString::Copy(fullname, TEXT(BEAR_TO_STRING(MAIN_PROJECT_NAME)));
+		BearString::Copy(fullname,
+#ifdef GCC
+	TEXT("lib")
+#endif
+		 TEXT(BEAR_TO_STRING(MAIN_PROJECT_NAME))
+		 );
 		BearString::Contact(fullname, TEXT("_"));
 
 		BearString::Copy(name_data, name);
@@ -76,7 +81,11 @@ void * BearManagerProjects::GetFunctionInProjectImpl(BearStringConteniar name_, 
 		if (BearString::ToChar(main_project, TEXT('_')))
 			BearString::ToChar(main_project, TEXT('_'))[0] = 0;
 
-		BearString::Copy(fullname, TEXT(BEAR_TO_STRING(MAIN_PROJECT_NAME)));
+		BearString::Copy(fullname,
+#ifdef GCC
+	TEXT("lib")
+#endif
+		 TEXT(BEAR_TO_STRING(MAIN_PROJECT_NAME)));
 		BearString::Contact(fullname, TEXT("_"));
 
 		BearString::Copy(name_data, name);

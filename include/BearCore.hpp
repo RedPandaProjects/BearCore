@@ -26,16 +26,18 @@
 
 #include "BearTemplate/BearUtilsForClass.h"
 
+
+#include "BearTemplate/BearDefines.h"
+
+#include "BearTemplate/BearFunctional.h"
+#include "BearTemplate/BearAlgorithm.h"
+
 #include "BearMemory/BearMemory.h"
 #include "BearMemory/BearMemoryTemplate.h"
 #include "BearMemory/BearMemoryAllocator.h"
 #include "BearMemory/BearMemoryMultiRef.h"
 #include "BearMemory/BearMemoryRef.h"
 
-#include "BearTemplate/BearDefines.h"
-
-#include "BearTemplate/BearFunctional.h"
-#include "BearTemplate/BearAlgorithm.h"
 
 #include "BearDebug/BearDebug.h"
 #include "BearDebug/BearDebugDefines.h"
