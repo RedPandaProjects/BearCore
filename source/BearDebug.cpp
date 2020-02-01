@@ -30,8 +30,15 @@ void BearDebug::DebugBreak()
 
 
 
-void BearDebug::FatalError(const bchar * chenk, const bchar * name, const char * function_name, uint32 line, const bchar * text, ...)
+void BearDebug::FatalError(const bchar* chenk, const bchar* name, const char* function_name, uint32 line, const bchar* text, ...)
 {
+#ifdef MSVC
+	if (IsDebuggerPresent())
+	{
+		DebugBreak();
+		return;
+	}
+#endif
 	BearString str;
 
 	str.append(TEXT("\r\nОшибка в файле:")).append(name);
