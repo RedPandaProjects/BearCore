@@ -186,6 +186,7 @@ inline void bear_delete(C*old)
 		}
 		else
 		{
+			old->~C();
 			BearMemory::Free(reinterpret_cast<void*>(old));
 		}
 	}
