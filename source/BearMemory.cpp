@@ -105,7 +105,7 @@ void BearMemory::DebugCheak()
 		auto end = LMemoryBlocks.end();
 		while (begin != end)
 		{
-			BearLog::Printf( TEXT( BEAR_PRINT_STR_CURRENT ":0x%p\n"), begin->name, begin->ptr);
+			BearLog::Printf( TEXT( BEAR_PRINT_STR ":0x%p\n"), begin->name, begin->ptr);
 			
 			begin++;
 		}
