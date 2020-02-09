@@ -4,13 +4,7 @@ template<typename P>
 struct BearRef
 {
 public:
-	template<typename C>
-	BearRef(C* p, bool auto_free = true) : m_p(0), m_free(auto_free)
-	{
-		m_p = static_cast<P*>(p);
-	}
-	explicit BearRef(P*p, bool auto_free = true) :m_p(p), m_free(auto_free)
-	{}
+	BearRef(P*p, bool auto_free = true) :m_p(p), m_free(auto_free){}
 	BearRef() :m_p(0), m_free(false){};
 	BearRef(const BearRef& ptr): m_p(ptr.m_p), m_free(ptr.m_free){ ptr.m_p = 0; ptr.m_free = false; };
 	BearRef(BearRef&&ptr) : m_p(ptr.m_p), m_free(ptr.m_free) { ptr.m_p = 0; ptr.m_free = false;};
