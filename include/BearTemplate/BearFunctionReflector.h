@@ -237,7 +237,7 @@ inline BearFunctionRef*bear_create_function_ref(P(*f)())
 class BearClassFunctionRef
 {
 public:
-	virtual ~BearClassFunctionRef();
+	virtual ~BearClassFunctionRef(){}
 	template<class R>
 	inline R CallWithArgumentsList(void*cl,void**stack)
 	{
