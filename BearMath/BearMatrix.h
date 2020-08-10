@@ -34,8 +34,8 @@ public:
 		m_matrix[7] = 0.0f;
 
 		m_matrix[8] = 0.0f;
-		m_matrix[9] = 1.0f;
-		m_matrix[10] = 0.0f;
+		m_matrix[9] = 0.0f;
+		m_matrix[10] = 1.0f;
 		m_matrix[11] = 0.0f;
 
 		m_matrix[12] = 0.0f;
@@ -189,6 +189,10 @@ public:
 	inline const float*operator*() const
 	{
 		return m_matrix;
+	}
+	inline float Get(bsize x, bsize y)const
+	{
+		return m_matrix_4x4[x][y];
 	}
 private:
 	static inline void multiply(float* result, const float* matrix1, const float* matrix2)
