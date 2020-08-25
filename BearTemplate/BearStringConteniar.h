@@ -70,6 +70,10 @@ public:
 	{
 		m_data = Impl::BearStringConteniarManager::Get(str);
 	}
+	static inline const C* Reserve(const C* str)
+	{
+		return (const C *) Impl::BearStringConteniarManager::Get(str)->String;
+	}
 	inline const C* operator*() const
 	{
 		if (m_data)return (const C*)m_data->String;
