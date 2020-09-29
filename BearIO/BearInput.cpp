@@ -143,3 +143,46 @@ void BearInput::SetMousePosition(const BearVector2<float>& position)
 	POINT point = { static_cast<LONG>(position.x),  static_cast<LONG>(position.y) };
 	SetCursorPos(static_cast<LONG>(position.x), static_cast<LONG>(position.y));
 }
+
+void BearInput::SetCursor(Cursor type)
+{
+	LPTSTR Win32Cursor = IDC_ARROW;
+	switch (type)
+	{
+	case BearInput::Cursor_None:
+		::SetCursor(NULL);
+		return;
+		break;
+	case BearInput::Cursor_Arrow:
+		Win32Cursor = IDC_ARROW;
+		break;
+	case BearInput::Cursor_TextInput:
+		Win32Cursor = IDC_IBEAM;
+		break;
+	case BearInput::Cursor_ResizeAll:
+		Win32Cursor = IDC_SIZEALL;
+		break;
+	case BearInput::Cursor_ResizeEW:
+		Win32Cursor = IDC_SIZEWE;
+		break;
+	case BearInput::Cursor_ResizeNS:
+		Win32Cursor = IDC_SIZENS;
+		break;
+	case BearInput::Cursor_ResizeNESW:
+		Win32Cursor = IDC_SIZENESW;
+		break;
+	case BearInput::Cursor_ResizeNWSE:
+		Win32Cursor = IDC_SIZENWSE;
+		break;
+	case BearInput::Cursor_Hand:
+		Win32Cursor = IDC_HAND;
+		break;
+	case BearInput::Cursor_NotAllowed:
+		Win32Cursor = IDC_NO;
+		break;
+	default:
+		Win32Cursor = IDC_ARROW;
+		break;
+	}
+	::SetCursor(::LoadCursor(NULL, Win32Cursor));
+}
