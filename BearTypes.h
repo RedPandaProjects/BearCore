@@ -78,4 +78,6 @@ typedef int64 bint;
 #ifdef MSVC
 #pragma warning(disable:4200)
 #pragma warning(disable:4251)
+#pragma warning(disable:4201)
+#pragma warning(disable:4100)
 #endif
