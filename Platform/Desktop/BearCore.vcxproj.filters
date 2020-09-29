@@ -22,6 +22,9 @@
     <Filter Include="BearUtils">
       <UniqueIdentifier>{23e52710-d7c1-4254-89ca-20890a54c01c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="BearNet">
+      <UniqueIdentifier>{a3ac54cd-5794-4512-800d-d6b03ee7c5f2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\BearDebug\BearDebugDefines.h">
@@ -203,6 +206,15 @@
     <ClInclude Include="..\..\BearUtils\BearManagerDynamicLibraries.h">
       <Filter>BearUtils</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\BearNet\BearNetTcpServer.h">
+      <Filter>BearNet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\BearNet\BearIP.h">
+      <Filter>BearNet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\BearNet\BearNetTcpClient.h">
+      <Filter>BearNet</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\BearDebug\BearDebug.cpp">
@@ -299,6 +311,15 @@
     <ClCompile Include="..\..\BearCore.PCH.cpp" />
     <ClCompile Include="..\..\BearUtils\BearManagerDynamicLibraries.cpp">
       <Filter>BearUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\BearNet\BearNetTcpServer.cpp">
+      <Filter>BearNet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\BearNet\BearIP.cpp">
+      <Filter>BearNet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\BearNet\BearNetTcpClient.cpp">
+      <Filter>BearNet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

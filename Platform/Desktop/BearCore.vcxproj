@@ -57,6 +57,9 @@
     <ClInclude Include="..\..\BearMemory\BearMemoryMultiRef.h" />
     <ClInclude Include="..\..\BearMemory\BearMemoryRef.h" />
     <ClInclude Include="..\..\BearMemory\BearMemoryTemplate.h" />
+    <ClInclude Include="..\..\BearNet\BearIP.h" />
+    <ClInclude Include="..\..\BearNet\BearNetTcpClient.h" />
+    <ClInclude Include="..\..\BearNet\BearNetTcpServer.h" />
     <ClInclude Include="..\..\BearParser\BearINI.h" />
     <ClInclude Include="..\..\BearParser\BearXML.h" />
     <ClInclude Include="..\..\BearTemplate\BearAlgorithm.h" />
@@ -113,6 +116,9 @@
     <ClCompile Include="..\..\BearIO\BearPackage.cpp" />
     <ClCompile Include="..\..\BearMath\BearCamera.cpp" />
     <ClCompile Include="..\..\BearMemory\BearMemory.cpp" />
+    <ClCompile Include="..\..\BearNet\BearIP.cpp" />
+    <ClCompile Include="..\..\BearNet\BearNetTcpClient.cpp" />
+    <ClCompile Include="..\..\BearNet\BearNetTcpServer.cpp" />
     <ClCompile Include="..\..\BearParser\BearINI.cpp" />
     <ClCompile Include="..\..\BearParser\BearXML.cpp" />
     <ClCompile Include="..\..\BearUtils\BearCheakSum.cpp" />
@@ -254,6 +260,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
+      <AdditionalDependencies>Wsock32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -267,6 +274,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
+      <AdditionalDependencies>Wsock32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -284,6 +292,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
+      <AdditionalDependencies>Wsock32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Development|Win32'">
@@ -301,6 +310,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
+      <AdditionalDependencies>Wsock32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -318,6 +328,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
+      <AdditionalDependencies>Wsock32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Development|x64'">
@@ -335,6 +346,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
+      <AdditionalDependencies>Wsock32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

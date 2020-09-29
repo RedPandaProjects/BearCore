@@ -129,3 +129,7 @@ private:
 #include "BearTemplate/BearFunction.h"
 #include "BearTemplate/BearFastDelegate.h"
 
+
+#include "BearNet/BearIP.h"
+#include "BearNet/BearNetTcpClient.h"
+#include "BearNet/BearNetTcpServer.h"
