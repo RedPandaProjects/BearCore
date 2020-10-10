@@ -175,7 +175,7 @@ bool BearNetTcpClient::Receive(BearStringAnsi& data) const
 	if (!Size)
 		return false;
 	data.assign(Size, ' ');
-	Receive(data.data(), Size);
+	Receive(&data[0], Size);
 	return true;
 }
 bool BearNetTcpClient::Receive(BearStringUnicode& data) const
@@ -184,8 +184,9 @@ bool BearNetTcpClient::Receive(BearStringUnicode& data) const
 	if (!Receive(Size))
 		return false;
 	if (!Size)
+
 		return false;
 	data.assign(Size, ' ');
-	Receive(data.data(), Size*2);
+	Receive(&data[0], Size*2);
 	return true;
 }
