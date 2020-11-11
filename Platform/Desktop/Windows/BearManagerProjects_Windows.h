@@ -79,7 +79,7 @@ void * BearManagerDynamicLibraries::GetFunctionInProjectImpl(BearStringConteniar
 		}
 		else
 		{
-			return false;
+			return 0;
 		}
 	}
 	auto Item= GLibraries->find(name_);

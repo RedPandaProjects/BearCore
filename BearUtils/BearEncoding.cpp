@@ -50,9 +50,9 @@ struct Initializer
 		if (ConverterUTF8)
 		{
 			#ifdef MSVC
-			bear_delete(ConverterUTF16);
+			delete[] ConverterUTF16;
 			#endif
-			bear_delete(ConverterUTF8);
+			delete[] ConverterUTF8;
 		}
 	#ifdef MSVC
 		ConverterUTF16 = new std::wstring_convert<::codecvt_byname<bchar16, bchar8, std::mbstate_t>, bchar16>(new ::codecvt_byname<bchar16, bchar8, std::mbstate_t>(lg));
@@ -61,10 +61,10 @@ struct Initializer
 	}
 	~Initializer()
 	{
-			#ifdef MSVC
-		bear_delete(ConverterUTF16);
+		#ifdef MSVC
+		delete[] ConverterUTF16;
 		#endif
-		bear_delete(ConverterUTF8);
+		delete[] ConverterUTF8;
 	}
 };
 Initializer initializer;
