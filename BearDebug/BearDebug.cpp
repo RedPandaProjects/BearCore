@@ -13,7 +13,7 @@ void CALLBACK GErrorHandler(INT_PTR)
 	BT_SaveSnapshot(0);
 }
 
-#elif UNIX
+#elif CURRENT_PLATFORM == PLATFORM_UNIX
 #include <signal.h>
 #endif
 
@@ -28,7 +28,7 @@ BearDebug::~BearDebug()
 
 void BearDebug::Break()
 {
-#ifdef MSVC
+#if CURRENT_COMPILER == COMPILER_MSVC
 	__debugbreak();
 #else
    __builtin_trap();
@@ -40,7 +40,7 @@ void BearDebug::Break()
 
 void BearDebug::Error(const bchar* chenk, const bchar* name, const char* function_name, uint32 line)
 {
-#ifdef MSVC
+#if CURRENT_COMPILER == COMPILER_MSVC
 	if (IsDebuggerPresent())
 	{
 		Break();

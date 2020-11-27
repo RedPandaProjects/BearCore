@@ -1,5 +1,5 @@
 ﻿#include "BearCore.hpp"
-#ifdef _WINDOWS
+#if CURRENT_PLATFORM == PLATFORM_WINDOWS
 #ifdef __WINDOWS32__WINDOWSDOWS
 #undef __WINDOWS32__WINDOWSDOWS
 #endif
@@ -28,7 +28,7 @@
 void BearNetTcpClient::Close()
 {
 	if (m_Socket)
-#ifdef _WINDOWS
+#if CURRENT_PLATFORM == PLATFORM_WINDOWS
 		closesocket(m_Socket);
 #else
    ::close(m_Socket);
@@ -67,7 +67,7 @@ void BearNetTcpClient::SetBlocking(bool is_block)
 {
 	if (m_Socket)
 	{
-#ifdef _WINDOWS
+#if CURRENT_PLATFORM == PLATFORM_WINDOWS
 		m_IsBlock = is_block;
 		u_long blocking = m_IsBlock;
 		ioctlsocket(m_Socket, FIONBIO, &blocking);

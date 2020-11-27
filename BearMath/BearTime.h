@@ -1,5 +1,5 @@
 #pragma once
-#ifdef WINDOWS
+#if CURRENT_PLATFORM == PLATFORM_WINDOWS
 #undef GetCurrentTime
 #endif
 class  BearTime

@@ -10,6 +10,7 @@
 #include <string>
 #include <limits>
 
+#include "BearConfig.h"
 #include "BearTypes.h"
  
 

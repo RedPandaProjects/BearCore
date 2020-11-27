@@ -215,6 +215,7 @@
     <ClInclude Include="..\..\BearNet\BearNetTcpClient.h">
       <Filter>BearNet</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\BearConfig.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\BearDebug\BearDebug.cpp">

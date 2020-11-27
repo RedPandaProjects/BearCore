@@ -21,7 +21,7 @@ public :
 	bool ExistFile(const bchar*path, const bchar*file);
 	bool ExistFileAndUpdate(const bchar*path, const bchar*file, const bchar*e, BearStringPath&path_out);
 	bool ExistFile(const bchar*path, const bchar*file, const bchar*e);
-#ifdef WINDOWS
+#if CURRENT_PLATFORM == PLATFORM_WINDOWS
 #undef CreateDirectory
 #endif
 	void CreateDirectory(const bchar*path, bsize id);

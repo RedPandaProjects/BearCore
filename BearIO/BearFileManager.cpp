@@ -1,9 +1,9 @@
 #include "BearCore.hpp"
-#ifdef WINDOWS
+#if CURRENT_PLATFORM == PLATFORM_WINDOWS
 #include <sys/stat.h>
 #include <io.h>
 #include "Windows/BearFileManager_Windows.h"
-#elif UNIX
+#elif CURRENT_PLATFORM == PLATFORM_UNIX
 #include "Unix/BearFileManager_Unix.h"
 #endif
 
@@ -66,7 +66,7 @@ void BearFileManager::PathOptimization(bchar * in)
 		bchar* b = in;
 		while (*b)
 		{
-#ifdef WINDOWS
+#if CURRENT_PLATFORM == PLATFORM_WINDOWS
 			if (*b == TEXT("/")[0])
 #else
 			if (*b == TEXT("\\")[0])

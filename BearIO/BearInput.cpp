@@ -1,5 +1,5 @@
 #include "BearCore.hpp"
-#ifdef WINDOWS
+#if CURRENT_PLATFORM == PLATFORM_WINDOWS
 BEARTOOL_API BearMap<int32, int32>* LToWinowsKey=0;
 BEARTOOL_API BearMap<int32, int32> *GFromWinowsKey=0;
 static void RegisterWindowsKey(int32 win, BearInput::Key key)
@@ -123,7 +123,7 @@ void GKeyWindowsInitialize()
 #endif
 bool BearInput::KeyState(Key key)
 {
-#ifdef WINDOWS
+#if CURRENT_PLATFORM == PLATFORM_WINDOWS
 	auto item = LToWinowsKey->find(key);
 	if (item != LToWinowsKey->end())
 		return ::GetKeyState(item->second) & 0x8000;

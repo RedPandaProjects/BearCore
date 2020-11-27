@@ -19,12 +19,12 @@ void BearLog::DebugPrintf(const bchar * text, ...)
 	OutputDebugString(var1);
 	OutputDebugString(TEXT("\r\n"));
 #endif
-#ifdef WINDOWS
+#if CURRENT_PLATFORM == PLATFORM_WINDOWS
 	char text866[8192];
 	CharToOem(var1, text866);
 	printf(text866);
 	printf("\r\n");
-#elif UNIX
+#elif CURRENT_PLATFORM == PLATFORM_UNIX
 #ifdef UNICODE
 	wprintf(var1);
 	wprintf(TEXT("\n"));
@@ -56,12 +56,12 @@ void BearLog::Printf(const bchar * text, ...)
 	OutputDebugString(var1);
 	OutputDebugString(TEXT("\r\n"));
 #endif
-#ifdef WINDOWS
+#if CURRENT_PLATFORM == PLATFORM_WINDOWS
 	char text866[8192];
 	CharToOem(var1, text866);
 	printf(text866);
 	printf("\r\n");
-#elif UNIX
+#elif CURRENT_PLATFORM == PLATFORM_UNIX
 #ifdef UNICODE 
 	wprintf(var1);
 	wprintf(TEXT("\n"));
@@ -89,7 +89,7 @@ void BearLog::Flush()
 	while (b != e)
 	{
 		LogFile.WriteBuffer((void*)**b, sizeof(bchar)*(b->size()));
-#ifdef WINDOWS
+#if CURRENT_PLATFORM == PLATFORM_WINDOWS
 		LogFile.WriteBuffer(TEXT("\r\n"), sizeof(bchar) * 2);
 #else
 		LogFile.Write((void*)TEXT("\n"), sizeof(bchar) * 2);
@@ -179,7 +179,7 @@ int32 BearLog::GetBuildImpl(const char * date, int32 start_year, int32 start_mon
 
 	BearString16 month;
 	uint32 days = 0, year = 0;
-#ifdef WINDOWS
+#if CURRENT_PLATFORM == PLATFORM_WINDOWS
 	data.scanf(TEXT("%s %u %u"), month, &days, &year);
 #else 
 	data.scanf(TEXT("" BEAR_PRINT_UTF8 " %d %d"), month, &days, &year);

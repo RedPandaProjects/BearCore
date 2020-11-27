@@ -836,7 +836,7 @@ using BearStringAnsi = BearStringUnknown<bchar8>;
 using BearStringUnicode = BearStringUnknown<bchar16>;
 using BearString= BearStringUnknown<bchar>;
 
-#ifdef WINDOWS 
+#if CURRENT_PLATFORM == PLATFORM_WINDOWS 
 #define BEAR_PRINT_STR_CURRENT "%s"
 #ifdef UNICODE
 #define BEAR_PRINT_STR "%S"

@@ -18,25 +18,22 @@ struct codecvt_byname : public std::codecvt_byname<I, E, S>
 	{
 	}
 };
-#ifdef MSVC
+#if CURRENT_COMPILER == COMPILER_MSVC
 #pragma warning(disable:4996)
 #endif
-#ifdef MSVC
+#if CURRENT_COMPILER == COMPILER_MSVC
 std::wstring_convert<::codecvt_byname<bchar16, bchar8, std::mbstate_t>, bchar16> *ConverterUTF16;
 #endif
 std::wstring_convert<std::codecvt_utf8_utf16<bchar16>, bchar16> *ConverterUTF8;
 
-#if defined(WINDOWS) || defined(UNIX)
-static uint32 LAnsiCode = 1251; /*RUS*/
-;
-#endif
+constexpr uint32 LAnsiCode = 1251; /*RUS*/
 
 struct Initializer
 {
 	Initializer() {}
 	inline void Initialize(const char *lg = "en_US.UTF-8")
 	{
-#ifdef MSVC
+#if CURRENT_COMPILER == COMPILER_MSVC
 		if (ConverterUTF8)
 		{
 			return;
@@ -49,21 +46,21 @@ struct Initializer
 
 		if (ConverterUTF8)
 		{
-			#ifdef MSVC
+			#if CURRENT_COMPILER == COMPILER_MSVC
 			delete[] ConverterUTF16;
 			#endif
 			delete[] ConverterUTF8;
 		}
-	#ifdef MSVC
+#if CURRENT_COMPILER == COMPILER_MSVC
 		ConverterUTF16 = new std::wstring_convert<::codecvt_byname<bchar16, bchar8, std::mbstate_t>, bchar16>(new ::codecvt_byname<bchar16, bchar8, std::mbstate_t>(lg));
-		#endif
+#endif
 		ConverterUTF8 = new std::wstring_convert<std::codecvt_utf8_utf16<bchar16>, bchar16>;
 	}
 	~Initializer()
 	{
-		#ifdef MSVC
+#if CURRENT_COMPILER == COMPILER_MSVC
 		delete[] ConverterUTF16;
-		#endif
+#endif
 		delete[] ConverterUTF8;
 	}
 };
@@ -100,7 +97,7 @@ inline bchar16 ToUTF16(bchar8 c_)
 	uint8 c=c_;
 	if (c>=0x80)
 	{
-#ifdef WINDOWS
+#if CURRENT_PLATFORM == PLATFORM_WINDOWS
 		bchar16 res[2]; 
 		MultiByteToWideChar(LAnsiCode, 0, &c_, 2, res, 2);
 		return res[0];
@@ -193,7 +190,7 @@ void BearEncoding::SetLangure(Lang lang)
 	{
 	case BearEncoding::E_RUS:
 		setlocale(LC_CTYPE, "ru_RU.UTF-8");
-#ifdef WINDOWS
+#if CURRENT_PLATFORM == PLATFORM_WINDOWS
 		initializer.ReInitialize("Russian");
 #else
 		initializer.ReInitialize("ru_RU.UTF-8");

@@ -4,7 +4,7 @@ class BEARTOOL_API BearThread
 public:
 	BEAR_CLASS_WITHOUT_COPY(BearThread);
 	// ����������� ������ (������� � �� ���������);
-#ifdef WINDOWS
+#if CURRENT_PLATFORM == PLATFORM_WINDOWS
 	template<class F,class ...A>
 	BearThread(F function,A&&...args):m_id(0),m_thread(0)
 	{
@@ -46,10 +46,10 @@ public:
 private:
 	void RunThread(const char*name, void * fun, void * arg);
 
-#ifdef WINDOWS
+#if CURRENT_PLATFORM == PLATFORM_WINDOWS
 	mutable void* m_id;
 	mutable	uint32 m_thread;
-#elif UNIX
+#elif CURRENT_PLATFORM == PLATFORM_UNIX
 	bool m_active;
  	pthread_t m_thread; 
 #endif

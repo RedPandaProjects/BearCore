@@ -25,7 +25,7 @@ bool BearFileStream::Open(const bchar *name, BearFlags<uint8> flags)
 		mode = TEXT("rb");
 	if (m_file)
 		Close();
-#ifdef MSVC
+#if CURRENT_COMPILER == COMPILER_MSVC
 #ifdef UNICODE
 	_wfopen_s(reinterpret_cast<FILE **>(&m_file), name, mode);
 #else
@@ -60,7 +60,7 @@ bsize BearFileStream::Seek(bsize tell1) const
 {
 	if (!m_file)
 		return 0;
-#ifdef WINDOWS
+#if CURRENT_PLATFORM == PLATFORM_WINDOWS
 	_fseeki64((FILE *)m_file, static_cast<int64>(tell1), SEEK_SET);
 #else
 	fseek((FILE *)m_file, static_cast<long>(tell1), SEEK_SET);
@@ -72,7 +72,7 @@ bsize BearFileStream::Seek(bsize tell1) const
 bsize BearFileStream::Tell() const
 {
 	if (m_file)
-#ifdef WINDOWS
+#if CURRENT_PLATFORM == PLATFORM_WINDOWS
 		return static_cast<bsize>(_ftelli64((FILE *)m_file));
 #else
 		return static_cast<bsize>(ftell((FILE *)m_file));
@@ -88,7 +88,7 @@ bsize BearFileStream::Size() const
 	bsize pos = Tell();
 	fseek((FILE *)m_file, 0, SEEK_END);
 	bsize size_ = Tell();
-#ifdef WINDOWS
+#if CURRENT_PLATFORM == PLATFORM_WINDOWS
 		_fseeki64((FILE *)m_file, static_cast<int64>(pos), SEEK_SET);
 #else
 	fseek((FILE *)m_file, static_cast<long>(pos), SEEK_SET);

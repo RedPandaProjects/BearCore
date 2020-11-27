@@ -64,7 +64,7 @@ public:
 			return b;
 		return a; 
 	}
-#ifdef MSVC
+#if CURRENT_COMPILER == COMPILER_MSVC
 	template<typename T>
 	inline static bool isnan( T a)
 	{

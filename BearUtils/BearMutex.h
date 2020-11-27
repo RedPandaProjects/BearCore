@@ -10,7 +10,7 @@ public:
 	bool TryLock();
 	void Swap(BearMutex&right);
 private:
-#ifdef WINDOWS
+#if CURRENT_PLATFORM == PLATFORM_WINDOWS
 	CRITICAL_SECTION m_mutex;
 #elif LINUX 
 	pthread_mutex_t m_mutex;

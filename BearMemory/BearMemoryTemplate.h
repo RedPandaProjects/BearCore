@@ -120,7 +120,7 @@ inline C*bear_new(const D&...d)
 	new(c)C(d...);
 	return c;
 }
-#ifdef MSVC 
+#if CURRENT_COMPILER == COMPILER_MSVC 
 template<typename C, typename...D>
 inline C*bear_new(D&&...d)
 {
