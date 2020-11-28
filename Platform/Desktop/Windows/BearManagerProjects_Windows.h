@@ -38,7 +38,7 @@ bool BearManagerDynamicLibraries::CheckProject(BearStringConteniar  name_)
 	}
 	return true;
 }
-inline void BearManagerDynamicLibraries::Destory()
+ void BearManagerDynamicLibraries::Destory()
 {
 	if (GLibraries == nullptr)return;
 	auto begin = GLibraries->begin();
@@ -52,7 +52,7 @@ inline void BearManagerDynamicLibraries::Destory()
 	GLibraries->clear();
 	bear_delete(GLibraries);
 }
-inline void BearManagerDynamicLibraries::UnLoad(BearStringConteniar name)
+ void BearManagerDynamicLibraries::UnLoad(BearStringConteniar name)
 {
 	if (GLibraries == nullptr)return;
 	auto Item = GLibraries->find(name);
